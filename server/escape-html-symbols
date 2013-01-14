@@ -1,0 +1,2 @@
+sed "s/'/\&\#39;/g" | sed "s/\"/\&quot;/g" | sed "s/</\&lt;/g" | sed "s/>/\&gt;/g" 
+

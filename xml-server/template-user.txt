@@ -1,0 +1,9 @@
+clown		// passwd
+11774756	// tetecouleur
+0		// corpscouleur
+0		// piedcouleur
+big bos		// description
+big bos		// commentaire
+777		// corps
+777		// tete
+777		// pied

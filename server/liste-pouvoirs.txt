@@ -1,0 +1,18 @@
+&nbpouvoirs=15& 
+
+&pouvoir1=23& &pouvoir2=24& &pouvoir3=31& 
+&pouvoir4=41& &pouvoir5=32& 
+&pouvoir6=26& &pouvoir7=21& &pouvoir8=33&
+&pouvoir9=14& &pouvoir10=22& &pouvoir11=12&
+&pouvoir12=13& &pouvoir13=25& &pouvoir14=27&
+&pouvoir15=11&
+
+&duree1=1024& 
+&duree2=1024& &duree3=1024& &duree4=1024& &duree5=1024&
+&duree6=1024& &duree7=1024& &duree8=1024& &duree9=1024&
+&duree10=1024&
+&duree11=1024&
+&duree12=1024&
+&duree13=1024&
+&duree14=1024&
+&duree15=1024&

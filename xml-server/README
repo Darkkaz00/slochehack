@@ -1,0 +1,11 @@
+Ici il y a le serveur de chat XML (xmlserv),
+de même que des programmes qui s'occupent des
+inscriptions / connexions, ces programmes étant
+lancés par le serveur HTTP dans la directoire
+"server".
+
+La base de données est le dossier "users".
+Chaque usager correspond à un fichier homonyme.
+Le fichier template-user.txt est un exemple
+annoté de fichier usager.
+

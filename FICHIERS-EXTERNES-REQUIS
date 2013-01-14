@@ -1,0 +1,117 @@
+Par souci de droits d'auteurs, je n'inclus pas les logiciels externes,
+ni les graphismes/client/son/HTML originaux de sloche.
+
+Ici je vous donne les chemins des fichiers non-inclus qui sont requis pour
+faire fonctionner une réimplémentation assez complète et je vous
+donne des infos sur ce que sont ces fichiers. Pour que le logiciel marche
+il faut copier au ___bons___ endroits les ___bons___ fichiers. Merci.
+
+Donc, en résumé, ça vous prend d'avance le logiciel gratuit de serveur
+de policies de Adobe ainsi que les fichiers du site. Je ne les donne pas.
+Je vous montre juste où les mettre.
+
+PAGE D'ACCUEIL [pas absolument nécessaire]
+
+./server/sloche-data/popup.html		<--  la fenêtre avec le client
+./server/sloche-data/index.html		<--  la page d'accueil
+./server/sloche-data/splahtml.gif	<--  logo du site sur la page d'accueil
+
+FICHIERS CLIENT FLASH
+
+./fichiers-client/sloche2007.swf	<--	client version 2007
+./fichiers-client/sloche414-2006.swf	<--	client version 2006
+./fichiers-client/sloche2005.swf	<--	client version 2005
+./fichiers-client/sloche2004.swf	<--	client version 2004
+./fichiers-client/sloche2003.swf	<--	client version 2003
+
+ICÔNES BOUTONS POUVOIRS (taille : 17 x 17 pixels, format: JPEG)
+
+./server/sloche-data/icone-telep.jpg	<--	icône pouvoir téléportation
+./server/sloche-data/icone-velo.jpg	<--	icône pouvoir vélo
+./server/sloche-data/icone-wribit.jpg	<--	etc., etc., etc.
+./server/sloche-data/icone-barbu.jpg		.
+./server/sloche-data/icone-mouche.jpg		.
+./server/sloche-data/icone-rrdb.jpg		.
+./server/sloche-data/icone-mini.jpg		.
+./server/sloche-data/icone-ultra.jpg		.
+./server/sloche-data/icone-laser.jpg		.
+./server/sloche-data/icone-geant.jpg		.
+./server/sloche-data/icone-real.jpg		.
+./server/sloche-data/icone-scie.jpg		.
+./server/sloche-data/icone-nouveaux-persos.jpg	.
+./server/sloche-data/icone-pet.jpg		.
+./server/sloche-data/icone-vip.jpg		.
+
+SALLES DE CHAT
+
+./server/sloche-data/0.swf 		<-- salle privée liposuccion
+./server/sloche-data/64.swf		<-- décors salles de chat
+./server/sloche-data/15.swf			.
+./server/sloche-data/76.swf			.
+./server/sloche-data/31.swf			.
+./server/sloche-data/33.swf			.
+./server/sloche-data/23.swf			.
+./server/sloche-data/52.swf                     .
+./server/sloche-data/53.swf                     .
+./server/sloche-data/25.swf                     .
+./server/sloche-data/61.swf                     .
+./server/sloche-data/71.swf                     .
+./server/sloche-data/72.swf                     .
+./server/sloche-data/43.swf                     .
+./server/sloche-data/34.swf                     .
+./server/sloche-data/32.swf                     .
+./server/sloche-data/11.swf                     .
+./server/sloche-data/54.swf                     .
+./server/sloche-data/42.swf                     .
+./server/sloche-data/51.swf                     .
+./server/sloche-data/75.swf                     .
+./server/sloche-data/35.swf                     .
+./server/sloche-data/44.swf                     .
+./server/sloche-data/13.swf                     .
+./server/sloche-data/63.swf                     .
+./server/sloche-data/12.swf                     .
+./server/sloche-data/22.swf                     .
+./server/sloche-data/73.swf                     .
+./server/sloche-data/77.swf                     .
+./server/sloche-data/55.swf                     .
+./server/sloche-data/65.swf                     .
+./server/sloche-data/74.swf                     .
+./server/sloche-data/6.swf                      .
+./server/sloche-data/24.swf                     .
+./server/sloche-data/62.swf                     .
+./server/sloche-data/41.swf                     .
+./server/sloche-data/14.swf                     .
+./server/sloche-data/45.swf                     .
+./server/sloche-data/21.swf                     .
+
+MUSIQUES
+
+./server/sloche-data/1.swf	<-- musique numéro 1
+./server/sloche-data/2.swf      <-- musique numéro 2
+./server/sloche-data/3.swf      <-- etc..........
+./server/sloche-data/4.swf                      .
+./server/sloche-data/5.swf                      .
+
+SERVEUR DE "POLICIES" FLASH DE ADOBE
+
+./logiciels/flashpolicyd_v0.6[1].zip	<-- archive serveur policies adobe
+./logiciels/flashpolicyd_v0.6		<-- serveur policies adobe ......
+./logiciels/flashpolicyd_v0.6/Perl_xinetd				.
+./logiciels/flashpolicyd_v0.6/Perl_xinetd/in.flashpolicyd.pl		.
+./logiciels/flashpolicyd_v0.6/Perl_xinetd/flashpolicyd.xinet		.
+./logiciels/flashpolicyd_v0.6/Perl_xinetd/install.sh			.
+./logiciels/flashpolicyd_v0.6/Standalone				.
+./logiciels/flashpolicyd_v0.6/Standalone/flashpolicyd.pl		.
+./logiciels/flashpolicyd_v0.6/Standalone/flashpolicyd.py		.
+./logiciels/flashpolicyd_v0.6/Python_xinetd				.
+./logiciels/flashpolicyd_v0.6/Python_xinetd/flashpolicyd.xinet		.
+./logiciels/flashpolicyd_v0.6/Python_xinetd/install.sh			.
+./logiciels/flashpolicyd_v0.6/Python_xinetd/in.flashpolicyd.py		.
+./logiciels/flashpolicyd_v0.6/Python_init				.
+./logiciels/flashpolicyd_v0.6/Python_init/flashpolicyd.init		.
+./logiciels/flashpolicyd_v0.6/Python_init/install.sh			.
+./logiciels/flashpolicyd_v0.6/Python_init/flashpolicyd.py		.
+./logiciels/flashpolicyd_v0.6/flashpolicy.xml				.
+./logiciels/flashpolicyd_v0.6/README.txt				.
+
+

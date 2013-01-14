@@ -1,0 +1,22 @@
+SERVEUR HTTP FAIT MASION
+
+Dependencies:
+
+	- C compiler (cc)
+	- GNU bash (or maybe another modern sh-type unix shell)
+	- Python 2.x
+
+Notes:
+	- this probably won't work on windows. use
+	  one of the many unices available (linux, mac os x, ...)
+
+	- to start the ncweb httpd, type
+		./run
+
+Warning:
+
+	- i know very little about security.
+	  there is just a buffer overflow preventer in
+	  ncweb.c. use a good firewall !
+
+
