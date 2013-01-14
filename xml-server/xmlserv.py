@@ -322,9 +322,10 @@ def serve_client(conn, addr, id):
 				rep = '<MESSAGE TYPE="LR">'
 				effaces = 0
 				for i in range(1000):
-					if len(rpeople[1000 + i]) == 0:
-						id_salle_libre[i] = True
-						print "effacement de la salle %s (numero %d, tableau %d)" % (nom_salle[i], i, 1000 + i)
+					if not id_salle_libre[i]:
+						if len(rpeople[1000 + i]) == 0:
+							id_salle_libre[i] = True
+							print "effacement de la salle %s (numero %d, tableau %d)" % (nom_salle[i], i, 1000 + i)
 									
 				for i in range(1000):
 					if not id_salle_libre[i]:
@@ -383,16 +384,16 @@ def serve_client(conn, addr, id):
 				cette_salle = data[data.find("<DESC>")+6:data.find("</DESC>")]
 				rep = '<MESSAGE TYPE="CR">'
 
-				numero_rp = chiffre_salle()
-
 				# meme salle et meme proprietare existent deja ?
 				for i in range(1000):
 					if nom_salle[i] == cette_salle:
 						if prop_salle[i] == ce_prop:
 							if not id_salle_libre[i]:
+								print "conflit salle existante: %s" % cette_salle
 								cr_ok = False
 
 				if cr_ok:
+					numero_rp = chiffre_salle()
 					nom_salle[numero_rp] = cette_salle
 					prop_salle[numero_rp] = ce_prop
 					rep += '<STATUS>OK</STATUS>'
