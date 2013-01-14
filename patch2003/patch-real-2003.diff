@@ -1,0 +1,17 @@
+--- sloche2003.flasm	2013-01-13 22:01:32.313713720 +0000
++++ sloche2003-fixreal.flasm	2013-01-13 22:01:18.609709061 +0000
+@@ -1,4 +1,4 @@
+-movie 'sloche2003.swf' compressed // flash 6, total frames: 84, frame rate: 40 fps, 720x600 px
++movie 'sloche2003-fixreal.swf' compressed // flash 6, total frames: 84, frame rate: 40 fps, 720x600 px
+   
+   protect
+   
+@@ -47811,7 +47811,7 @@
+       getVariable
+       push 'length'
+       getMember
+-      push 3
++      push -100
+       equals
+       push 'boucher'
+       getVariable
