@@ -12,7 +12,6 @@ import time
 MAX_USERS = 1024
 
 # salles prive'es ...
-numero_rp = 0
 id_salle_libre = [True for i in range(1000)]
 nom_salle = ["" for i in range(1000)]
 prop_salle = ["" for i in range(1000)]
@@ -24,6 +23,7 @@ def chiffre_salle():
 		if id_salle_libre[i]:
 			id_salle_libre[i] = False
 			return i
+	return None
 
 def efr(n):
 	if n >= 1000:
@@ -200,7 +200,6 @@ def update_room(room, person):
 
 def serve_client(conn, addr, id):
 	# Ah, ce cher langage Python
-	global numero_rp
 	global nom_salle
 	global prop_salle
 	global acc_salle
@@ -322,15 +321,12 @@ def serve_client(conn, addr, id):
 			if data.find('TYPE="LR"') > 0:
 				rep = '<MESSAGE TYPE="LR">'
 				effaces = 0
-				for i in range(numero_rp):
+				for i in range(1000):
 					if len(rpeople[1000 + i]) == 0:
 						id_salle_libre[i] = True
 						print "effacement de la salle %s (numero %d, tableau %d)" % (nom_salle[i], i, 1000 + i)
-										
-				while id_salle_libre[numero_rp - 1]:
-					numero_rp -= 1
-				
-				for i in range(numero_rp):
+									
+				for i in range(1000):
 					if not id_salle_libre[i]:
 						pop_salle = len(rpeople[1000 + i])
 						rep += '<RP>'
@@ -387,15 +383,14 @@ def serve_client(conn, addr, id):
 				cette_salle = data[data.find("<DESC>")+6:data.find("</DESC>")]
 				rep = '<MESSAGE TYPE="CR">'
 
-				# depassement du maximum de salles privees
-				if numero_rp >= 1000:
-					cr_ok = False
+				numero_rp = chiffre_salle()
 
 				# meme salle et meme proprietare existent deja ?
-				for i in range(numero_rp):
+				for i in range(1000):
 					if nom_salle[i] == cette_salle:
 						if prop_salle[i] == ce_prop:
-							cr_ok = False
+							if not id_salle_libre[i]:
+								cr_ok = False
 
 				if cr_ok:
 					nom_salle[numero_rp] = cette_salle
@@ -404,8 +399,6 @@ def serve_client(conn, addr, id):
 					rep += '<ID>%d</ID>' % -numero_rp
 					rep += '<USERNAME>%s</USERNAME>' % ce_prop
 					rep += '<ROOMNAME>%s</ROOMNAME>' % cette_salle
-					# nouveau numero de salle !
-					numero_rp += 1
 				else:
 					rep += '<STATUS>NOK</STATUS>'
 
