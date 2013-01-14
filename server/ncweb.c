@@ -90,6 +90,14 @@ int main(int argc, char** argv)
 			printf("%s 200 OK\n", tokens[2]);
 			fflush(stdout);
 
+			/* Decor salle privees liposuccion (v4 2006-2007) */
+			if (strstr(tokens[1], "/client/decor/lipo_decor.swf")) {
+				printf("\n");
+				fflush(stdout);
+				system("cat sloche-data/0.swf");
+				fflush(stdout);
+			}
+
 			/* GOT GET /client/decor/22.swf HTTP/1.1 */
 			if(strstr(tokens[1], "/client/decor/")){
 				printf("\n");

@@ -9,12 +9,25 @@ from roommove import *
 from getuserapi import *
 import time
 
+MAX_USERS = 1024
+
+# salles prive'es ...
+numero_rp = 0
+nom_salle = ["" for i in range(1000)]
+prop_salle = ["" for i in range(1000)]
+acc_salle = ["" for i in range(1000)]
+req_sp = [[] for i in range(MAX_USERS)]
+
+def efr(n):
+	if n >= 1000:
+		return 1000 - n
+	else:
+		return n
+
 # mouches, grenouille, barbu, rapitissateur, roi et reine
 pouvoirs_attaques = [13, 14, 22, 25, 27]
 # laser, pet, gzzzit
 pouvoirs_attaques_2 = [12, 31, 40]
-
-MAX_USERS = 1024
 
 true = True
 false = False
@@ -78,7 +91,7 @@ def chaine_king(id):
 		return ""
 
 # people in a given room
-rpeople = [[] for i in range(100)]
+rpeople = [[] for i in range(2000)]
 
 # id -> username lookup
 unames = ["" for i in range(MAX_USERS)]
@@ -108,6 +121,12 @@ def nombre():
 			n += 1
 	return n
 
+def chiffre_user(unam):
+	for i in range(MAX_USERS):
+		if unames[i] == unam:
+			return i
+	return None
+
 def fix_real(room):
 	broadcast('<MESSAGE TYPE="BE"><ETAT>1</ETAT><FROM>%s</FROM><TO>%s</TO><EFFET>%s</EFFET><PARAM>1</PARAM></MESSAGE>' % ("real", "real", "41"), room)
 
@@ -119,10 +138,10 @@ def leave_room(room, person):
 
 def description_salle(room, update=False, new_people=[]):
 	if update:
-		mes = '<MESSAGE TYPE="ER" VALUE="update"><RID VALUE="update">%d</RID>' % room
+		mes = '<MESSAGE TYPE="ER" VALUE="update"><RID VALUE="update">%d</RID>' % efr(room)
 		who = new_people
 	else:
-		mes = '<MESSAGE TYPE="ER"><RID>%d</RID>' % room
+		mes = '<MESSAGE TYPE="ER"><RID>%d</RID>' % efr(room)
 		who = rpeople[room]
 	
 	realcheck = 0
@@ -173,6 +192,12 @@ def update_room(room, person):
 		fix_real(room)
 
 def serve_client(conn, addr, id):
+	# Ah, ce cher langage Python
+	global numero_rp
+	global nom_salle
+	global prop_salle
+	global acc_salle
+
 	client_host, client_port = addr
 	print "Got connection from %s:%s. Starting thread %d" % (client_host, client_port, id)
 
@@ -282,6 +307,121 @@ def serve_client(conn, addr, id):
 					# update avatar
 					leave_room(room, id)
 					update_room(room, id)
+
+			# obtenir la liste des rooms prive'es.
+			# De'clenche' en marchant sur la grosse bosse
+			# ou en cliquant sur 'raifrai^chir'.
+			if data.find('TYPE="LR"') > 0:
+				rep = '<MESSAGE TYPE="LR">'
+				for i in range(numero_rp):
+					pop_salle = len(unames[1000 + i])
+					rep += '<RP>'
+					rep += '<ID>%d</ID>' % -i
+					rep += '<NAME>%s</NAME>' % nom_salle[i]
+					rep += '<UNAM>%s</UNAM>' % prop_salle[i]
+					rep += '<NOMBRE>%d</NOMBRE>' % pop_salle
+					rep += '<ACCESS>%s</ACCESS>' % acc_salle[i]
+					rep += '</RP>'
+				rep += '</MESSAGE>'
+				conn.sendall(rep.strip() + '\0')
+				print 'reponse LR: %s' % rep
+
+			# demander acces a aune room privee
+			if data.find('TYPE="RP"') > 0:
+				rp_id = int(data[data.find("<ID>")+4:data.find("</ID>")])
+				rp_raison = data[data.find("<RAISON>")+8:data.find("</RAISON>")]
+	
+				relai = '<MESSAGE TYPE="RP">'
+				relai += '<ID>%d</ID>' % rp_id
+				relai += '<USERNAME>%s</USERNAME>' % username
+				relai += '<RAISON>%s</RAISON>' % rp_raison
+				relai += '</MESSAGE>'
+
+				# je stocke les ID en nombres positifs dans mes tableaux...
+				if rp_id < 0:
+					rp_id = -rp_id
+				id_prop = chiffre_user(prop_salle[int(rp_id)])
+
+				req_sp[id_prop].append(username)
+				mq[id_prop].append(relai)
+
+			# autoriser / refuser acces a room privee
+			if data.find('TYPE="AC"') > 0:
+				ac_s = data[data.find("<S>")+3:data.find("</S>")]
+				ac_id = data[data.find("<ID>")+4:data.find("</ID>")]
+					
+				relai = '<MESSAGE TYPE="AC">'
+				relai += '<S>%s</S>' % ac_s
+				relai += '<BOF>mettons</BOF>'
+				relai += '<ID>%s</ID>' % ac_id
+				relai += '</MESSAGE>'
+
+				if len(req_sp[id]) > 0:
+					id_dest = chiffre_user(req_sp[id].pop())
+					print "relai AC: %s" % relai
+					mq[id_dest].append(relai)
+				
+
+			# cre'er room prive'e
+			if data.find('TYPE="CR"') > 0:
+				cr_ok = True
+				ce_prop = data[data.find("<NOM>")+5:data.find("</NOM>")]
+				cette_salle = data[data.find("<DESC>")+6:data.find("</DESC>")]
+				rep = '<MESSAGE TYPE="CR">'
+
+				# depassement du maximum de salles privees
+				if numero_rp >= 1000:
+					cr_ok = False
+
+				# meme salle et meme proprietare existent deja ?
+				for i in range(numero_rp):
+					if nom_salle[i] == cette_salle:
+						if prop_salle[i] == ce_prop:
+							cr_ok = False
+
+				if cr_ok:
+					nom_salle[numero_rp] = cette_salle
+					prop_salle[numero_rp] = ce_prop
+					rep += '<STATUS>OK</STATUS>'
+					rep += '<ID>%d</ID>' % -numero_rp
+					rep += '<USERNAME>%s</USERNAME>' % ce_prop
+					rep += '<ROOMNAME>%s</ROOMNAME>' % cette_salle
+					# nouveau numero de salle !
+					numero_rp += 1
+				else:
+					rep += '<STATUS>NOK</STATUS>'
+
+				rep += '</MESSAGE>'
+
+				conn.sendall(rep.strip() + '\0')
+				print 'reponse CR: %s' % rep
+
+			# SR -- requete entree room privee
+			if data.find('TYPE="SR"') > 0:
+				sr_ok = True
+				id_salle = int(data[data.find("<ID>")+4:data.find("</ID>")])
+
+				# la reponse serveur SR, ca ne fait qu'ajouter une
+				# banderole dans le GUI du client, mais ca semble
+				# necessaire.
+				rep = '<MESSAGE TYPE="SR" FROM="SimpleChat">'
+				rep += '<STATUS>OK</STATUS>'	# NOK pour refuser entree...
+				rep += '</MESSAGE>'
+				conn.sendall(rep.strip() + '\0')
+				print 'reponse SR: %s' % rep
+
+				# maintenant, le changement de salle a proprement parler
+
+				print "salle privee: %d" % id_salle
+				nr = 1000 - id_salle
+				rpeople[room].remove(id)
+				rpeople[nr].append(id)
+				leave_room(room, id)
+				update_room(nr, id)
+				room = nr
+
+				mes = description_salle(room)
+				conn.sendall(mes.strip() + '\0')
 
 			# store coords
 			if data.find('TYPE="BM"') > 0:
