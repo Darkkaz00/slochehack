@@ -13,10 +13,17 @@ MAX_USERS = 1024
 
 # salles prive'es ...
 numero_rp = 0
+id_salle_libre = [True for i in range(1000)]
 nom_salle = ["" for i in range(1000)]
 prop_salle = ["" for i in range(1000)]
 acc_salle = ["" for i in range(1000)]
 req_sp = [[] for i in range(MAX_USERS)]
+
+def chiffre_salle():
+	for i in range(1000):
+		if id_salle_libre[i]:
+			id_salle_libre[i] = False
+			return i
 
 def efr(n):
 	if n >= 1000:
@@ -197,6 +204,7 @@ def serve_client(conn, addr, id):
 	global nom_salle
 	global prop_salle
 	global acc_salle
+	global id_salle_libre
 
 	client_host, client_port = addr
 	print "Got connection from %s:%s. Starting thread %d" % (client_host, client_port, id)
@@ -316,25 +324,22 @@ def serve_client(conn, addr, id):
 				effaces = 0
 				for i in range(numero_rp):
 					if len(rpeople[1000 + i]) == 0:
-						effaces += 1
+						id_salle_libre[i] = True
 						print "effacement de la salle %s (numero %d, tableau %d)" % (nom_salle[i], i, 1000 + i)
-						print "car sa population = %d" % len(rpeople[1000 + i])
-						del nom_salle[i]
-						del prop_salle[i]
-						del acc_salle[i]
-
-				print "%d salles effacees" % effaces
-				numero_rp -= effaces		
-
+										
+				while id_salle_libre[numero_rp - 1]:
+					numero_rp -= 1
+				
 				for i in range(numero_rp):
-					pop_salle = len(rpeople[1000 + i])
-					rep += '<RP>'
-					rep += '<ID>%d</ID>' % -i
-					rep += '<NAME>%s</NAME>' % nom_salle[i]
-					rep += '<UNAM>%s</UNAM>' % prop_salle[i]
-					rep += '<NOMBRE>%d</NOMBRE>' % pop_salle
-					rep += '<ACCESS>%s</ACCESS>' % acc_salle[i]
-					rep += '</RP>'
+					if not id_salle_libre[i]:
+						pop_salle = len(rpeople[1000 + i])
+						rep += '<RP>'
+						rep += '<ID>%d</ID>' % -i
+						rep += '<NAME>%s</NAME>' % nom_salle[i]
+						rep += '<UNAM>%s</UNAM>' % prop_salle[i]
+						rep += '<NOMBRE>%d</NOMBRE>' % pop_salle
+						rep += '<ACCESS>%s</ACCESS>' % acc_salle[i]
+						rep += '</RP>'
 				rep += '</MESSAGE>'
 				conn.sendall(rep.strip() + '\0')
 				print 'reponse LR: %s' % rep
