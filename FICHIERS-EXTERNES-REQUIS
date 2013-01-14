@@ -4,7 +4,7 @@ ni les graphismes/client/son/HTML originaux de sloche.
 Ici je vous donne les chemins des fichiers non-inclus qui sont requis pour
 faire fonctionner une réimplémentation assez complète et je vous
 donne des infos sur ce que sont ces fichiers. Pour que le logiciel marche
-il faut copier au ___bons___ endroits les ___bons___ fichiers. Merci.
+il faut copier aux ___bons___ endroits les ___bons___ fichiers. Merci.
 
 Donc, en résumé, ça vous prend d'avance le logiciel gratuit de serveur
 de policies de Adobe ainsi que les fichiers du site. Je ne les donne pas.
@@ -25,6 +25,7 @@ FICHIERS CLIENT FLASH
 ./fichiers-client/sloche2003.swf	<--	client version 2003
 
 ICÔNES BOUTONS POUVOIRS (taille : 17 x 17 pixels, format: JPEG)
+[pas absolument nécessaire]
 
 ./server/sloche-data/icone-telep.jpg	<--	icône pouvoir téléportation
 ./server/sloche-data/icone-velo.jpg	<--	icône pouvoir vélo
@@ -45,7 +46,7 @@ ICÔNES BOUTONS POUVOIRS (taille : 17 x 17 pixels, format: JPEG)
 SALLES DE CHAT
 
 ./server/sloche-data/0.swf 		<-- salle privée liposuccion
-./server/sloche-data/64.swf		<-- décors salles de chat
+./server/sloche-data/64.swf		<-- décors salles de chat ...
 ./server/sloche-data/15.swf			.
 ./server/sloche-data/76.swf			.
 ./server/sloche-data/31.swf			.
@@ -76,7 +77,6 @@ SALLES DE CHAT
 ./server/sloche-data/55.swf                     .
 ./server/sloche-data/65.swf                     .
 ./server/sloche-data/74.swf                     .
-./server/sloche-data/6.swf                      .
 ./server/sloche-data/24.swf                     .
 ./server/sloche-data/62.swf                     .
 ./server/sloche-data/41.swf                     .
@@ -85,12 +85,14 @@ SALLES DE CHAT
 ./server/sloche-data/21.swf                     .
 
 MUSIQUES
+[pas absolument nécessaire]
 
 ./server/sloche-data/1.swf	<-- musique numéro 1
 ./server/sloche-data/2.swf      <-- musique numéro 2
 ./server/sloche-data/3.swf      <-- etc..........
 ./server/sloche-data/4.swf                      .
 ./server/sloche-data/5.swf                      .
+./server/sloche-data/6.swf                      .
 
 SERVEUR DE "POLICIES" FLASH DE ADOBE
 
