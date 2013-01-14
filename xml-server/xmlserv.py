@@ -313,8 +313,21 @@ def serve_client(conn, addr, id):
 			# ou en cliquant sur 'raifrai^chir'.
 			if data.find('TYPE="LR"') > 0:
 				rep = '<MESSAGE TYPE="LR">'
+				effaces = 0
 				for i in range(numero_rp):
-					pop_salle = len(unames[1000 + i])
+					if len(rpeople[1000 + i]) == 0:
+						effaces += 1
+						print "effacement de la salle %s (numero %d, tableau %d)" % (nom_salle[i], i, 1000 + i)
+						print "car sa population = %d" % len(rpeople[1000 + i])
+						del nom_salle[i]
+						del prop_salle[i]
+						del acc_salle[i]
+
+				print "%d salles effacees" % effaces
+				numero_rp -= effaces		
+
+				for i in range(numero_rp):
+					pop_salle = len(rpeople[1000 + i])
 					rep += '<RP>'
 					rep += '<ID>%d</ID>' % -i
 					rep += '<NAME>%s</NAME>' % nom_salle[i]
@@ -341,9 +354,9 @@ def serve_client(conn, addr, id):
 				if rp_id < 0:
 					rp_id = -rp_id
 				id_prop = chiffre_user(prop_salle[int(rp_id)])
-
-				req_sp[id_prop].append(username)
-				mq[id_prop].append(relai)
+				if id_prop != None:
+					req_sp[id_prop].append(username)
+					mq[id_prop].append(relai)
 
 			# autoriser / refuser acces a room privee
 			if data.find('TYPE="AC"') > 0:
@@ -412,8 +425,9 @@ def serve_client(conn, addr, id):
 
 				# maintenant, le changement de salle a proprement parler
 
-				print "salle privee: %d" % id_salle
+				print "%s entre dans la salle privee numero %d" % (username, id_salle)
 				nr = 1000 - id_salle
+				print "chiffre tableau: %d" % nr
 				rpeople[room].remove(id)
 				rpeople[nr].append(id)
 				leave_room(room, id)
