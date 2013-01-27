@@ -15,7 +15,6 @@ MAX_USERS = 1024
 id_salle_libre = [True for i in range(1000)]
 nom_salle = ["" for i in range(1000)]
 prop_salle = ["" for i in range(1000)]
-acc_salle = ["" for i in range(1000)]
 req_sp = [[] for i in range(MAX_USERS)]
 
 def chiffre_salle():
@@ -330,12 +329,26 @@ def serve_client(conn, addr, id):
 				for i in range(1000):
 					if not id_salle_libre[i]:
 						pop_salle = len(rpeople[1000 + i])
+
+						# Les salles dont on est soi-meme proprietaire
+						# doivent apparaitre en vert en ne demandent
+						# pas de requete d'access.
+						#
+						# Remarque: devrait-on memoriser les autorisations
+						# d'acces de telle sorte qu'une fois permis a entrer
+						# dans une salle donnee, il ne faut plus demander
+						# la permission au proprio ?
+						if username == prop_salle[i]:
+							acc_check = "ok"
+						else:
+							acc_check = "nok"
+
 						rep += '<RP>'
 						rep += '<ID>%d</ID>' % -i
 						rep += '<NAME>%s</NAME>' % nom_salle[i]
 						rep += '<UNAM>%s</UNAM>' % prop_salle[i]
 						rep += '<NOMBRE>%d</NOMBRE>' % pop_salle
-						rep += '<ACCESS>%s</ACCESS>' % acc_salle[i]
+						rep += '<ACCESS>%s</ACCESS>' % acc_check
 						rep += '</RP>'
 				rep += '</MESSAGE>'
 				conn.sendall(rep.strip() + '\0')
