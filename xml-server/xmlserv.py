@@ -476,6 +476,10 @@ def serve_client(conn, addr, id):
 						mq[int(who)].append('<MESSAGE TYPE="BT" PRIVATE="1"><TEXT PRIVATE="1">%s</TEXT><USERNAME>%s</USERNAME></MESSAGE>' % (text, username))
 						mq[id].append('<MESSAGE TYPE="BT" PRIVATE="1"><TEXT PRIVATE="1">%s</TEXT><USERNAME>%s</USERNAME></MESSAGE>' % (text, username))
 
+			# relai liposuccion
+			if data.find('TYPE="DL"') > 0:
+				docteur_liposuccion(room, id)
+
 			# teleport
 			if data.find('TYPE="RR"') > 0 and data.find('<RID>') > 0:
 				# hack!
