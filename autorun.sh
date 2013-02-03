@@ -18,6 +18,7 @@ ifconfig | grep 192 | grep -v RX | sed 's/inet addr:\(.*\)\ Bcast:\(.*\)/\1/' | 
 echo "IP: `cat localhost.txt`"
 sh create-modded-swf.sh `cat localhost.txt` $CLIENT
 cat server/sloche-data/config.default | sed s/SERVERADDR/`cat localhost.txt`/g > server/sloche-data/simpleChatConfig.xml
+cat server/sloche-data/config_messagiel.default | sed s/SERVERADDR/`cat localhost.txt`/g > server/sloche-data/simpleChatConfig1.xml
 rm localhost.txt
 
 $TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x bash -c "cd server; ./run; bash" &

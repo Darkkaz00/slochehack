@@ -306,9 +306,10 @@ int main(int argc, char** argv)
 				fflush(stdout);
 			}
 			if(!strcmp(tokens[1], "/client/simpleChatConfig1.xml")){
+				/* fichier config messagiel */
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/simpleChatConfig.xml");
+				system("cat sloche-data/simpleChatConfig1.xml");
 				fflush(stdout);
 			}
 			if(!strcmp(tokens[1], "/crossdomain.xml")){
