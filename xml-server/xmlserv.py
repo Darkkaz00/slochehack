@@ -479,7 +479,6 @@ def serve_client(conn, addr, id):
 			# teleport
 			if data.find('TYPE="RR"') > 0 and data.find('<RID>') > 0:
 				# hack!
-
 				ref_room = int(data[data.find("<RID>")+5:data.find("</RID>")])
 				dir = data[data.find("<DI>")+4:data.find("</DI>")]
 
@@ -487,6 +486,16 @@ def serve_client(conn, addr, id):
 				user_y[id] = random.randrange(350, 450)
 
 				nr = get_new_room(ref_room, dir, 2000, 2000)
+
+				# sortie salle swompe
+				if room == 71 and nr == 61:
+					user_x[id] = random.randrange(260, 348)
+					user_y[id] = random.randrange(346, 389)
+
+				# entree salle swompe
+				if room == 61 and nr == 71:
+					user_x[id] = random.randrange(270, 286)
+					user_y[id] = random.randrange(320, 353)
 
 				rpeople[room].remove(id)
 				rpeople[nr].append(id)
@@ -505,20 +514,29 @@ def serve_client(conn, addr, id):
 
 				if dir == "gauche" and user_x[id] > 100 and room == 15:
 					nr = 65
-				
+
 				old_y = user_y[id]
 
 				user_x[id] = random.randrange(300, 400)
-				user_y[id] = random.randrange(350, 450)
+				# preserver coordonne Y dans salles swompe
+				if not (69 < room < 80):
+					if room == 71 and nr == 72:
+						user_x[id] = 591
+					user_y[id] = random.randrange(350, 450)
 
 				if dir == "droite":
 					user_x[id] = random.randrange(80, 200)
 				if dir == "gauche":
 					user_x[id] = random.randrange(500, 600)
 				if dir == "haut":
-					user_y[id] = random.randrange(400, 500)
+					user_y[id] = random.randrange(440, 470)
 				if dir == "bas":
 					user_y[id] = random.randrange(300, 350)
+
+				# escaliers gzzit
+				if room == 64 and nr == 63:
+					user_x[id] = random.randrange(494, 559)
+					user_y[id] = random.randrange(447, 448)
 
 				if nr == 1 and user_y[id] < 349:
 					user_y[id] = 349
