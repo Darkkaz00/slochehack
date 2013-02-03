@@ -61,6 +61,8 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	(Internet = mauvaise idée, cf infos sécurité plus haut)
 
 2. modifier server/sloche-data/simpleChatConfig.xml
+   	 et server/sloche-data/simpleChatConfig1.xml
+
    	pour refléter l'adresse IP choisie
 
 3. cd server; ./run			[serveur HTTP fait maison]
@@ -77,6 +79,10 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	plus de vitesse.
 
 	Requiert Python 2.x récent.
+
+6. cd xml-server; python messagiel.py	[serveur messagiel (slochepop)]
+	Même remarques qu'au numéro 5, en ajoutant la remarque
+	que le serveur messagiel n'est pas absolument nécessaire.
 
 Remarque: il y a le script autorun.sh qui fait tout cela tout seul si il
 est bien configuré. Je l'utilise personnellement.
