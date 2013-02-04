@@ -80,10 +80,6 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 
 	Requiert Python 2.x récent.
 
-6. cd xml-server; python messagiel.py	[serveur messagiel (slochepop)]
-	Même remarques qu'au numéro 5, en ajoutant la remarque
-	que le serveur messagiel n'est pas absolument nécessaire.
-
 Remarque: il y a le script autorun.sh qui fait tout cela tout seul si il
 est bien configuré. Je l'utilise personnellement.
 

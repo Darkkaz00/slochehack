@@ -11,6 +11,15 @@ import time
 
 MAX_USERS = 1024
 
+# tableaux et fonctions messagiel
+unames_messagiel = ["" for i in range(MAX_USERS)]
+
+def find_free_id_messagiel():
+	for i in range(MAX_USERS):
+		if unames_messagiel[i] == "":
+			return i
+	return -1
+
 # salles prive'es ...
 id_salle_libre = [True for i in range(1000)]
 nom_salle = ["" for i in range(1000)]
@@ -110,6 +119,7 @@ user_y = [0 for i in range(MAX_USERS)]
 
 # broadcast message to all message-queues
 def broadcast(msg, room):
+	print "broad %s to %d" % (msg, room)
 	for i in range(MAX_USERS):
 		if unames[i] != "" and i in rpeople[room]:
 			mq[i].append(msg)
@@ -593,17 +603,65 @@ def serve_client(conn, addr, id):
 	leave_room(room, id)
 	unames[id] = ""
 
+#####################################################################################
+
+def serve_client_messagiel(conn, addr, id):
+	client_host, client_port = addr
+	print "messagiel: conn. %s:%s, lancement thread %d" % (client_host, client_port, id)
+	conn.sendall('<MESSAGE TYPE="ami"></MESSAGE>' + '\0')
+
+	while True:
+		ready = select.select([conn], [], [], 0.01)
+		if ready[0]:
+			data = conn.recv(1024)
+			print "%d: %s" % (id, data)
+			if not data:
+				break
+
+	unames_messagiel[id] = ""
+	print "messagiel: fermeture conn. %s:%s" % (client_host, client_port)
+	conn.close()
+
+#####################################################################################
+
+# brancher serveur chat et serveur messagiel
+
 host = ''
 port = 9100
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((host, port))
 id = 0
 
-s.listen(5)
+host_m = ''
+port_m = 9200
+s_m = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s_m.bind((host_m, port_m))
+id_m = 0
 
-while 1:
-	conn, addr = s.accept()
-	id = find_free_id()
-	if id >= 0:
-		print "New thread with id %d" % id
-		thread.start_new_thread(serve_client, (conn, addr, id))
+# on gere les deux sous-serveurs en parallele
+
+def thread_chat(s, derp):
+	s.listen(5)
+	while 1:
+		conn, addr = s.accept()
+		id = find_free_id()
+		if id >= 0:
+			print "New thread with id %d" % id
+			thread.start_new_thread(serve_client, (conn, addr, id))
+
+def thread_messagiel(s_m, derp):
+	s_m.listen(5)
+	while 1:
+		conn, addr = s_m.accept()
+		id_m = find_free_id_messagiel()
+		if id_m >= 0:
+			thread.start_new_thread(serve_client_messagiel, (conn, addr, id_m))
+		else:
+			print "plus de place !!!"
+
+thread.start_new_thread(thread_chat, (s, 0))
+thread.start_new_thread(thread_messagiel, (s_m, 0))
+
+while True:
+	pass
+
