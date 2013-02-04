@@ -119,7 +119,6 @@ user_y = [0 for i in range(MAX_USERS)]
 
 # broadcast message to all message-queues
 def broadcast(msg, room):
-	print "broad %s to %d" % (msg, room)
 	for i in range(MAX_USERS):
 		if unames[i] != "" and i in rpeople[room]:
 			mq[i].append(msg)
