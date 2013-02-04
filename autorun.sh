@@ -24,3 +24,4 @@ rm localhost.txt
 $TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x bash -c "cd server; ./run; bash" &
 $TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x bash -c "cd logiciels; cd flashpolicyd_v0.6; sudo python Standalone/flashpolicyd.py --file=../../custom-policy.xml; bash" &
 $TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x bash -c "cd xml-server; echo xmlserv; python $XMLSERV; bash" &
+$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x bash -c "cd xml-server; echo messagiel; python messagiel.py; bash" &
