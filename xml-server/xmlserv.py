@@ -8,6 +8,7 @@ import random
 from roommove import *
 from getuserapi import *
 import time
+import amis_api
 
 MAX_USERS = 1024
 
@@ -626,27 +627,47 @@ def serve_client_messagiel(conn, addr, id):
 			print "deja branche !!!! fermeture de la connection"
 			conn.close()
 			return
+
+	# Aller chercher la liste d'amis de l'usager
+	mes_amis = amis_api.liste_amis(username)
+	rep_liste = '<MESSAGE TYPE="ami">'
+	for ami in mes_amis:
+		# L'ami est-il en ligne ?
+		if chiffre_user(ami):
+			sta = 1		# oui
+		else:
+			sta = 0		# non
+		rep_liste += '<AMI STATUS="%d">%s</AMI>' % (sta, ami)
+	rep_liste += '</MESSAGE>'
+	conn.sendall(rep_liste + '\0')
+
 	unames_messagiel[id] = username
-
-	# Aller chercher la liste d'amis de l'usager, puis l'envoyer
-	# dans ce format:
-	# <MESSAGE TYPE="ami">
-	# 	<AMI STATUS="1">donald</AMI>	(en ligne)
-	# 	<AMI STATUS="0">paul</AMI>		(hors ligne)
-	# </MESSAGE>
-
-	# if chiffre_user("bob"):
-	#	eh bien bob est en ligne
-	# else:
-	#   eh bien bob est pas en ligne
 
 	while True:
 		ready = select.select([conn], [], [], 0.01)
 		if ready[0]:
 			data = conn.recv(1024)
-			print "%d: %s" % (id, data)
+			print "messagiel: %s: %s" % (username, data)
+			# Connection morte
 			if not data:
 				break
+
+			# Requete ami
+			if data.find('<OPTION>request</OPTION>') > 0:
+				to = data[data.find("<TO>")+4:data.find("</TO>")]
+				text = data[data.find("<TEXT>")+6:data.find("</TEXT>")]
+				print "messagiel: %s req ami %s: '%s'" % (username, to, text)
+
+			# Supprimer ami
+			if data.find('<OPTION>supprimer</OPTION>') > 0:
+				to = data[data.find("<TO>")+4:data.find("</TO>")]
+				print "messagiel: %s supprimer ami %s" % (username, to)
+
+			# Message slochepop
+			if not (data.find('<OPTION>') > 0) and data.find('TYPE="send"'):
+				to = data[data.find("<TO>")+4:data.find("</TO>")]
+				text = data[data.find("<TEXT>")+6:data.find("</TEXT>")]
+				print "messagiel: %s message a %s: '%s'" % (username, to, text)
 
 	unames_messagiel[id] = ""
 	print "messagiel: fermeture conn. %s:%s" % (client_host, client_port)
