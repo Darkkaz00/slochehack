@@ -607,7 +607,38 @@ def serve_client(conn, addr, id):
 def serve_client_messagiel(conn, addr, id):
 	client_host, client_port = addr
 	print "messagiel: conn. %s:%s, lancement thread %d" % (client_host, client_port, id)
-	conn.sendall('<MESSAGE TYPE="ami"></MESSAGE>' + '\0')
+
+	# Demander au client sloche quel est le nom de l'utilisateur
+	# qui vient de se brancher au messagiel.
+	conn.sendall('<MESSAGE TYPE="set"><HR FROM="messagiel">abcdef</HR></MESSAGE>' + '\0')
+
+	# S'attendre a une reponse dans le genre de:
+	# <MESSAGE TYPE="enter" FROM="Client"><NOM>laplante</NOM><HR>24248</HR></MESSAGE>
+	rep = conn.recv(1024)
+	if rep.find('TYPE="enter"') < 0:
+		print "Expected enter message from %s:%s; got %s. Closing connection." % (client_host, client_port, rep)
+		conn.close()
+		return
+	username = rep[rep.find("<NOM>")+5:rep.find("</NOM>")]
+	print "messagiel: %s:%s -> usager %s" % (client_host, client_port, username)
+	for i in range(MAX_USERS):
+		if unames_messagiel[id] == username:
+			print "deja branche !!!! fermeture de la connection"
+			conn.close()
+			return
+	unames_messagiel[id] = username
+
+	# Aller chercher la liste d'amis de l'usager, puis l'envoyer
+	# dans ce format:
+	# <MESSAGE TYPE="ami">
+	# 	<AMI STATUS="1">donald</AMI>	(en ligne)
+	# 	<AMI STATUS="0">paul</AMI>		(hors ligne)
+	# </MESSAGE>
+
+	# if chiffre_user("bob"):
+	#	eh bien bob est en ligne
+	# else:
+	#   eh bien bob est pas en ligne
 
 	while True:
 		ready = select.select([conn], [], [], 0.01)
@@ -637,9 +668,14 @@ s_m = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s_m.bind((host_m, port_m))
 id_m = 0
 
+check = 0
+
 # on gere les deux sous-serveurs en parallele
 
 def thread_chat(s, derp):
+	global check
+	print "chat ok"
+	check += 1
 	s.listen(5)
 	while 1:
 		conn, addr = s.accept()
@@ -649,6 +685,9 @@ def thread_chat(s, derp):
 			thread.start_new_thread(serve_client, (conn, addr, id))
 
 def thread_messagiel(s_m, derp):
+	global check
+	print "messagiel ok"
+	check += 1
 	s_m.listen(5)
 	while 1:
 		conn, addr = s_m.accept()
@@ -658,8 +697,14 @@ def thread_messagiel(s_m, derp):
 		else:
 			print "plus de place !!!"
 
+print "SVP ATTENDRE UN INSTANT AVANT D'UTILISER LE CHAT..."
 thread.start_new_thread(thread_chat, (s, 0))
+time.sleep(1)
 thread.start_new_thread(thread_messagiel, (s_m, 0))
+while check != 2:
+	pass
+print "checks ok"
+print "SERVEUR PRET !"
 
 while True:
 	pass
