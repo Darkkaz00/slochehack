@@ -219,21 +219,21 @@ def serve_client(conn, addr, id):
 	mq[id] = []
 
 	client_host, client_port = addr
-	print "Got connection from %s:%s. Starting thread %d" % (client_host, client_port, id)
+	print "xmlserv: branchement depuis. %s:%s. lancement du thread %d" % (client_host, client_port, id)
 
 	conn.sendall("<MESSAGE TYPE=\"ACK\"></MESSAGE>" + '\0')
-	print "Acknowledged connection to %s:%s" % (client_host, client_port)
+	print "xmlserv: ACK %s:%s" % (client_host, client_port)
 
 	# Initial room request
 	# <MESSAGE TYPE="RR" FROM="laplante"><RID>23</RID><DI>droite</DI><NOM>laplante</NOM><GUEST>false</GUEST></MESSAGE>
 	req = conn.recv(1024)
 	if req.find('TYPE="RR"') < 0:
-		print "Expected room request from %s:%s; got %s. Closing connection." % (client_host, client_port, req)
+		print "xmlserv: expected room request from %s:%s; got %s. Closing connection." % (client_host, client_port, req)
 		conn.close()
 		return
 	username = req[req.find("<NOM>")+5:req.find("</NOM>")]
 	if username in unames:
-		print "%s:%s: connection with already logged-in username %s refused" % (client_host, client_port, username)
+		print "xmlserv: %s:%s: connection with already logged-in username %s refused" % (client_host, client_port, username)
 		conn.close()
 		return
 
@@ -608,7 +608,7 @@ def serve_client(conn, addr, id):
 			print "xmlchat: %s: envoi depuis queue: %s" % (username, mq[id][0])
 			mq[id] = mq[id][1:]
 
-	print "closed connection to %s:%s" % (client_host, client_port)
+	print "xmlserv: fermeture conn. %s:%s" % (client_host, client_port)
 	conn.close()
 
 	# Avertir sortie aux amis sur messagiel
@@ -653,10 +653,6 @@ def serve_client_messagiel(conn, addr, id):
 			return
 
 	# Aller chercher la liste d'amis de l'usager
-	# REMARQUE: sur le site d'origine le client
-	# se chargeait de cette operation en utilisant
-	# des donnees fournies via HTTP, et ce lorsque
-	# le message enter lui etait envoye.
 	mes_amis = amis_api.liste_amis(username)
 	rep_liste = '<MESSAGE TYPE="ami">'
 	for ami in mes_amis:
@@ -770,6 +766,18 @@ def serve_client_messagiel(conn, addr, id):
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
 				text = data[data.find("<TEXT>")+6:data.find("</TEXT>")]
 				print "messagiel: %s message a %s: '%s'" % (username, to, text)
+
+				if chiffre_user(to) != None:
+					# Ajoute un nouveau message slochepop avec une
+					# petite bulle qu'il faut cliquer pour le lire.
+					relai = '<MESSAGE TYPE="send">'
+					relai += '<TEXT>%s</TEXT>' % text
+					relai += '<FROM>%s</FROM>' % username
+					relai += '</MESSAGE>'
+					mq[chiffre_user(to)].append(relai)
+				else:
+					print "messagiel: TODO: stockage sloche-pops !"
+
 
 	unames_messagiel[id] = ""
 	print "messagiel: fermeture conn. %s:%s" % (client_host, client_port)

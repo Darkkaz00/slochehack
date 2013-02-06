@@ -2,6 +2,7 @@
 
 import sys
 import urlparse
+import amis_api
 import os
 
 dat = sys.argv[1]
@@ -41,7 +42,18 @@ try:
 		fiche += '&commentaire=%s&&corpscouleur=%s&' % (comm, cc)
 		fiche += '&hcorps=2& &corps='+c+'& &sn_mdate=2006-05-20%2017%3A28%3A51& &htete=57&'
 		fiche += '&nblogin=15& &lastlogindate=2006%2F05%2F28%2011%3A18%3A52& &xml=true& &ageok=false& &tete='+t+'& &pied='+p+'&'
-		fiche += ' &status=actif& &hpied=2& &lastlogintime=1148829532& &sn_cdate=2006-05-20%2009%3A29%3A28& &boqakiri=givonefe& &kickout=0& &nbami=1& &ami0=narrateur&'
+		fiche += ' &status=actif& &hpied=2& &lastlogintime=1148829532& &sn_cdate=2006-05-20%2009%3A29%3A28& &boqakiri=givonefe& &kickout=0& '
+
+
+		# Aller chercher la liste d'amis de l'usager
+		mes_amis = amis_api.liste_amis(username)
+		data_amis = '&nbami=%d& ' % len(mes_amis)
+		index = 0
+		for ami in mes_amis:
+			data_amis += '&ami%d=%s& ' % (index, ami)
+			index += 1
+		fiche += data_amis
+
 		fiche += ' &resultat=ok& '
 		fiche += ' &guest=false& '
 		#fiche += ' &pouvoir=11,13,41& '
