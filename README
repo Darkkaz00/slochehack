@@ -78,6 +78,9 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	On peut aussi utiliser pypy si on veut un peu
 	plus de vitesse.
 
+	Remarque: ce serveur gère aussi le système d'amis et de
+	messagiel (le "sloche-pop").
+
 	Requiert Python 2.x récent.
 
 Remarque: il y a le script autorun.sh qui fait tout cela tout seul si il
@@ -91,7 +94,6 @@ Il y a des choses mineures absentes, par exemple:
 	- système original d'achat et lancement de pouvoirs
 	- recherche d'utilisateurs
 	- nouvelles
-	- sloche-pop
 
 Comptes spéciaux
 	nom		mot de passe	disponibilité
