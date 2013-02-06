@@ -745,7 +745,17 @@ def serve_client_messagiel(conn, addr, id):
 			# Supprimer ami
 			if data.find('<OPTION>supprimer</OPTION>') > 0:
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
-				print "messagiel: %s supprimer ami %s" % (username, to)
+				print "messagiel: %s supprime ami %s" % (username, to)
+
+				# Ce relai affiche le bon message mais ne semble
+				# pas toujours supprimer l'ami comme il faut...
+				relai = '<MESSAGE TYPE="send">'
+				relai += '<TEXT OPTION="supprimer">%s</TEXT>' % username
+				relai += '<FROM>%s</FROM>' % username
+				relai += '</MESSAGE>'
+				id_dest = chiffre_user(to)
+				if id_dest != None:
+					mq[id_dest].append(relai)
 
 			# Message slochepop
 			if not (data.find('<OPTION>') > 0) and data.find('TYPE="send"') > 0:
