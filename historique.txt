@@ -1,0 +1,55 @@
+Historique des versions du logiciel "slochehack"
+
+Version 1.4 - 6 février 2013
+- Réimplémentation assez complète du "sloche pop" (amis et messages privés)
+  pour les clients 2003 et 2004-2007
+- Plein fonctionnement original du personnage "Docteur Liposuccion"
+- Permettre aux propriétaires de salles privées l'accès direct à celles-ci
+- Meilleurs déplacements entre salles (particulièrement dans le club VIP)
+- Réglage d'une bogue rare et subtil dans le script autorun
+- Ajout de la documentation technique (format HTML) dans l'archive slochehack,
+  laquelle a été mise à jour.
+- Ajout de l'historique des versions dans l'archive slochehack, laquelle a
+  été mise à jour.
+
+Version 1.3 - 13 janvier 2013
+
+- Patchage automatique d'un bogue par rapport a Réal dans le client 2003
+- Salle privées liposuccion (clients 2006 et 2007)
+- Réglé quelques fautes de frappe dans la documentation
+
+Version 1.2 - 11 janvier 2013
+
+- Ne comprend pas les graphismes etc., par souci de droits d'auteur
+- Première version disponible publiquement sur Internet
+- Création du site web slochehack
+- Mise à jour de la documentation
+- Ajout du fichier "FICHIERS-EXTERNES-REQUIS" qui vous dit quoi d'autre ça
+  prend.
+
+Version 1.1 améliorée - 4 septembre 2012
+
+- Commande /nains qui provoque le bogue des nains rouges dans la version 2003
+- Réglé des bogues par rapport à réal dans le client version 2003
+
+Version 1.1 - 1er septembre 2012
+
+- Relai de chat (serveur XML) beaucoup plus rapide
+- Ma page / inscriptions marchent pour client 2003-2004
+- Interface TCP/IP web par script netcat remplacée par un script Python
+- Connexions web gérées en parallèle plutôt qu'en série
+- Réglé deux-trois bogues, dont celui des fiches qui n'apparaissaient pas.
+- Presque tous les pouvoirs dans la version 2004.
+- Tous les pouvoirs dans la version 2006/2007.
+- Serveur web gère les icônes de boutons de pouvoirs
+- Script autorun.sh qui part tout automatiquement (si bien configuré !)
+
+Première bêta - 17 août 2012
+
+- Fonctionnement raisonnable des clients 2003, 2004, 2007
+- Comptes spéciaux doclipo, laplante inclus
+- Compte spécial pour tester les codes de pouvoirs
+- Serveur web et base-de-données vites-faits-maison
+- Première version distribuée à un bêta-testeur
+
+Début approximatif du projet: 19 mai 2012
