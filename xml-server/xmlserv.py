@@ -9,6 +9,7 @@ from roommove import *
 from getuserapi import *
 import time
 import amis_api
+import stockage_messagiel_api
 
 MAX_USERS = 1024
 
@@ -629,6 +630,17 @@ def serve_client(conn, addr, id):
 
 #####################################################################################
 
+def envoi_ou_stockage(to, relai):
+	if chiffre_dans_messagiel(to) != None:
+		# Envoyer le message directement
+		print "messagiel: envoi direct a %s de '%s'" % (to, relai)
+		queue_messagiel[chiffre_dans_messagiel(to)].append(relai)
+	else:
+		# Stocker le message et l'envoyer lorsque l'usager
+		# se branchera au slochepop
+		print "messagiel: stockage pour %s de '%s'" % (to, relai)
+		stockage_messagiel_api.ajouter(to, relai)
+
 def serve_client_messagiel(conn, addr, id):
 	# Ajoute un nouveau message slochepop avec une petite
 	# bulle. Texte: beurre. Envoyeur: $qui
@@ -674,6 +686,13 @@ def serve_client_messagiel(conn, addr, id):
 	rep_liste += '</MESSAGE>'
 	conn.sendall(rep_liste + '\0')
 
+	# S'occuper des vieux messages...
+	# Par "messages", j'entends messages XML qui peuvent avoir
+	# plusieurs fonctions.
+	vieux_messages = stockage_messagiel_api.obtenir_vider_stockage(username)
+	for m in vieux_messages:
+		conn.sendall(m + '\0')
+
 	unames_messagiel[id] = username
 
 	while True:
@@ -699,9 +718,7 @@ def serve_client_messagiel(conn, addr, id):
 				relai += '<FROM>%s</FROM>' % username
 				relai += '</MESSAGE>'
 				id_dest = chiffre_user(to)
-				if id_dest != None:
-					print "envoi relai requete ami"
-					mq[id_dest].append(relai)
+				envoi_ou_stockage(to, relai)
 
 			# Ami autorise.
 			# <MESSAGE TYPE="send"><NOM>donald</NOM><TO>laplante</TO><TEXT></TEXT>
@@ -727,10 +744,7 @@ def serve_client_messagiel(conn, addr, id):
 				relai += '<TEXT OPTION="autoriser">%s</TEXT>' % nom
 				relai += '<FROM>%s</FROM>' % nom
 				relai += '</MESSAGE>'
-
-				id_dest = chiffre_user(to)
-				if id_dest != None:
-					mq[id_dest].append(relai)
+				envoi_ou_stockage(to, relai)
 
 			# Relai ami
 			# <MESSAGE TYPE="ami" FROM="Client"><NOM>donald</NOM><AMI>laplante</AMI></MESSAGE>
@@ -742,10 +756,7 @@ def serve_client_messagiel(conn, addr, id):
 				relai = '<MESSAGE TYPE="ami">'
 				relai += '<AMI STATUS="1">%s</AMI>' % ami
 				relai += '</MESSAGE>'
-				
-				id_dest = chiffre_user(nom)
-				if id_dest != None:
-					mq[id_dest].append(relai)
+				envoi_ou_stockage(nom, relai)
 
 			# Supprimer ami
 			if data.find('<OPTION>supprimer</OPTION>') > 0:
@@ -757,9 +768,7 @@ def serve_client_messagiel(conn, addr, id):
 				relai += '<TEXT OPTION="supprimer">%s</TEXT>' % username
 				relai += '<FROM>%s</FROM>' % username
 				relai += '</MESSAGE>'
-				id_dest = chiffre_user(to)
-				if id_dest != None:
-					mq[id_dest].append(relai)
+				envoi_ou_stockage(to, relai)
 
 				# (de-)stocker cela dans la BDD
 				mes_amis = amis_api.liste_amis(username)
@@ -776,23 +785,19 @@ def serve_client_messagiel(conn, addr, id):
 				text = data[data.find("<TEXT>")+6:data.find("</TEXT>")]
 				print "messagiel: %s message a %s: '%s'" % (username, to, text)
 
-				if chiffre_dans_messagiel(to) != None:
-					# Ajoute un nouveau message slochepop avec une
-					# petite bulle qu'il faut cliquer pour le lire.
-					relai = '<MESSAGE TYPE="send">'
-					relai += '<TEXT>%s</TEXT>' % text
-					relai += '<FROM>%s</FROM>' % username
-					relai += '</MESSAGE>'
-					queue_messagiel[chiffre_dans_messagiel(to)].append(relai)
-				else:
-					print "messagiel: TODO: stockage sloche-pops !"
+				# Ajoute un nouveau message slochepop avec une
+				# petite bulle qu'il faut cliquer pour le lire.
+				relai = '<MESSAGE TYPE="send">'
+				relai += '<TEXT>%s</TEXT>' % text
+				relai += '<FROM>%s</FROM>' % username
+				relai += '</MESSAGE>'
+				envoi_ou_stockage(to, relai)
 
-		# send off queued messages
+		# Messages en file (recus d'un autre module ou thread etc.)
 		while len(queue_messagiel[id]):
 			conn.sendall(queue_messagiel[id][0].strip() + '\0')
 			print "messagiel: %s: envoi depuis queue: %s" % (username, queue_messagiel[id][0])
 			queue_messagiel[id] = queue_messagiel[id][1:]
-
 
 	unames_messagiel[id] = ""
 	print "messagiel: fermeture conn. %s:%s" % (client_host, client_port)

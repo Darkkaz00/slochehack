@@ -1,0 +1,4 @@
+Ce fichier ne sert qu'à faire détecter par git la directoire dans laquelle
+il est. Merci.
+
+
