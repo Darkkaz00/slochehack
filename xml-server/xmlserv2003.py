@@ -14,8 +14,27 @@ import select
 import random
 from roommove import *
 from getuserapi import *
+import time
+import amis_api
+import stockage_messagiel_api
 
 MAX_USERS = 1024
+
+# tableaux et fonctions messagiel
+unames_messagiel = ["" for i in range(MAX_USERS)]
+queue_messagiel = [[] for i in range(MAX_USERS)]
+
+def chiffre_dans_messagiel(unam):
+	for i in range(MAX_USERS):
+		if unames_messagiel[i] == unam:
+			return i
+	return None
+
+def find_free_id_messagiel():
+	for i in range(MAX_USERS):
+		if unames_messagiel[i] == "":
+			return i
+	return -1
 
 true = True
 false = False
@@ -28,6 +47,12 @@ unames = ["" for i in range(MAX_USERS)]
 
 # message queues
 mq = [[] for i in range(MAX_USERS)]
+
+def chiffre_user(unam):
+	for i in range(MAX_USERS):
+		if unames[i] == unam:
+			return i
+	return None
 
 user_x = [0 for i in range(MAX_USERS)]
 user_y = [0 for i in range(MAX_USERS)]
@@ -114,6 +139,13 @@ def serve_client(conn, addr, id):
 		print "%s:%s: connection with already logged-in username %s refused" % (client_host, client_port, username)
 		conn.close()
 		return
+
+	# Avertir entree aux amis sur messagiel
+	for i in range(MAX_USERS):
+		if i != id:
+			relai = '<MESSAGE TYPE="enter"><USERNAME>%s</USERNAME></MESSAGE>' % username
+			mq[i].append(relai)
+
 	unames[id] = username
 	room = int(req[req.find("<ROOMID>")+8:req.find("</ROOMID>")])
 
@@ -315,9 +347,186 @@ def serve_client(conn, addr, id):
 	print "closed connection to %s:%s" % (client_host, client_port)
 	conn.close()
 
+	# Avertir sortie aux amis sur messagiel
+	for i in range(MAX_USERS):
+		relai = '<MESSAGE TYPE="quit"><USERNAME>%s</USERNAME></MESSAGE>' % username
+		mq[i].append(relai)
+
 	rpeople[room].remove(id)
 	leave_room(room, id)
 	unames[id] = ""
+
+#####################################################################################
+
+def envoi_ou_stockage(to, relai):
+	if chiffre_dans_messagiel(to) != None:
+		# Envoyer le message directement
+		print "messagiel: envoi direct a %s de '%s'" % (to, relai)
+		queue_messagiel[chiffre_dans_messagiel(to)].append(relai)
+	else:
+		# Stocker le message et l'envoyer lorsque l'usager
+		# se branchera au slochepop
+		print "messagiel: stockage pour %s de '%s'" % (to, relai)
+		stockage_messagiel_api.ajouter(to, relai)
+
+def serve_client_messagiel(conn, addr, id):
+	client_host, client_port = addr
+	print "messagiel: conn. %s:%s, lancement thread %d" % (client_host, client_port, id)
+
+	queue_messagiel[id] = []
+
+	# Demander au client sloche quel est le nom de l'utilisateur
+	# qui vient de se brancher au messagiel.
+	conn.sendall('<MESSAGE TYPE="set"><HR FROM="messagiel">abcdef</HR></MESSAGE>' + '\0')
+
+	# S'attendre a une reponse dans le genre de:
+	# <MESSAGE TYPE="enter" FROM="Client"><NOM>laplante</NOM><HR>24248</HR></MESSAGE>
+	rep = conn.recv(1024)
+	if rep.find('TYPE="enter"') < 0:
+		print "Expected enter message from %s:%s; got %s. Closing connection." % (client_host, client_port, rep)
+		conn.close()
+		return
+	username = rep[rep.find("<NOM>")+5:rep.find("</NOM>")]
+	print "messagiel: %s:%s -> usager %s" % (client_host, client_port, username)
+	for i in range(MAX_USERS):
+		if unames_messagiel[id] == username:
+			print "deja branche !!!! fermeture de la connection"
+			conn.close()
+			return
+
+	# Aller chercher la liste d'amis de l'usager
+	mes_amis = amis_api.liste_amis(username)
+	rep_liste = '<MESSAGE TYPE="ami">'
+	for ami in mes_amis:
+		# L'ami est-il en ligne ?
+		if chiffre_user(ami) != None:
+			sta = 1		# oui
+		else:
+			sta = 0		# non
+		rep_liste += '<AMI STATUS="%d">%s</AMI>' % (sta, ami)
+	rep_liste += '</MESSAGE>'
+	conn.sendall(rep_liste + '\0')
+
+	# S'occuper des vieux messages...
+	# Par "messages", j'entends messages XML qui peuvent avoir
+	# plusieurs fonctions.
+	vieux_messages = stockage_messagiel_api.obtenir_vider_stockage(username)
+	for m in vieux_messages:
+		conn.sendall(m + '\0')
+
+	unames_messagiel[id] = username
+
+	while True:
+		ready = select.select([conn], [], [], 0.01)
+		if ready[0]:
+			data = conn.recv(1024)
+
+			# Connection morte
+			if not data:
+				break
+			else:
+				print "messagiel: %s: %s" % (username, data)
+
+			# Requete ami
+			if data.find('<OPTION>request</OPTION>') > 0:
+				to = data[data.find("<TO>")+4:data.find("</TO>")]
+				text = data[data.find("<TEXT>")+6:data.find("</TEXT>")]
+				print "messagiel: %s req ami %s: '%s'" % (username, to, text)
+
+				# relai. marche sur 2007.
+				relai = '<MESSAGE TYPE="send">'
+				relai += '<TEXT OPTION="request">%s</TEXT>' % text
+				relai += '<FROM>%s</FROM>' % username
+				relai += '</MESSAGE>'
+				id_dest = chiffre_user(to)
+				envoi_ou_stockage(to, relai)
+
+			# Ami autorise.
+			# <MESSAGE TYPE="send"><NOM>donald</NOM><TO>laplante</TO><TEXT></TEXT>
+			# <OPTION>autoriser</OPTION></MESSAGE>
+			if data.find('<OPTION>autoriser</OPTION>') > 0:
+				nom = data[data.find("<NOM>")+5:data.find("</NOM>")]
+				to = data[data.find("<TO>")+4:data.find("</TO>")]
+				print "%s autorise %s a etre son ami" % (nom, to)
+
+				# Stocker nouvel ami dans la BDD
+				if nom == username:
+					mes_amis = amis_api.liste_amis(nom)
+					mes_amis.append(to)
+					amis_api.stocker_liste_amis(nom, mes_amis)
+
+					ses_amis = amis_api.liste_amis(to)
+					ses_amis.append(nom)
+					amis_api.stocker_liste_amis(to, ses_amis)						
+
+				# Envoie la bulle "ami accepte" mais n'ajoute pas
+				# l'ami a la liste...
+				relai = '<MESSAGE TYPE="send">'
+				relai += '<TEXT OPTION="autoriser">%s</TEXT>' % nom
+				relai += '<FROM>%s</FROM>' % nom
+				relai += '</MESSAGE>'
+				envoi_ou_stockage(to, relai)
+
+			# Relai ami
+			# <MESSAGE TYPE="ami" FROM="Client"><NOM>donald</NOM><AMI>laplante</AMI></MESSAGE>
+			if data.find('TYPE="ami"') > 0:
+				print "relai ami..."
+				nom = data[data.find("<NOM>")+5:data.find("</NOM>")]
+				ami = data[data.find("<AMI>")+5:data.find("</AMI>")]
+
+				relai = '<MESSAGE TYPE="ami">'
+				relai += '<AMI STATUS="1">%s</AMI>' % ami
+				relai += '</MESSAGE>'
+				envoi_ou_stockage(nom, relai)
+
+			# Supprimer ami
+			if data.find('<OPTION>supprimer</OPTION>') > 0:
+				to = data[data.find("<TO>")+4:data.find("</TO>")]
+				print "messagiel: %s supprime ami %s" % (username, to)
+
+				# Ce relai marche sur le client 2007
+				relai = '<MESSAGE TYPE="send">'
+				relai += '<TEXT OPTION="supprimer">%s</TEXT>' % username
+				relai += '<FROM>%s</FROM>' % username
+				relai += '</MESSAGE>'
+				envoi_ou_stockage(to, relai)
+
+				# (de-)stocker cela dans la BDD
+				mes_amis = amis_api.liste_amis(username)
+				mes_amis.remove(to)
+				amis_api.stocker_liste_amis(username, mes_amis)
+
+				ses_amis = amis_api.liste_amis(to)
+				ses_amis.remove(username)
+				amis_api.stocker_liste_amis(to, ses_amis)		
+
+			# Message slochepop
+			if not (data.find('<OPTION>') > 0) and data.find('TYPE="send"') > 0:
+				to = data[data.find("<TO>")+4:data.find("</TO>")]
+				text = data[data.find("<TEXT>")+6:data.find("</TEXT>")]
+				print "messagiel: %s message a %s: '%s'" % (username, to, text)
+
+				# Ajoute un nouveau message slochepop avec une
+				# petite bulle qu'il faut cliquer pour le lire.
+				relai = '<MESSAGE TYPE="send">'
+				relai += '<TEXT>%s</TEXT>' % text
+				relai += '<FROM>%s</FROM>' % username
+				relai += '</MESSAGE>'
+				envoi_ou_stockage(to, relai)
+
+		# Messages en file (recus d'un autre module ou thread etc.)
+		while len(queue_messagiel[id]):
+			conn.sendall(queue_messagiel[id][0].strip() + '\0')
+			print "messagiel: %s: envoi depuis queue: %s" % (username, queue_messagiel[id][0])
+			queue_messagiel[id] = queue_messagiel[id][1:]
+
+	unames_messagiel[id] = ""
+	print "messagiel: fermeture conn. %s:%s" % (client_host, client_port)
+	conn.close()
+
+#####################################################################################
+
+# brancher serveur chat et serveur messagiel
 
 host = ''
 port = 9100
@@ -325,11 +534,50 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((host, port))
 id = 0
 
-s.listen(5)
+host_m = ''
+port_m = 9200
+s_m = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s_m.bind((host_m, port_m))
+id_m = 0
 
-while 1:
-	conn, addr = s.accept()
-	id = find_free_id()
-	if id >= 0:
-		print "New thread with id %d" % id
-		thread.start_new_thread(serve_client, (conn, addr, id))
+check = 0
+
+# on gere les deux sous-serveurs en parallele
+
+def thread_chat(s, derp):
+	global check
+	print "chat ok"
+	check += 1
+	s.listen(5)
+	while 1:
+		conn, addr = s.accept()
+		id = find_free_id()
+		if id >= 0:
+			print "New thread with id %d" % id
+			thread.start_new_thread(serve_client, (conn, addr, id))
+
+def thread_messagiel(s_m, derp):
+	global check
+	print "messagiel ok"
+	check += 1
+	s_m.listen(5)
+	while 1:
+		conn, addr = s_m.accept()
+		id_m = find_free_id_messagiel()
+		if id_m >= 0:
+			thread.start_new_thread(serve_client_messagiel, (conn, addr, id_m))
+		else:
+			print "plus de place !!!"
+
+print "SVP ATTENDRE UN INSTANT AVANT D'UTILISER LE CHAT..."
+thread.start_new_thread(thread_chat, (s, 0))
+time.sleep(1)
+thread.start_new_thread(thread_messagiel, (s_m, 0))
+while check != 2:
+	pass
+print "checks ok"
+print "SERVEUR PRET !"
+
+while True:
+	pass
+

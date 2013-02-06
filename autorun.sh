@@ -8,7 +8,7 @@
 TERMINAL_GRAPHIQUE=mate-terminal
 
 # Fichier client à utiliser.
-CLIENT=fichiers-client/sloche2007.swf
+CLIENT=fichiers-client/sloche2004.swf
 
 # Attention de changer XMLSERV à xmlserv2003.py si on choisit
 # le client 2003 !
