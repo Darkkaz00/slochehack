@@ -747,8 +747,7 @@ def serve_client_messagiel(conn, addr, id):
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
 				print "messagiel: %s supprime ami %s" % (username, to)
 
-				# Ce relai affiche le bon message mais ne semble
-				# pas toujours supprimer l'ami comme il faut...
+				# Ce relai marche sur le client 2007
 				relai = '<MESSAGE TYPE="send">'
 				relai += '<TEXT OPTION="supprimer">%s</TEXT>' % username
 				relai += '<FROM>%s</FROM>' % username
@@ -756,6 +755,15 @@ def serve_client_messagiel(conn, addr, id):
 				id_dest = chiffre_user(to)
 				if id_dest != None:
 					mq[id_dest].append(relai)
+
+				# (de-)stocker cela dans la BDD
+				mes_amis = amis_api.liste_amis(username)
+				mes_amis.remove(to)
+				amis_api.stocker_liste_amis(username, mes_amis)
+
+				ses_amis = amis_api.liste_amis(to)
+				ses_amis.remove(username)
+				amis_api.stocker_liste_amis(to, ses_amis)		
 
 			# Message slochepop
 			if not (data.find('<OPTION>') > 0) and data.find('TYPE="send"') > 0:
