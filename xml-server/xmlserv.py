@@ -659,7 +659,7 @@ def serve_client_messagiel(conn, addr, id):
 		# Un message est envoye lorsqu'une deconnexion
 		# de quelque usager que ce soit a lieu.
 		if len(queue_messagiel[id]) > 0:
-			qui = queue_messagiel[i].pop()
+			qui = queue_messagiel[id].pop()
 			if qui in mes_amis:
 				relai = '<MESSAGE TYPE="ami">'
 				relai += '<AMI STATUS="0">%s</AMI>' % qui
