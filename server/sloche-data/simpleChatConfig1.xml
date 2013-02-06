@@ -1,1 +1,1 @@
-<?xml version="1.0"?><config><systemEnabled>true</systemEnabled><startMsg><![CDATA[Unity SimpleChat v1.0.2]]></startMsg><server>192.168.2.3</server><port>9200</port><logLevel>2</logLevel></config>
+<?xml version="1.0"?><config><systemEnabled>true</systemEnabled><startMsg><![CDATA[Unity SimpleChat v1.0.2]]></startMsg><server>192.168.0.102</server><port>9200</port><logLevel>2</logLevel></config>

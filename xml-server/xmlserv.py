@@ -670,8 +670,7 @@ def serve_client_messagiel(conn, addr, id):
 
 			# Ami autorise.
 			# <MESSAGE TYPE="send"><NOM>donald</NOM><TO>laplante</TO><TEXT></TEXT>
-			# <OPTION>autoriser</OPTION></MESSAGE><MESSAGE TYPE="ami" 
-			# FROM="Client"><NOM>donald</NOM><AMI>laplante</AMI></MESSAGE>
+			# <OPTION>autoriser</OPTION></MESSAGE>
 			if data.find('<OPTION>autoriser</OPTION>') > 0:
 				nom = data[data.find("<NOM>")+5:data.find("</NOM>")]
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
@@ -685,6 +684,21 @@ def serve_client_messagiel(conn, addr, id):
 				relai += '</MESSAGE>'
 
 				id_dest = chiffre_user(to)
+				if id_dest != None:
+					mq[id_dest].append(relai)
+
+			# Relai ami
+			# <MESSAGE TYPE="ami" FROM="Client"><NOM>donald</NOM><AMI>laplante</AMI></MESSAGE>
+			if data.find('TYPE="ami"') > 0:
+				print "relai ami..."
+				nom = data[data.find("<NOM>")+5:data.find("</NOM>")]
+				ami = data[data.find("<AMI>")+5:data.find("</AMI>")]
+
+				relai = '<MESSAGE TYPE="ami">'
+				relai += '<AMI STATUS="1">%s</AMI>' % ami
+				relai += '</MESSAGE>'
+				
+				id_dest = chiffre_user(nom)
 				if id_dest != None:
 					mq[id_dest].append(relai)
 
