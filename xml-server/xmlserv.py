@@ -653,6 +653,10 @@ def serve_client_messagiel(conn, addr, id):
 			return
 
 	# Aller chercher la liste d'amis de l'usager
+	# REMARQUE: sur le site d'origine le client
+	# se chargeait de cette operation en utilisant
+	# des donnees fournies via HTTP, et ce lorsque
+	# le message enter lui etait envoye.
 	mes_amis = amis_api.liste_amis(username)
 	rep_liste = '<MESSAGE TYPE="ami">'
 	for ami in mes_amis:
