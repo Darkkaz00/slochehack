@@ -14,6 +14,13 @@ MAX_USERS = 1024
 
 # tableaux et fonctions messagiel
 unames_messagiel = ["" for i in range(MAX_USERS)]
+queue_messagiel = [[] for i in range(MAX_USERS)]
+
+def chiffre_dans_messagiel(unam):
+	for i in range(MAX_USERS):
+		if unames_messagiel[i] == unam:
+			return i
+	return None
 
 def find_free_id_messagiel():
 	for i in range(MAX_USERS):
@@ -633,6 +640,8 @@ def serve_client_messagiel(conn, addr, id):
 	client_host, client_port = addr
 	print "messagiel: conn. %s:%s, lancement thread %d" % (client_host, client_port, id)
 
+	queue_messagiel[id] = []
+
 	# Demander au client sloche quel est le nom de l'utilisateur
 	# qui vient de se brancher au messagiel.
 	conn.sendall('<MESSAGE TYPE="set"><HR FROM="messagiel">abcdef</HR></MESSAGE>' + '\0')
@@ -767,16 +776,22 @@ def serve_client_messagiel(conn, addr, id):
 				text = data[data.find("<TEXT>")+6:data.find("</TEXT>")]
 				print "messagiel: %s message a %s: '%s'" % (username, to, text)
 
-				if chiffre_user(to) != None:
+				if chiffre_dans_messagiel(to) != None:
 					# Ajoute un nouveau message slochepop avec une
 					# petite bulle qu'il faut cliquer pour le lire.
 					relai = '<MESSAGE TYPE="send">'
 					relai += '<TEXT>%s</TEXT>' % text
 					relai += '<FROM>%s</FROM>' % username
 					relai += '</MESSAGE>'
-					mq[chiffre_user(to)].append(relai)
+					queue_messagiel[chiffre_dans_messagiel(to)].append(relai)
 				else:
 					print "messagiel: TODO: stockage sloche-pops !"
+
+		# send off queued messages
+		while len(queue_messagiel[id]):
+			conn.sendall(queue_messagiel[id][0].strip() + '\0')
+			print "messagiel: %s: envoi depuis queue: %s" % (username, queue_messagiel[id][0])
+			queue_messagiel[id] = queue_messagiel[id][1:]
 
 
 	unames_messagiel[id] = ""
