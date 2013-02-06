@@ -699,7 +699,17 @@ def serve_client_messagiel(conn, addr, id):
 				nom = data[data.find("<NOM>")+5:data.find("</NOM>")]
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
 				print "%s autorise %s a etre son ami" % (nom, to)
-				
+
+				# Stocker nouvel ami dans la BDD
+				if nom == username:
+					mes_amis = amis_api.liste_amis(nom)
+					mes_amis.append(to)
+					amis_api.stocker_liste_amis(nom, mes_amis)
+
+					ses_amis = amis_api.liste_amis(to)
+					ses_amis.append(nom)
+					amis_api.stocker_liste_amis(to, ses_amis)						
+
 				# Envoie la bulle "ami accepte" mais n'ajoute pas
 				# l'ami a la liste...
 				relai = '<MESSAGE TYPE="send">'
