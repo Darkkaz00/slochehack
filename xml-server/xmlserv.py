@@ -642,13 +642,6 @@ def envoi_ou_stockage(to, relai):
 		stockage_messagiel_api.ajouter(to, relai)
 
 def serve_client_messagiel(conn, addr, id):
-	# Ajoute un nouveau message slochepop avec une petite
-	# bulle. Texte: beurre. Envoyeur: $qui
-	# relai = '<MESSAGE TYPE="send">'
-	# relai += '<TEXT>beurre</TEXT>'
-	# relai += '<AMI>%s</AMI>' % qui
-	# relai += '</MESSAGE>'
-
 	client_host, client_port = addr
 	print "messagiel: conn. %s:%s, lancement thread %d" % (client_host, client_port, id)
 
