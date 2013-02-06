@@ -633,7 +633,7 @@ def serve_client_messagiel(conn, addr, id):
 	rep_liste = '<MESSAGE TYPE="ami">'
 	for ami in mes_amis:
 		# L'ami est-il en ligne ?
-		if chiffre_user(ami):
+		if chiffre_user(ami) != None:
 			sta = 1		# oui
 		else:
 			sta = 0		# non
@@ -658,13 +658,43 @@ def serve_client_messagiel(conn, addr, id):
 				text = data[data.find("<TEXT>")+6:data.find("</TEXT>")]
 				print "messagiel: %s req ami %s: '%s'" % (username, to, text)
 
+				# relai. marche sur 2007.
+				relai = '<MESSAGE TYPE="send">'
+				relai += '<TEXT OPTION="request">%s</TEXT>' % text
+				relai += '<FROM>%s</FROM>' % username
+				relai += '</MESSAGE>'
+				id_dest = chiffre_user(to)
+				if id_dest != None:
+					print "envoi relai requete ami"
+					mq[id_dest].append(relai)
+
+			# Ami autorise.
+			# <MESSAGE TYPE="send"><NOM>donald</NOM><TO>laplante</TO><TEXT></TEXT>
+			# <OPTION>autoriser</OPTION></MESSAGE><MESSAGE TYPE="ami" 
+			# FROM="Client"><NOM>donald</NOM><AMI>laplante</AMI></MESSAGE>
+			if data.find('<OPTION>autoriser</OPTION>') > 0:
+				nom = data[data.find("<NOM>")+5:data.find("</NOM>")]
+				to = data[data.find("<TO>")+4:data.find("</TO>")]
+				print "%s autorise %s a etre son ami" % (nom, to)
+				
+				# Envoie la bulle "ami accepte" mais n'ajoute pas
+				# l'ami a la liste...
+				relai = '<MESSAGE TYPE="send">'
+				relai += '<TEXT OPTION="autoriser">%s</TEXT>' % nom
+				relai += '<FROM>%s</FROM>' % nom
+				relai += '</MESSAGE>'
+
+				id_dest = chiffre_user(to)
+				if id_dest != None:
+					mq[id_dest].append(relai)
+
 			# Supprimer ami
 			if data.find('<OPTION>supprimer</OPTION>') > 0:
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
 				print "messagiel: %s supprimer ami %s" % (username, to)
 
 			# Message slochepop
-			if not (data.find('<OPTION>') > 0) and data.find('TYPE="send"'):
+			if not (data.find('<OPTION>') > 0) and data.find('TYPE="send"') > 0:
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
 				text = data[data.find("<TEXT>")+6:data.find("</TEXT>")]
 				print "messagiel: %s message a %s: '%s'" % (username, to, text)

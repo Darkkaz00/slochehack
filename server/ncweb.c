@@ -478,10 +478,34 @@ int main(int argc, char** argv)
 				system("cat liste-pouvoirs.txt");
 				printf("\n");
 				fflush(stdout);
+			/* garder le client messagiel content...
+			 * il fait plein de requetes inutiles... */
+			} else if(strstr(tokens[1], "/messagiel/")){
+				cl = 0;
+				while(!feof(stdin)){
+					fgets(buf, myBUFSIZ, stdin);
+					fprintf(log, "POST:  %s", buf);
+					fflush(log);
+					if(strstr(buf, "Content-Length:"))	sscanf(buf, "Content-Length: %d", &cl);
+					if(strstr(buf, "Content-length:"))	sscanf(buf, "Content-length: %d", &cl);	/* >:( */
+					if(strstr(buf, "content-length:"))	sscanf(buf, "content-length: %d", &cl);	/* >:( */
+					if(strlen(buf) < 3){
+						fgets(buf, cl ? cl + 1: myBUFSIZ, stdin);
+						fprintf(log, "Content: '%s'\n", buf);
+						fflush(log);
+						break;
+					}
+				}
+				printf("\n");
+				fflush(stdout);
 
-
+				/* bon, on a recu toute la requete, on s'en balance,
+				 * on dit: "oui merci au revoir" */
+				printf("\n");
+				fflush(stdout);
+				printf(" &resultat=1& &success=1& \n\n");
+				fflush(stdout);
 			} else {
-
 				printf("\n\n");	fflush(stdout);
 			}
 
