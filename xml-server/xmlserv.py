@@ -14,7 +14,6 @@ MAX_USERS = 1024
 
 # tableaux et fonctions messagiel
 unames_messagiel = ["" for i in range(MAX_USERS)]
-queue_messagiel = [[] for i in range(MAX_USERS)]
 
 def find_free_id_messagiel():
 	for i in range(MAX_USERS):
@@ -237,6 +236,13 @@ def serve_client(conn, addr, id):
 		print "%s:%s: connection with already logged-in username %s refused" % (client_host, client_port, username)
 		conn.close()
 		return
+
+	# Avertir entree aux amis sur messagiel
+	for i in range(MAX_USERS):
+		if i != id:
+			relai = '<MESSAGE TYPE="enter"><USERNAME>%s</USERNAME></MESSAGE>' % username
+			mq[i].append(relai)
+
 	unames[id] = username
 	room = int(req[req.find("<RID>")+5:req.find("</RID>")])
 	rpeople[room].append(id)
@@ -599,14 +605,16 @@ def serve_client(conn, addr, id):
 				unames[id] = ""
 				return
 			conn.sendall(mq[id][0].strip() + '\0')
+			print "xmlchat: %s: envoi depuis queue: %s" % (username, mq[id][0])
 			mq[id] = mq[id][1:]
 
 	print "closed connection to %s:%s" % (client_host, client_port)
 	conn.close()
 
-	# avertir messagiel de la deconnexion
+	# Avertir sortie aux amis sur messagiel
 	for i in range(MAX_USERS):
-		queue_messagiel[i].append(username)	
+		relai = '<MESSAGE TYPE="quit"><USERNAME>%s</USERNAME></MESSAGE>' % username
+		mq[i].append(relai)
 
 	rpeople[room].remove(id)
 	leave_room(room, id)
@@ -615,10 +623,15 @@ def serve_client(conn, addr, id):
 #####################################################################################
 
 def serve_client_messagiel(conn, addr, id):
+	# Ajoute un nouveau message slochepop avec une petite
+	# bulle. Texte: beurre. Envoyeur: $qui
+	# relai = '<MESSAGE TYPE="send">'
+	# relai += '<TEXT>beurre</TEXT>'
+	# relai += '<AMI>%s</AMI>' % qui
+	# relai += '</MESSAGE>'
+
 	client_host, client_port = addr
 	print "messagiel: conn. %s:%s, lancement thread %d" % (client_host, client_port, id)
-
-	queue_messagiel[id] = []
 
 	# Demander au client sloche quel est le nom de l'utilisateur
 	# qui vient de se brancher au messagiel.
@@ -655,17 +668,6 @@ def serve_client_messagiel(conn, addr, id):
 	unames_messagiel[id] = username
 
 	while True:
-		# Mettre en rouge les amis deconnectes.
-		# Un message est envoye lorsqu'une deconnexion
-		# de quelque usager que ce soit a lieu.
-		if len(queue_messagiel[id]) > 0:
-			qui = queue_messagiel[id].pop()
-			if qui in mes_amis:
-				relai = '<MESSAGE TYPE="ami">'
-				relai += '<AMI STATUS="0">%s</AMI>' % qui
-				relai += '</MESSAGE>'
-				conn.sendall(relai + '\0')
-
 		ready = select.select([conn], [], [], 0.01)
 		if ready[0]:
 			data = conn.recv(1024)
