@@ -467,6 +467,19 @@ def serve_client_messagiel(conn, addr, id):
 				relai += '</MESSAGE>'
 				envoi_ou_stockage(to, relai)
 
+			# Ami refuse
+			if data.find('<OPTION>refus</OPTION>') > 0:
+				nom = data[data.find("<NOM>")+5:data.find("</NOM>")]
+				to = data[data.find("<TO>")+4:data.find("</TO>")]
+				print "%s refuse a %s le droit d'etre son ami" % (nom, to)			
+
+				# Envoyer la bulle "ami refuse"
+				relai = '<MESSAGE TYPE="send">'
+				relai += '<TEXT OPTION="refus">%s</TEXT>' % nom
+				relai += '<FROM>%s</FROM>' % nom
+				relai += '</MESSAGE>'
+				envoi_ou_stockage(to, relai)
+
 			# Relai ami
 			# <MESSAGE TYPE="ami" FROM="Client"><NOM>donald</NOM><AMI>laplante</AMI></MESSAGE>
 			if data.find('TYPE="ami"') > 0:
