@@ -214,6 +214,10 @@ def serve_client(conn, addr, id):
 	global acc_salle
 	global id_salle_libre
 
+	# Effacer messages laisses derriere par dernier
+	# usager ayant eu ce chiffre de thread
+	mq[id] = []
+
 	client_host, client_port = addr
 	print "Got connection from %s:%s. Starting thread %d" % (client_host, client_port, id)
 

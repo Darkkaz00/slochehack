@@ -92,6 +92,9 @@ def serve_client(conn, addr, id):
 	client_host, client_port = addr
 	print "Got connection from %s:%s. Starting thread %d" % (client_host, client_port, id)
 
+	# Effacer vieux messages
+	mq[id] = []
+
 	conn.sendall("<MESSAGE TYPE=\"set\" FROM=\"server\"><HR>jhdgkdsfjsdk</HR></MESSAGE>" + '\0')
 	print "Acknowledged connection to %s:%s" % (client_host, client_port)
 
