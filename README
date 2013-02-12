@@ -49,9 +49,13 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 		  de bien le configurer, etc. Si vous utilisez celui
 		  d'Adobe comme moi, les scripts inclus feront tout cela
 		  tout seul.
+		- Commande md5sum
 
 	(Moi je fais rouler tout ça avec les utilitaires
 	version GNU et Linux comme Unix.)
+
+	Remarque: je songe à faire une version plus portable
+	qui fonctionnerait directement dans Windows.
 
 Étapes de lancement:
 
