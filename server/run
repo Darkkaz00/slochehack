@@ -1,2 +1,1 @@
-# change bash to another modern shell if necessary
-sudo bash server-run.sh
+sudo sh server-run.sh

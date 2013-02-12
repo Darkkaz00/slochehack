@@ -39,7 +39,7 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 		- compilateur C (par ex. gcc ou clang)
 		- droits d'administrateur et utilitaire sudo
 		- Python 2.x récent
-		- GNU bash (ou similaire / compatible)
+		- shell Unix "sh" standard ou compatible
 		- outil flasm (http://www.nowrap.de/flasm.html)
 		- Serveur de "flash policies" fonctionnel.
 		  Il y a un gratuit sur le site d'adobe:

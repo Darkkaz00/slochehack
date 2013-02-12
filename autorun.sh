@@ -24,6 +24,6 @@ cat server/sloche-data/config.default | sed s/SERVERADDR/`cat localhost.txt`/g >
 cat server/sloche-data/config_messagiel.default | sed s/SERVERADDR/`cat localhost.txt`/g > server/sloche-data/simpleChatConfig1.xml
 rm localhost.txt
 
-$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x bash -c "cd server; ./run; bash" &
-$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x bash -c "cd logiciels; cd flashpolicyd_v0.6; sudo python Standalone/flashpolicyd.py --file=../../custom-policy.xml; bash" &
-$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x bash -c "cd xml-server; echo xmlserv; python $XMLSERV; bash" &
+$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd server; ./run; sh" &
+$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd logiciels; cd flashpolicyd_v0.6; sudo python Standalone/flashpolicyd.py --file=../../custom-policy.xml; sh" &
+$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd xml-server; echo xmlserv; python $XMLSERV; sh" &
