@@ -2,6 +2,9 @@
 # dit à quelle addresse IP locale le site sera disponible.
 # Testé sous Linux/gnome, Linux/mate et linux/ubuntu.
 
+# Ce script de lançage ne fonctionne pas avec le terminal
+# graphique LXDE, désolé :(
+
 # Changer au besoin. seulement testé avec GNOME et MATE,
 # j'espère que la syntaxte des paramètres sera la même avec
 # d'autres environnements graphiques...
