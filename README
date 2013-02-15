@@ -55,7 +55,9 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	version GNU et Linux comme Unix.)
 
 	Remarque: je songe à faire une version plus portable
-	qui fonctionnerait directement dans Windows.
+	qui fonctionnerait directement dans Windows, je pense à
+	réécrire les bouts faits en shell et en C en python pour
+	que la portabilité soit vraiment facile.
 
 Étapes de lancement:
 
