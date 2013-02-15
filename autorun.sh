@@ -3,7 +3,10 @@
 # Testé sous Linux/gnome, Linux/mate et linux/ubuntu.
 
 # Ce script de lançage ne fonctionne pas avec le terminal
-# graphique LXDE, désolé :(
+# graphique LXDE, désolé :( Ce script ne fonctionne pas non
+# plus avec la version BSD de la commande ifconfig.
+# Vous êtes pas obligé d'utiliser ce script, il est possible
+# de lancer le serveur "manuellement", voir le fichier "README".
 
 # Changer au besoin. seulement testé avec GNOME et MATE,
 # j'espère que la syntaxte des paramètres sera la même avec
