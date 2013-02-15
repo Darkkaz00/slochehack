@@ -1,0 +1,135 @@
+Réimplémentation du bon vieux chat de sloche.com
+------------------------------------------------
+par: un anonyme ancien fan de sloche.com ;)
+
+Instructions de lancement -- version Windows
+(si vous êtes pas sous Windows, SVP lire "README")
+
+CODE SOURCE =================================================================
+
+Ce projet est 100% open source. Tout le code source est inclus sur place.
+Aucun binaire n'est diffusé par moi.
+
+FICHIERS EXTERNES REQUIS ====================================================
+
+S'il-vous-plaît bien lire le document "FICHIERS-EXTERNES-REQUIS" avant
+de continuer. Sans les fichiers requis, ce logiciel
+		
+			ne marchera pas.
+			-- -------- ---
+
+Prière de bien lire ce document aussi.
+
+
+REMARQUES DE SÉCURITÉ	======================================================
+
+Je ne suis pas expert en sécurité.
+
+Prévoyez un bon pare-feu (firewall) pour pas qu'on puisse hacker votre machine
+à travers mon serveur HTTP vite-fait-maison.
+
+Probablement une mauvaise idée de mettre ça sur un serveur Internet public.
+
+Aucune garantie de qualité. Logiciel pas de qualité professionelle.
+Logiciel vite-fait.
+
+INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
+
+	Ce que ça vous prend:
+		- MinGW (http://www.mingw.org/) -- la version
+		  complète, là, avec le shell et tout
+		- Python (http://python.org/)
+		- outil flasm (http://www.nowrap.de/flasm.html)
+		- Serveur de "flash policies" fonctionnel.
+		  Il y a un gratuit sur le site d'adobe:
+		  http://www.adobe.com/cn/devnet/flashplayer/articles/
+		   socket_policy_files.html)
+		  S'assurer de le faire utiliser "custom-policy.xml",
+		  de bien le configurer, etc. Si vous utilisez celui
+		  d'Adobe comme moi, les scripts inclus feront tout cela
+		  tout seul.
+
+	Vous devez mettre python et flasm dans votre "PATH" pour que le
+	shell MinGW les trouve.
+
+Étapes de lancement:
+
+1. Dans un terminal MinGW, se rendre dans le dossier slochehack et taper:
+   sh create-modded-swf.sh IP exemple-de-fichier-client-sloche.swf
+
+	où IP = adresse IP du serveur, soit local (192.168.2.x) ou Internet
+	(Internet = mauvaise idée, cf infos sécurité plus haut)
+
+   Pour trouver votre IP locale, vous pouvez utiliser la commande "ipconfig".
+   Dans la sortie de la commande il devrait y avoir quelque chose comme ceci:
+
+   Ethernet adapter Local Area Connection:
+
+           Connection-specific DNS Suffix  . : Belkin
+           IP Address. . . . . . . . . . . . : 192.168.2.2
+           Subnet Mask . . . . . . . . . . . : 255.255.255.0
+           Default Gateway . . . . . . . . . : 192.168.2.1
+
+   Dans cet exemple, 192.168.2.2 est l'IP locale.
+
+
+2. modifier server/sloche-data/simpleChatConfig.xml
+   	 et server/sloche-data/simpleChatConfig1.xml
+
+   	pour refléter l'adresse IP choisie
+
+3. Dans un terminal MinGW:
+   cd server; sh server-run.sh		[serveur HTTP fait maison]
+
+4. cd logiciels; cd flashpolicyd_v0.6; python Standalone/flashpolicyd.py 
+    --file=../../custom-policy.xml
+	
+	[maudit serveur  de permissions flash]
+
+5. cd xml-server; python xmlserv.py	[serveur de messages XML]
+	ATTENTION: pour la version 2003, c'est xmlserv2003.py
+
+	On peut aussi utiliser pypy si on veut un peu
+	plus de vitesse.
+
+	Remarque: ce serveur gère aussi le système d'amis et de
+	messagiel (le "sloche-pop").
+
+	Requiert Python 2.x récent.
+
+UTILISATON DU SITE ===========================================================
+
+Le site devrait marcher de façon presqu'identique à l'original.
+Il y a des choses mineures absentes, par exemple:
+
+	- système original d'achat et lancement de pouvoirs
+	- recherche d'utilisateurs
+	- nouvelles
+
+Comptes spéciaux
+	nom		mot de passe	disponibilité
+					client
+	---------------------------------------------
+	doclipo		liposuccion	2007
+	laplante	bos		2004-2007
+	real		potiron		2003
+	sanstete	hax		2003-2007
+	pouvoirs	hax		2004-2005
+
+Actions spéciales
+-----------------
+
+Compte doclipo:
+	Envoyer le message privé "l" à un slocheux
+	crée une liposuccion
+Compte laplante:
+	Envoyer le message privé "kick" à un slocheux
+	le renvoie du serveur.
+Compte pouvoirs:
+	Envoyer un chiffre en message privé à un
+	utilisateur active le pouvoir correspondant
+	à ce chiffre chez cet utilisateur.
+	Remarque: ça prend sloche version 2004 ou
+	2005. Dans 2003, ça existait pas encore,
+	et dans 2006-2007, ça a été enlevé.
+
