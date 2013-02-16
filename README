@@ -35,7 +35,10 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	Ce que ça vous prend:
 		- un Unix (par ex. Linux, FreeBSD, Mac OS X, ...)
 		  cela doit inclure les utilitaires standard,
-		  dont make et sed.
+		  dont make et sed. il est aussi possible d'utiliser
+		  un sous-système de compatiblité, genre MinGW.
+		  voir par exemple le fichier README-windows.txt
+		  pour un guide d'installation avec MinGW sous Windows.
 		- compilateur C (par ex. gcc ou clang)
 		  la commande "cc" doit marcher
 		- droits d'administrateur et utilitaire sudo
@@ -51,15 +54,14 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 		  de bien le configurer, etc. Si vous utilisez celui
 		  d'Adobe comme moi, les scripts inclus feront tout cela
 		  tout seul.
-		- Commande md5sum
+		- commande md5sum
 
 	(Moi je fais rouler tout ça avec les utilitaires
 	version GNU et Linux comme Unix.)
 
-	Remarque: je songe à faire une version plus portable
-	qui fonctionnerait directement dans Windows, je pense à
-	réécrire les bouts faits en shell et en C en python pour
-	que la portabilité soit vraiment facile.
+	Remarque: je songe à faire une version plus facilement portable,
+	il suffirait de réécrire les bouts faits en shell et
+	en C en Python.
 
 Étapes de lancement:
 
@@ -67,6 +69,9 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 
 	où IP = adresse IP du serveur, soit local (192.168.2.x) ou Internet
 	(Internet = mauvaise idée, cf infos sécurité plus haut)
+
+	Sous un système Unix ou Linux, la commande "ifconfig" peut aider
+	à déterminer l'addresse LAN de la machine présente.
 
 2. modifier server/sloche-data/simpleChatConfig.xml
    	 et server/sloche-data/simpleChatConfig1.xml
@@ -92,14 +97,15 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	Requiert Python 2.x récent.
 
 Remarque: il y a le script autorun.sh qui fait tout cela tout seul si il
-est bien configuré. Je l'utilise personnellement.
+est bien configuré. (Malheureusement, il ne fonctionne que sous certains
+bureaux graphiques et seulement sous Linux).
 
 UTILISATON DU SITE ===========================================================
 
 Le site devrait marcher de façon presqu'identique à l'original.
 Il y a des choses mineures absentes, par exemple:
 
-	- système original d'achat et lancement de pouvoirs
+	- système original d'achat de pouvoirs
 	- recherche d'utilisateurs
 	- nouvelles
 
@@ -129,3 +135,4 @@ Compte pouvoirs:
 	Remarque: ça prend sloche version 2004 ou
 	2005. Dans 2003, ça existait pas encore,
 	et dans 2006-2007, ça a été enlevé.
+
