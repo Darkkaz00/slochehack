@@ -37,8 +37,10 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 		  cela doit inclure les utilitaires standard,
 		  dont make et sed.
 		- compilateur C (par ex. gcc ou clang)
+		  la commande "cc" doit marcher
 		- droits d'administrateur et utilitaire sudo
 		- Python 2.x récent
+		  la commande "python" doit marcher
 		- shell Unix "sh" standard ou compatible
 		- outil flasm (http://www.nowrap.de/flasm.html)
 		- Serveur de "flash policies" fonctionnel.
