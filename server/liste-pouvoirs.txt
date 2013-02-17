@@ -1,4 +1,4 @@
-&nbpouvoirs=15& 
+&nbpouvoirs=16& 
 
 &pouvoir1=23& &pouvoir2=24& &pouvoir3=31& 
 &pouvoir4=41& &pouvoir5=32& 
@@ -6,6 +6,7 @@
 &pouvoir9=14& &pouvoir10=22& &pouvoir11=12&
 &pouvoir12=13& &pouvoir13=25& &pouvoir14=27&
 &pouvoir15=11&
+&pouvoir16=42&
 
 &duree1=1024& 
 &duree2=1024& &duree3=1024& &duree4=1024& &duree5=1024&
@@ -16,3 +17,4 @@
 &duree13=1024&
 &duree14=1024&
 &duree15=1024&
+&duree16=1024&
