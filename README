@@ -35,10 +35,8 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	Ce que ça vous prend:
 		- un Unix (par ex. Linux, FreeBSD, Mac OS X, ...)
 		  cela doit inclure les utilitaires standard,
-		  dont make et sed. il est aussi possible d'utiliser
-		  un sous-système de compatiblité, genre MinGW.
-		  voir par exemple le fichier README-windows.txt
-		  pour un guide d'installation avec MinGW sous Windows.
+		  dont make et sed.
+		  En ce moment, ça marche pas avec MinGW, désolé.
 		- compilateur C (par ex. gcc ou clang)
 		  la commande "cc" doit marcher
 		- droits d'administrateur et utilitaire sudo
@@ -60,8 +58,11 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	version GNU et Linux comme Unix.)
 
 	Remarque: je songe à faire une version plus facilement portable,
-	il suffirait de réécrire les bouts faits en shell et
-	en C en Python.
+	j'aurais à réécrire les bouts botchés faits en shell et
+	en C (surtout le serveur web) en Python, et alors là ça marcherait
+	sur MinGW et probablement sur a peu près n'importe quoi.
+	Malheureusement, je ne crois pas que je vais un jour faire ces
+	corrections.
 
 Étapes de lancement:
 

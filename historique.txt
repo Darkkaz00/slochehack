@@ -1,8 +1,7 @@
 Historique des versions du logiciel "slochehack"
 
 Version 1.5 - XXX
-- Ajout d'instructions de lancement sous Windows (README-windows.txt)
-- Correction des informations sur les logiciels requis
+- Correction des informations sur la configuration logicielle requise
 
 Version 1.4 - 6 février 2013
 - Réimplémentation assez complète du "sloche pop" (amis et messages privés)
