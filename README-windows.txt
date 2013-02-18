@@ -40,14 +40,6 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 		  complète, là, avec le shell et tout
 		- Python (http://python.org/)
 		- outil flasm (http://www.nowrap.de/flasm.html)
-		- Serveur de "flash policies" fonctionnel.
-		  Il y a un gratuit sur le site d'adobe:
-		  http://www.adobe.com/cn/devnet/flashplayer/articles/
-		   socket_policy_files.html)
-		  S'assurer de le faire utiliser "custom-policy.xml",
-		  de bien le configurer, etc. Si vous utilisez celui
-		  d'Adobe comme moi, les scripts inclus feront tout cela
-		  tout seul.
 
 	Vous devez mettre python et flasm dans votre "PATH" pour que le
 	shell MinGW les trouve.
@@ -81,12 +73,7 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 3. Dans un terminal MinGW:
    cd server; sh server-run.sh		[serveur HTTP fait maison]
 
-4. cd logiciels; cd flashpolicyd_v0.6; python Standalone/flashpolicyd.py 
-    --file=../../custom-policy.xml
-	
-	[maudit serveur  de permissions flash]
-
-5. cd xml-server; python xmlserv.py	[serveur de messages XML]
+4. cd xml-server; python xmlserv.py	[serveur de messages XML]
 	ATTENTION: pour la version 2003, c'est xmlserv2003.py
 
 	On peut aussi utiliser pypy si on veut un peu
@@ -102,7 +89,7 @@ UTILISATON DU SITE ===========================================================
 Le site devrait marcher de façon presqu'identique à l'original.
 Il y a des choses mineures absentes, par exemple:
 
-	- système original d'achat et lancement de pouvoirs
+	- système original d'achat de pouvoirs
 	- recherche d'utilisateurs
 	- nouvelles
 

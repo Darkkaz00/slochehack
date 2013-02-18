@@ -28,5 +28,4 @@ cat server/sloche-data/config_messagiel.default | sed s/SERVERADDR/`cat localhos
 rm localhost.txt
 
 $TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd server; ./run; sh" &
-$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd logiciels; cd flashpolicyd_v0.6; sudo python Standalone/flashpolicyd.py --file=../../custom-policy.xml; sh" &
 $TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd xml-server; echo xmlserv; python $XMLSERV; sh" &

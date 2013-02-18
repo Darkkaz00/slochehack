@@ -44,14 +44,6 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 		  la commande "python" doit marcher
 		- shell Unix "sh" standard ou compatible
 		- outil flasm (http://www.nowrap.de/flasm.html)
-		- Serveur de "flash policies" fonctionnel.
-		  Il y a un gratuit sur le site d'adobe:
-		  http://www.adobe.com/cn/devnet/flashplayer/articles/
-		   socket_policy_files.html)
-		  S'assurer de le faire utiliser "custom-policy.xml",
-		  de bien le configurer, etc. Si vous utilisez celui
-		  d'Adobe comme moi, les scripts inclus feront tout cela
-		  tout seul.
 		- commande md5sum
 
 	(Moi je fais rouler tout ça avec les utilitaires
@@ -81,12 +73,7 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 
 3. cd server; ./run			[serveur HTTP fait maison]
 
-4. cd logiciels; cd flashpolicyd_v0.6; sudo python Standalone/flashpolicyd.py 
-    --file=../../custom-policy.xml
-	
-	[maudit serveur  de permissions flash]
-
-5. cd xml-server; python xmlserv.py	[serveur de messages XML]
+4. cd xml-server; python xmlserv.py	[serveur de messages XML]
 	ATTENTION: pour la version 2003, c'est xmlserv2003.py
 
 	On peut aussi utiliser pypy si on veut un peu
