@@ -94,7 +94,7 @@ int main(int argc, char** argv)
 			if (strstr(tokens[1], "/client/decor/lipo_decor.swf")) {
 				printf("\n");
 				fflush(stdout);
-				system("cat sloche-data/0.swf");
+				system("python cat.py sloche-data/0.swf");
 				fflush(stdout);
 			}
 
@@ -102,7 +102,7 @@ int main(int argc, char** argv)
 			if(strstr(tokens[1], "/client/decor/")){
 				printf("\n");
 				fflush(stdout);
-				sprintf(tmp, "cat sloche-data/%s", tokens[1] + strlen("/client/decor"));
+				sprintf(tmp, "python cat.py sloche-data/%s", tokens[1] + strlen("/client/decor"));
 				system(tmp);
 				fflush(stdout);
 			}
@@ -110,71 +110,71 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/client/popup.html")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/popup.html");
+				system("python cat.py sloche-data/popup.html");
 				fflush(stdout);
 			}
 
 			if(!strcmp(tokens[1], "/")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/index.html");
+				system("python cat.py sloche-data/index.html");
 				fflush(stdout);
 			}
 
 			if(!strcmp(tokens[1], "/splahtml.gif")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/splahtml.gif");
+				system("python cat.py sloche-data/splahtml.gif");
 				fflush(stdout);
 			}
 
 			if(!strcmp(tokens[1], "/client/son/son1.swf")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/1.swf");
+				system("python cat.py sloche-data/1.swf");
 				fflush(stdout);
 			}
 			if(!strcmp(tokens[1], "/client/son/son2.swf")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/2.swf");
+				system("python cat.py sloche-data/2.swf");
 				fflush(stdout);
 			}
 			if(!strcmp(tokens[1], "/client/son/son3.swf")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/3.swf");
+				system("python cat.py sloche-data/3.swf");
 				fflush(stdout);
 			}
 			if(!strcmp(tokens[1], "/client/son/son4.swf")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/4.swf");
+				system("python cat.py sloche-data/4.swf");
 				fflush(stdout);
 			}
 			if(!strcmp(tokens[1], "/client/son/son5.swf")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/5.swf");
+				system("python cat.py sloche-data/5.swf");
 				fflush(stdout);
 			}
 			if(!strcmp(tokens[1], "/client/son/son6.swf")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/6.swf");
+				system("python cat.py sloche-data/6.swf");
 				fflush(stdout);
 			}
 			if(!strcmp(tokens[1], "/client/sloche.swf")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/sloche.swf");
+				system("python cat.py sloche-data/sloche.swf");
 				fflush(stdout);
 			}
 
 			if(!strcmp(tokens[1], "/swompe/pouvoirs.txt")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/pouvoirs.txt");
+				system("python cat.py sloche-data/pouvoirs.txt");
 				fflush(stdout);
 			}
 
@@ -182,7 +182,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/24.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-telep.jpg");
+				system("python cat.py sloche-data/icone-telep.jpg");
 				fflush(stdout);
 			}
 
@@ -190,7 +190,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/23.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-vip.jpg");
+				system("python cat.py sloche-data/icone-vip.jpg");
 				fflush(stdout);
 			}
 
@@ -198,7 +198,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/26.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-nouveaux-persos.jpg");
+				system("python cat.py sloche-data/icone-nouveaux-persos.jpg");
 				fflush(stdout);
 			}
 
@@ -206,7 +206,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/31.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-pet.jpg");
+				system("python cat.py sloche-data/icone-pet.jpg");
 				fflush(stdout);
 			}
 
@@ -214,7 +214,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/12.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-laser.jpg");
+				system("python cat.py sloche-data/icone-laser.jpg");
 				fflush(stdout);
 			}
 
@@ -222,7 +222,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/13.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-mouche.jpg");
+				system("python cat.py sloche-data/icone-mouche.jpg");
 				fflush(stdout);
 			}
 
@@ -230,7 +230,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/25.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-mini.jpg");
+				system("python cat.py sloche-data/icone-mini.jpg");
 				fflush(stdout);
 			}
 
@@ -238,7 +238,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/21.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-scie.jpg");
+				system("python cat.py sloche-data/icone-scie.jpg");
 				fflush(stdout);
 			}
 
@@ -247,7 +247,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/14.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-wribit.jpg");
+				system("python cat.py sloche-data/icone-wribit.jpg");
 				fflush(stdout);
 			}
 
@@ -255,7 +255,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/22.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-barbu.jpg");
+				system("python cat.py sloche-data/icone-barbu.jpg");
 				fflush(stdout);
 			}
 
@@ -263,7 +263,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/32.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-velo.jpg");
+				system("python cat.py sloche-data/icone-velo.jpg");
 				fflush(stdout);
 			}
 
@@ -271,7 +271,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/33.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-ultra.jpg");
+				system("python cat.py sloche-data/icone-ultra.jpg");
 				fflush(stdout);
 			}
 
@@ -279,7 +279,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/41.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-real.jpg");
+				system("python cat.py sloche-data/icone-real.jpg");
 				fflush(stdout);
 			}
 
@@ -287,7 +287,7 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/27.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-rrdb.jpg");
+				system("python cat.py sloche-data/icone-rrdb.jpg");
 				fflush(stdout);
 			}
 
@@ -295,21 +295,21 @@ int main(int argc, char** argv)
 			if(!strcmp(tokens[1], "/swompe/pouvoirs/images/ico/11.jpg")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/icone-geant.jpg");
+				system("python cat.py sloche-data/icone-geant.jpg");
 				fflush(stdout);
 			}
 
 			if(!strcmp(tokens[1], "/client/simpleChatConfig.xml")){
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/simpleChatConfig.xml");
+				system("python cat.py sloche-data/simpleChatConfig.xml");
 				fflush(stdout);
 			}
 			if(!strcmp(tokens[1], "/client/simpleChatConfig1.xml")){
 				/* fichier config messagiel */
 				printf("\n");
 				fflush(stdout);	
-				system("cat sloche-data/simpleChatConfig1.xml");
+				system("python cat.py sloche-data/simpleChatConfig1.xml");
 				fflush(stdout);
 			}
 			if(!strcmp(tokens[1], "/crossdomain.xml")){
@@ -320,7 +320,7 @@ int main(int argc, char** argv)
 				*/
 				printf("Content-Type: text/xml\n\n");
 				fflush(stdout);	
-				system("cat sloche-data/crossdomain.xml");
+				system("python cat.py sloche-data/crossdomain.xml");
 				fflush(stdout);
 			}
 
@@ -475,7 +475,7 @@ int main(int argc, char** argv)
 				printf("\n");
 				fflush(stdout);
 
-				system("cat liste-pouvoirs.txt");
+				system("python cat.py liste-pouvoirs.txt");
 				printf("\n");
 				fflush(stdout);
 			/* garder le client messagiel content...
