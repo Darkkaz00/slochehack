@@ -10,6 +10,7 @@ import urllib
 import select
 import random
 from subprocess import Popen, PIPE
+import subprocess
 
 MAX_USERS = 1024
 
@@ -27,14 +28,13 @@ def serve_client(conn, addr, id):
 	print "Connexion obtenue: %s:%s. - thread %d" % (client_host, client_port, id)
 
 	req = conn.recv(5 * 1024 * 1024)
-	
 	serv = Popen('./ncweb', shell=False, stdout=PIPE, stdin=PIPE, stderr=PIPE)
 	serv.stdin.write(req)
-	conn.sendall(serv.stdout.read())
+	output = serv.stdout.read()
+	conn.sendall(output)
 	serv.kill()
-
 	print "Fermeture de la connexion %s:%s" % (client_host, client_port)
-	conn.close()
+	conn.shutdown(socket.SHUT_RDWR)
 	thread_free[id] = True
 
 host = ''
