@@ -32,7 +32,7 @@ def serve_client(conn, addr, id):
 	serv.stdin.write(req)
 	output = serv.stdout.read()
 	conn.sendall(output)
-	serv.kill()
+	#serv.kill()
 	print "Fermeture de la connexion %s:%s" % (client_host, client_port)
 	conn.shutdown(socket.SHUT_RDWR)
 	thread_free[id] = True
