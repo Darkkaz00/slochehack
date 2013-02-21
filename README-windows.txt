@@ -97,11 +97,11 @@ Comptes spéciaux
 	nom		mot de passe	disponibilité
 					client
 	---------------------------------------------
-	doclipo		liposuccion	2007
-	laplante	bos		2004-2007
-	real		potiron		2003
-	sanstete	hax		2003-2007
-	pouvoirs	hax		2004-2005
+	doclipo		liposuccion  2007
+	laplante	bos          2004-2007
+	real		potiron      2003
+	sanstete	hax          2003-2007
+	pouvoirs	hax          2004-2005
 
 Actions spéciales
 -----------------
