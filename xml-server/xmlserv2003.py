@@ -120,6 +120,18 @@ def serve_client(conn, addr, id):
 	# Effacer vieux messages
 	mq[id] = []
 
+	init = time.time()
+	ready = select.select([conn], [], [], 0.01)
+	if ready[0]:
+		req = conn.recv(1024)
+		print "r: %s" % req
+		print "policy-file-request" in req
+		if "policy-file-request" in req:
+			print "policy file"
+			conn.sendall("<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"9100,9200\" /></cross-domain-policy>" + '\0')
+			conn.close()
+			return
+
 	conn.sendall("<MESSAGE TYPE=\"set\" FROM=\"server\"><HR>jhdgkdsfjsdk</HR></MESSAGE>" + '\0')
 	print "Acknowledged connection to %s:%s" % (client_host, client_port)
 
