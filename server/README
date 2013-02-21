@@ -1,22 +1,12 @@
 SERVEUR HTTP FAIT MASION
 
-Dependencies:
-
-	- C compiler (cc)
-	- Unix shell (sh) -- or compatible, like bash
+Logiciels requis:
+	- Compilateur C (cc)
+	- Shell Unix (sh)
+	- Shell Windows pour la version Windows
 	- Python 2.x (python)
 
-Notes:
-	- this probably won't work on windows. use
-	  one of the many unices available (linux, mac os x, ...)
-
-	- to start the ncweb httpd, type
-		./run
-
-Warning:
-
-	- i know very little about security.
-	  there is just a buffer overflow preventer in
-	  ncweb.c. use a good firewall !
+Attention: ce logiciel est vite-fait-masion. Pas de garantie pantoute.
+Prévoir un bon pare-feu au besoin.
 
 
