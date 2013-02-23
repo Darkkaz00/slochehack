@@ -41,6 +41,7 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 		- Droits d'administrateur et utilitaire "sudo"
 		- Python 2.x récent -- commande "python"
 		- Logiciel flasm (http://www.nowrap.de/flasm.html)
+		  la commande "flasm" doit marcher
 
 Étapes de lancement:
 
@@ -50,16 +51,15 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	(Internet = mauvaise idée, cf infos sécurité plus haut)
 
 	Sous un système Unix ou Linux, la commande "ifconfig" peut aider
-	à déterminer l'addresse LAN de la machine présente.
+	à déterminer l'addresse LAN de la machine présente. Par exemple,
+	sous Linux, on verra apparaître en dessous du nom de la bonne
+	interface réseau quelque chose dans ce genre:
 
-2. modifier server/sloche-data/simpleChatConfig.xml
-   	 et server/sloche-data/simpleChatConfig1.xml
+		 inet addr:192.168.0.102
 
-   	pour refléter l'adresse IP choisie
+2. cd server; ./demarrage-unix		[serveur HTTP fait maison]
 
-3. cd server; ./demarrage-unix		[serveur HTTP fait maison]
-
-4. cd xml-server; python xmlserv.py	[serveur de messages XML]
+3. cd xml-server; python xmlserv.py	[serveur de messages XML]
 	ATTENTION: pour la version 2003, c'est xmlserv2003.py
 
 	On peut aussi utiliser pypy si on veut un peu

@@ -3,6 +3,7 @@ import md5
 import os
 import shutil
 
+# les arguments !!!
 if len(sys.argv) < 3:
 	print "usage: %s IP fichier.swf" % sys.argv[0]
 	sys.exit(1)
@@ -66,3 +67,27 @@ shutil.move("sloche_mod.swf", "server/sloche-data/sloche.swf")
 # on fait le menage
 os.remove("sloche_mod.asm")
 os.remove("sloche_mod.$wf")
+
+#  
+# creation des fichiers de configuration XML
+#
+
+# lecture
+f = open("server/sloche-data/config.default")
+config = f.read()
+f.close()
+f = open("server/sloche-data/config_messagiel.default")
+config1 = f.read()
+f.close()
+
+# modification
+config = config.replace("SERVERADDR", sys.argv[1])
+config1 = config1.replace("SERVERADDR", sys.argv[1])
+
+# ecriture
+f = open("server/sloche-data/simpleChatConfig.xml", "w")
+f.write(config)
+f.close()
+f = open("server/sloche-data/simpleChatConfig1.xml", "w")
+f.write(config1)
+f.close()

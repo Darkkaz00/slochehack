@@ -68,15 +68,10 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 
    Dans cet exemple, 192.168.2.2 est l'IP locale.
 
-2. modifier server/sloche-data/simpleChatConfig.xml
-   	 et server/sloche-data/simpleChatConfig1.xml
+2. Dans un terminal MinGW:
+   cd server; sh server-run.sh			[serveur HTTP fait maison]
 
-   	pour refléter l'adresse IP choisie
-
-3. Dans un terminal MinGW:
-   cd server; sh server-run.sh		[serveur HTTP fait maison]
-
-4. cd xml-server; python xmlserv.py	[serveur de messages XML]
+3. cd xml-server; python xmlserv.py		[serveur de messages XML]
 	ATTENTION: pour la version 2003, c'est xmlserv2003.py
 
 	On peut aussi utiliser pypy si on veut un peu
