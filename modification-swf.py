@@ -8,6 +8,8 @@ if len(sys.argv) < 3:
 	print "usage: %s IP fichier.swf" % sys.argv[0]
 	sys.exit(1)
 
+print "Modification du fichier SWF client ..."
+
 # copie du SWF et dessasemblage
 shutil.copyfile(sys.argv[2], "sloche_mod.swf")
 if os.system("flasm -d sloche_mod.swf >sloche_mod.asm") != 0:
@@ -72,6 +74,8 @@ os.remove("sloche_mod.$wf")
 # creation des fichiers de configuration XML
 #
 
+print "Mise en place des fichiers de configuration XML..."
+
 # lecture
 f = open("server/sloche-data/config.default")
 config = f.read()
@@ -91,3 +95,5 @@ f.close()
 f = open("server/sloche-data/simpleChatConfig1.xml", "w")
 f.write(config1)
 f.close()
+
+print "C'est beau, ca peut rouler"
