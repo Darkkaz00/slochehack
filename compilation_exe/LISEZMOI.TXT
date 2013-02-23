@@ -2,19 +2,18 @@ Réimplémentation du bon vieux chat de sloche.com
 ------------------------------------------------
 par: un certain Gabriel, ancien fan de sloche.com ;)
 
-Guide de lancement de la version précompilée facile
-d'usage pour Windows
+Guide de lancement de la version précompilée facile d'usage pour Windows
 
 CODE SOURCE =================================================================
 
-Ce projet est 100% open source. Le code source complet, qui comprend une
-version compatible Unix/Linux, est disponible depuis le site:
+Ce projet est 100% open source. Le code source du serveur slochehack, qui
+comprend une version compatible Unix/Linux, est disponible depuis le site:
 
 https://sites.google.com/site/newgabrielca/souvenirsloche/slochehack
 
-Ce logiciel a été réalisé à l'aide des logiciels MinGW, Python et py2exe.
-L'archive présente contient le DLL du logiciel Python, dont le code source
-est disponible depuis: http://python.org/.
+Ce logiciel a été réalisé à l'aide des logiciels MinGW, Python, py2exe
+et ResEdit. L'archive présente contient le DLL du logiciel Python, dont
+le code source est disponible depuis: http://python.org/.
 
 Le logiciel graphique de lancement a été créé en modifiant un example
 de programmation Windows obtenu depuis http://www.winprog.org/tutorial/.
