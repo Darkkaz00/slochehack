@@ -2,7 +2,7 @@ Réimplémentation du bon vieux chat de sloche.com
 ------------------------------------------------
 par: un anonyme ancien fan de sloche.com ;)
 
-Guide de lancement, version Unix
+Guide de lancement, version Windows
 
 CODE SOURCE =================================================================
 
