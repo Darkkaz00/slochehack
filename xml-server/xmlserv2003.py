@@ -121,7 +121,7 @@ def serve_client(conn, addr, id):
 	mq[id] = []
 
 	init = time.time()
-	ready = select.select([conn], [], [], 0.01)
+	ready = select.select([conn], [], [], 0.2)
 	if ready[0]:
 		req = conn.recv(1024)
 		print "r: %s" % req
