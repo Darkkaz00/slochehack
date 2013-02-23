@@ -1,0 +1,137 @@
+Réimplémentation du bon vieux chat de sloche.com
+------------------------------------------------
+par: un certain Gabriel, ancien fan de sloche.com ;)
+
+Guide de lancement de la version précompilée facile
+d'usage pour Windows
+
+CODE SOURCE =================================================================
+
+Ce projet est 100% open source. Le code source complet, qui comprend une
+version compatible Unix/Linux, est disponible depuis le site:
+
+https://sites.google.com/site/newgabrielca/souvenirsloche/slochehack
+
+Ce logiciel a été réalisé à l'aide des logiciels MinGW, Python et py2exe.
+L'archive présente contient le DLL du logiciel Python, dont le code source
+est disponible depuis: http://python.org/.
+
+Le logiciel graphique de lancement a été créé en modifiant un example
+de programmation Windows obtenu depuis http://www.winprog.org/tutorial/.
+
+FICHIERS EXTERNES REQUIS ====================================================
+
+S'il-vous-plaît bien lire le document "FICHIERS-EXTERNES-REQUIS.TXT" avant
+de continuer. Sans les fichiers requis, ce logiciel
+		
+			ne marchera pas.
+			-- -------- ---
+
+Prière de bien lire le présent document aussi.
+
+REMARQUES DE SÉCURITÉ	======================================================
+
+Je ne suis pas expert en sécurité.
+
+Au besoin, prévoir un bon pare-feu (firewall) pour pas qu'on puisse hacker
+votre machine à travers mon serveur HTTP vite-fait-maison.
+
+Probablement une mauvaise idée de mettre ça sur un serveur Internet public.
+
+Aucune garantie de qualité. Logiciel pas de qualité professionelle.
+Logiciel vite-fait.
+
+INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
+
+	Ce que ça vous prend:
+		- Outil flasm (http://www.nowrap.de/flasm.html)
+		  Placez "flasm.exe" dans la directoire principale de slochehack.
+
+Étapes de lancement facile graphique:
+
+1. Lancer "slochehack.exe" et remplir le formulaire.
+   Pour trouver votre IP locale, vous pouvez utiliser la commande "ipconfig".
+   Dans la sortie de la commande il devrait y avoir quelque chose comme ceci:
+
+   Ethernet adapter Local Area Connection:
+
+           Connection-specific DNS Suffix  . : Belkin
+           IP Address. . . . . . . . . . . . : 192.168.2.2
+           Subnet Mask . . . . . . . . . . . : 255.255.255.0
+           Default Gateway . . . . . . . . . : 192.168.2.1
+
+------------------------------------------------------------------------------
+
+Étapes de lancement "manuel":
+
+N.B. Sous Windows, le logiciel terminal s'appelle "invite de commandes".
+
+1. Dans un terminal, se rendre dans le dossier slochehack et taper:
+   modification-swf IP exemple-de-fichier-client-sloche.swf
+
+	où IP = adresse IP du serveur, soit local (192.168.2.x) ou Internet
+	(Internet = mauvaise idée, cf infos sécurité plus haut)
+
+   Pour trouver votre IP locale, vous pouvez utiliser la commande "ipconfig".
+   Dans la sortie de la commande il devrait y avoir quelque chose comme ceci:
+
+   Ethernet adapter Local Area Connection:
+
+           Connection-specific DNS Suffix  . : Belkin
+           IP Address. . . . . . . . . . . . : 192.168.2.2
+           Subnet Mask . . . . . . . . . . . : 255.255.255.0
+           Default Gateway . . . . . . . . . : 192.168.2.1
+
+   Dans cet exemple, 192.168.2.2 est l'IP locale.
+
+2. Si tout s'est bien déroulé, dans le même terminal, taper:
+   cd server
+   net-interface			
+
+   (C'est le serveur HTTP fait maison)
+
+3. Dans un deuxième terminal, se render au dossier slochehack et taper:
+	cd xml-server
+	xmlserv
+	
+	ATTENTION: pour la version 2003, il faut taper: xmlserv2003
+
+	Il s'agit du serveur de chat XML. Ce serveur gère aussi le
+	système d'amis et de messagiel (le "sloche-pop").
+
+UTILISATON DU SITE ===========================================================
+
+Le site devrait marcher de façon presqu'identique à l'original.
+Il y a des choses mineures absentes, par exemple:
+
+	- système original d'achat de pouvoirs
+	- recherche d'utilisateurs
+	- nouvelles
+
+Comptes spéciaux
+	nom		mot de passe		disponibilité
+						client
+	------------------------------------------------------
+	doclipo		liposuccion		2007
+	laplante	bos			2004-2007
+	real		potiron			2003
+	sanstete	hax			2003-2007
+	pouvoirs	hax			2004-2005
+
+Actions spéciales
+-----------------
+
+Compte doclipo:
+	Envoyer le message privé "l" à un slocheux
+	crée une liposuccion
+Compte laplante:
+	Envoyer le message privé "kick" à un slocheux
+	le renvoie du serveur.
+Compte pouvoirs:
+	Envoyer un chiffre en message privé à un
+	utilisateur active le pouvoir correspondant
+	à ce chiffre chez cet utilisateur.
+	Remarque: ça prend sloche version 2004 ou
+	2005. Dans 2003, ça existait pas encore,
+	et dans 2006-2007, ça a été enlevé.
+

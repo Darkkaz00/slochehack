@@ -485,7 +485,7 @@ int main(int argc, char** argv)
 				printf("\n");
 				fflush(stdout);
 
-				system("type sloche-data/liste-pouvoirs.txt");
+				system("type sloche-data\\liste-pouvoirs.txt");
 				printf("\n");
 				fflush(stdout);
 			/* garder le client messagiel content...
