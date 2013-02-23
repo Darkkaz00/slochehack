@@ -14,20 +14,22 @@
 // Dialog resources
 //
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_CAN
-IDD_MAIN DIALOG 0, 0, 205, 153
+IDD_MAIN DIALOG 100, 100, 205, 153
 STYLE DS_MODALFRAME | DS_SETFONT | WS_CAPTION | WS_POPUP | WS_SYSMENU
 CAPTION "slochehack"
 FONT 8, "MS Sans Serif"
 {
-    DEFPUSHBUTTON   "Quitter", IDOK, 140, 121, 52, 14
+    DEFPUSHBUTTON   "Quitter", IDOK, 145, 129, 55, 14
     LTEXT           "Fichier client:", IDC_STATIC, 13, 32, 42, 8, SS_LEFT
     EDITTEXT        IDC_EDIT1, 62, 29, 91, 12, ES_AUTOHSCROLL
     PUSHBUTTON      "Parcourir...", IDC_BUTTON1, 156, 28, 39, 14
-    AUTORADIOBUTTON "2003", IDC_RADIO1, 15, 62, 32, 8
-    AUTORADIOBUTTON "2004-2007", IDC_RADIO2, 15, 72, 50, 8
-    LTEXT           "Version du client:", IDC_STATIC, 14, 50, 55, 8, SS_LEFT
-    PUSHBUTTON      "Lancer le serveur", IDC_BUTTON2, 15, 122, 64, 14
-    LTEXT           "slochehack 1.5 - version Windows", IDC_STATIC, 53, 6, 110, 8, SS_LEFT
-    LTEXT           "Addresse IP serveur:", IDC_STATIC, 15, 94, 66, 8, SS_LEFT
-    EDITTEXT        IDC_EDIT2, 85, 92, 107, 12, ES_AUTOHSCROLL
+    AUTORADIOBUTTON "2003", IDC_RADIO1, 19, 62, 32, 8
+    AUTORADIOBUTTON "2004-2007", IDC_RADIO2, 63, 62, 50, 8
+    PUSHBUTTON      "Lancer le serveur", IDC_BUTTON2, 9, 129, 64, 14
+    LTEXT           "slochehack 1.5 - version Windows", IDC_STATIC, 49, 6, 110, 8, SS_LEFT
+    LTEXT           "Addresse IP serveur:", IDC_STATIC, 15, 91, 66, 8, SS_LEFT
+    EDITTEXT        IDC_EDIT2, 85, 89, 107, 12, ES_AUTOHSCROLL
+    GROUPBOX        "Version du client", IDC_STATIC, 11, 50, 178, 26
+    PUSHBUTTON      "Regarder ipconfig", IDC_BUTTON3, 125, 105, 68, 13
+    PUSHBUTTON      "Sauvegarder", IDC_BUTTON4, 86, 129, 46, 14
 }

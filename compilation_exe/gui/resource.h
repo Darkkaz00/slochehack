@@ -9,3 +9,5 @@
 #define IDC_RADIO2                              1003
 #define IDC_BUTTON2                             1004
 #define IDC_EDIT2                               1005
+#define IDC_BUTTON3                             1006
+#define IDC_BUTTON4                             1007
