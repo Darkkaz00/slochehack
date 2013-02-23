@@ -27,11 +27,6 @@ f.close()
 
 # client 2003 detecte --
 # Patch fix real 2003:
-# 
-# Ligne 0:
-# movie 'sloche2003.swf' compressed // flash 6, total frames: 84, frame rate: 40 fps, 720x600 px
-# movie 'sloche2003-fixreal.swf' compressed // flash 6, total frames: 84, frame rate: 40 fps, 720x600 px
-# 
 # Ligne 47813:
 #      push 3
 #      push -100

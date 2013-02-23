@@ -16,7 +16,8 @@ void unescape(char *);
 
 int unsafe(char* s){
 	while(*s){
-		if(! (isalnum(*s) || *s=='.' || *s=='_' || *s=='/'))	return 1;
+		if(! (isalnum(*s) || *s=='.' || *s=='_' || *s=='/'))
+			return 1;
 		++s;
 	}
 	return 0;
@@ -24,16 +25,12 @@ int unsafe(char* s){
 
 int unsafe_2(char* s){
 	while(*s){
-		if(! (isalnum(*s) || *s=='.' || *s==' ' || *s=='\n' || *s=='\r'))	return 1;
+		if(! (isalnum(*s) || *s=='.' || *s==' ' || *s=='\n'
+		   || *s=='\r'))
+			return 1;
 		++s;
 	}
 	return 0;
-}
-
-void footer()
-{
-	fflush(stdout);
-	printf("<P><HR><FONT SIZE='-1'><I>The &quot;Clown&quot; WebServer<BR><a href='/'>index</a> <a href='/about'>about</a>");
 }
 
 int main(int argc, char** argv)
@@ -68,7 +65,7 @@ int main(int argc, char** argv)
 				if(k) {
 					tokens[i] = p;
 					k = 0;
-				}			
+				}
 			} else {
 				*p = 0;
 				k = 1;
@@ -80,11 +77,8 @@ int main(int argc, char** argv)
 
 		if(i < 2) goto hack_attempt;
 
-		if(strlen(tokens[2]) > strlen("HTTP/1.23456789")) goto hack_attempt2;
-
-		/*
-		 * for(j = 0; j < i; j++)	printf("token %d : '%s'\n", j, tokens[j]);
-		 */
+		if(strlen(tokens[2]) > strlen("HTTP/1.23456789"))
+			goto hack_attempt2;
 
 		if(!strcmp(tokens[0], "GET")){
 			printf("%s 200 OK\n", tokens[2]);
