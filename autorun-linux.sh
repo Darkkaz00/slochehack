@@ -25,5 +25,5 @@ echo "IP: `cat localhost.txt`"
 python modification-swf.py `cat localhost.txt` $CLIENT
 rm localhost.txt
 
-$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd server; ./run; sh" &
+$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd server; ./demarrage-unix; sh" &
 $TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd xml-server; echo xmlserv; python $XMLSERV; sh" &
