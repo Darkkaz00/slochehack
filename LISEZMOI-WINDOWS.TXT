@@ -2,13 +2,11 @@ Réimplémentation du bon vieux chat de sloche.com
 ------------------------------------------------
 par: un anonyme ancien fan de sloche.com ;)
 
-Instructions de lancement -- version Windows
-(si vous êtes pas sous Windows, SVP lire "README")
+Guide de lancement, version Unix
 
 CODE SOURCE =================================================================
 
 Ce projet est 100% open source. Tout le code source est inclus sur place.
-Aucun binaire n'est diffusé par moi.
 
 FICHIERS EXTERNES REQUIS ====================================================
 
@@ -19,7 +17,6 @@ de continuer. Sans les fichiers requis, ce logiciel
 			-- -------- ---
 
 Prière de bien lire ce document aussi.
-
 
 REMARQUES DE SÉCURITÉ	======================================================
 
@@ -36,18 +33,25 @@ Logiciel vite-fait.
 INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 
 	Ce que ça vous prend:
+		- Système d'exploitation Windows vendu par Microsoft
+		  mais aussi préinstallé sur quasiment tous les
+		  ordinateurs vu qu'ils ont un gros monopole là-dessus
+		  (http://www.windows.com/)
 		- MinGW (http://www.mingw.org/) -- la version
 		  complète, là, avec le shell et tout
 		- Python (http://python.org/)
-		- outil flasm (http://www.nowrap.de/flasm.html)
+		- Outil flasm (http://www.nowrap.de/flasm.html)
 
 	Vous devez mettre python et flasm dans votre "PATH" pour que le
 	shell MinGW les trouve.
 
+	REMARQUE: je compte distribuer une version spéciale précompilée
+	qui ne demandera que flasm comme logiciel additionnel requis.
+
 Étapes de lancement:
 
-1. Dans un terminal MinGW, se rendre dans le dossier slochehack et taper:
-   sh create-modded-swf.sh IP exemple-de-fichier-client-sloche.swf
+1. Dans un terminal, se rendre dans le dossier slochehack et taper:
+   python modification-swf.py IP exemple-de-fichier-client-sloche.swf
 
 	où IP = adresse IP du serveur, soit local (192.168.2.x) ou Internet
 	(Internet = mauvaise idée, cf infos sécurité plus haut)
@@ -63,7 +67,6 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
            Default Gateway . . . . . . . . . : 192.168.2.1
 
    Dans cet exemple, 192.168.2.2 est l'IP locale.
-
 
 2. modifier server/sloche-data/simpleChatConfig.xml
    	 et server/sloche-data/simpleChatConfig1.xml
@@ -82,8 +85,6 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	Remarque: ce serveur gère aussi le système d'amis et de
 	messagiel (le "sloche-pop").
 
-	Requiert Python 2.x récent.
-
 UTILISATON DU SITE ===========================================================
 
 Le site devrait marcher de façon presqu'identique à l'original.
@@ -97,11 +98,11 @@ Comptes spéciaux
 	nom		mot de passe	disponibilité
 					client
 	---------------------------------------------
-	doclipo		liposuccion  2007
-	laplante	bos          2004-2007
-	real		potiron      2003
-	sanstete	hax          2003-2007
-	pouvoirs	hax          2004-2005
+	doclipo		liposuccion	2007
+	laplante	bos		2004-2007
+	real		potiron		2003
+	sanstete	hax		2003-2007
+	pouvoirs	hax		2004-2005
 
 Actions spéciales
 -----------------

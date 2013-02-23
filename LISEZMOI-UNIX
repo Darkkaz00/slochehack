@@ -2,10 +2,11 @@ Réimplémentation du bon vieux chat de sloche.com
 ------------------------------------------------
 par: un anonyme ancien fan de sloche.com ;)
 
+Guide de lancement, version Unix
+
 CODE SOURCE =================================================================
 
 Ce projet est 100% open source. Tout le code source est inclus sur place.
-Aucun binaire n'est diffusé par moi.
 
 FICHIERS EXTERNES REQUIS ====================================================
 
@@ -16,7 +17,6 @@ de continuer. Sans les fichiers requis, ce logiciel
 			-- -------- ---
 
 Prière de bien lire ce document aussi.
-
 
 REMARQUES DE SÉCURITÉ	======================================================
 
@@ -32,33 +32,19 @@ Logiciel vite-fait.
 
 INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 
+
 	Ce que ça vous prend:
-		- un Unix (par ex. Linux, FreeBSD, Mac OS X, ...)
-		  cela doit inclure les utilitaires standard,
-		  dont make et sed.
-		  En ce moment, ça marche pas avec MinGW, désolé.
-		- compilateur C (par ex. gcc ou clang)
-		  la commande "cc" doit marcher
-		- droits d'administrateur et utilitaire sudo
-		- Python 2.x récent
-		  la commande "python" doit marcher
-		- shell Unix "sh" standard ou compatible
-		- outil flasm (http://www.nowrap.de/flasm.html)
-		- commande md5sum
-
-	(Moi je fais rouler tout ça avec les utilitaires
-	version GNU et Linux comme Unix.)
-
-	Remarque: je songe à faire une version plus facilement portable,
-	j'aurais à réécrire les bouts botchés faits en shell et
-	en C (surtout le serveur web) en Python, et alors là ça marcherait
-	sur MinGW et probablement sur a peu près n'importe quoi.
-	Malheureusement, je ne crois pas que je vais un jour faire ces
-	corrections.
+		- Système d'exploitation de type Unix (Linux, FreeBSD,
+		  Mac OS X, Solaris, etc.). Cela doit comprendre
+		  les utiliataires standard, dont "sh", "make", "sed",
+		  et la commande "cc" pour le compilateur C.
+		- Droits d'administrateur et utilitaire "sudo"
+		- Python 2.x récent -- commande "python"
+		- Logiciel flasm (http://www.nowrap.de/flasm.html)
 
 Étapes de lancement:
 
-1. sh create-modded-swf.sh IP exemple-de-fichier-client-sloche.swf
+1. python modification-swf.py IP exemple-de-fichier-client-sloche.swf
 
 	où IP = adresse IP du serveur, soit local (192.168.2.x) ou Internet
 	(Internet = mauvaise idée, cf infos sécurité plus haut)
@@ -71,7 +57,7 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 
    	pour refléter l'adresse IP choisie
 
-3. cd server; ./run			[serveur HTTP fait maison]
+3. cd server; ./demarrage-unix		[serveur HTTP fait maison]
 
 4. cd xml-server; python xmlserv.py	[serveur de messages XML]
 	ATTENTION: pour la version 2003, c'est xmlserv2003.py
@@ -85,8 +71,9 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	Requiert Python 2.x récent.
 
 Remarque: il y a le script autorun-linux.sh qui fait tout cela tout seul si il
-est bien configuré. (Malheureusement, il ne fonctionne que sous certains
-bureaux graphiques et seulement sous Linux).
+est bien configuré. Malheureusement, il ne fonctionne que sous Linux et
+qu'avec les bureaux graphiques GNOME, MATE, et Ubuntu.
+
 
 UTILISATON DU SITE ===========================================================
 

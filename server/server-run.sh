@@ -2,7 +2,7 @@ echo "Compilation du serveur web"
 rm -f ncweb ncweb.exe
 if [ $(uname | grep MINGW) ];
 then
-	cc ncweb-win32.c -o ncweb
+	cc ncweb-windows.c -o ncweb
 else
 	make ncweb
 fi
