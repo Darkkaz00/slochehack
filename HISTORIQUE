@@ -1,10 +1,11 @@
 Historique des versions du logiciel "slochehack"
 
 Version 1.5 - XXX
-- Précisions sur la configuration logicielle requise
-- Petites corrections un peu partout dans l'archive
 - Compatibilité avec Windows
 - Plus besoin du serveur de policies de Adobe
+- Correction des informations sur la configuration logicielle
+  requise
+- Nettoyage et simplification du logiciel
 
 Version 1.4 - 6 février 2013
 - Réimplémentation assez complète du "sloche pop" (amis et messages privés)
