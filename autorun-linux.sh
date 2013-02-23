@@ -22,7 +22,7 @@ XMLSERV=xmlserv.py
 
 ifconfig | grep 192 | grep -v RX | sed 's/inet addr:\(.*\)\ Bcast:\(.*\)/\1/' | tr -d ' ' | tail -1 >localhost.txt
 echo "IP: `cat localhost.txt`"
-sh create-modded-swf.sh `cat localhost.txt` $CLIENT
+python modification-swf.py `cat localhost.txt` $CLIENT
 cat server/sloche-data/config.default | sed s/SERVERADDR/`cat localhost.txt`/g > server/sloche-data/simpleChatConfig.xml
 cat server/sloche-data/config_messagiel.default | sed s/SERVERADDR/`cat localhost.txt`/g > server/sloche-data/simpleChatConfig1.xml
 rm localhost.txt
