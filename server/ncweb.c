@@ -469,7 +469,7 @@ int main(int argc, char** argv)
 				printf("\n");
 				fflush(stdout);
 
-				system("cat liste-pouvoirs.txt");
+				system("cat sloche-data/liste-pouvoirs.txt");
 				printf("\n");
 				fflush(stdout);
 			/* garder le client messagiel content...
