@@ -3,8 +3,8 @@ Historique des versions du logiciel "slochehack"
 Version 1.5 - XXX
 - Compatibilité avec Windows
 - Plus besoin du serveur de policies de Adobe
-- Correction des informations sur la configuration logicielle
-  requise
+- Plus besoin de modifier soi-même les configurations XML
+- Correction des infos sur la configuration logicielle requise
 - Nettoyage et simplification du logiciel
 
 Version 1.4 - 6 février 2013
