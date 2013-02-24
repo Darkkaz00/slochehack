@@ -4,7 +4,18 @@
  * sur son site http://www.winprog.org/tutorial/
  *
  * Il y a aussi des bouts copiés d'autres exemples
- * provenant de la même archive.
+ * provenant de la même archive, et encore des
+ * bouts copiés d'exemples donnés sur Internet.
+ * Je suis pas un expert de programmation Windows
+ * et je n'ai ni le temps ni l'envie d'en devenir
+ * un, alors je n'ai pas de honte à faire du
+ * copier-coller-modifier.
+ *
+ * Le fichier ressources a été modifié à l'aide
+ * du logiciel ResEdit.
+ *
+ * - Gabriel
+ * 24 février 2013
  */
 
 #include <windows.h>
@@ -13,20 +24,25 @@
 #include <string.h>
 #include "resource.h"
 
-char buf[1024];		/* usage général */
-FILE *f;
+char buf[1024];		/* Usage général */
+FILE *f;			/* Usage général */
 
-int fichier_ok = 0;	/* choix fichier client OK ? */
 int version = 0;	/* 1: version 2003, 2: version 2004-2007 */
-char pwd[4096];		/* directoire slochehack */
+char pwd[4096];		/* Directoire principale slochehack */
 
-char fichier[MAX_PATH] = "";	/* chemin fichier client */
-char adr[256] = "";			/* addresse IP */
+char fichier[MAX_PATH] = "";	/* Chemin fichier client choisi */
+char adr[256] = "";			/* Addresse IP serveur choisie */
 
+/* Variables de programmation Windows tirées
+ * de l'exemple fourni par theForger */
 HBRUSH g_hbrBackground = NULL;
 OPENFILENAME ofn;
 char szFileName[MAX_PATH] = "";
 
+/* 
+ * Écrire une chaîne de caractères dans un fichier,
+ * en n'y écrivant pas les caractères "newline"
+ */
 void ecrire_comme_du_monde(char *str, FILE* f)
 {
 	char *p;
@@ -38,7 +54,12 @@ void ecrire_comme_du_monde(char *str, FILE* f)
 	fputc('\n', f);
 }
 
-char * enlever_lignes(char *str)
+/*
+ * Enlever les caractères "newline" d'une chaîne
+ * de caractères. Attention: ça retourne une seule
+ * et unique chaine en stockage "automatique".
+ */
+char* enlever_lignes(char *str)
 {
 	static char buf[4096];
 	char *p = str;
@@ -52,25 +73,30 @@ char * enlever_lignes(char *str)
 	return buf;
 }
 
+/*
+ * Vérifier si le programme "flasm.exe" est bel
+ * et bien présent dans la directoire principale
+ * du logiciel.
+ */
 int check_flasm()
 {
-	/* http://stackoverflow.com/questions/3828835/how-can-we-check-if-a-file-exists-or-not-using-win32-program */
-
-	/* aller dans la directoire principale slochehack */
+	/* Aller dans la directoire principale slochehack */
 	SetCurrentDirectory(pwd);
 
+	/* http://stackoverflow.com/questions/3828835/how-can-we-check-if-a-file-exists-or-not-using-win32-program */
 	return GetFileAttributes("flasm.exe") != 0xFFFFFFFF;
 }
 
+/* La routine principale de la fenêtre graphique */
 BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 {
 	switch(Message)
 	{
 		case WM_INITDIALOG:
-			/* stocker la directoire de lancement pour usage futur */
+			/* Stocker la directoire de lancement pour usage futur */
 			GetCurrentDirectory(4096, pwd);
 
-			/* sauvegarde ? */
+			/* Charger fichier sauvegarde, s'il y a lieu */
 			if ((f = fopen("config_slochehack.txt", "r"))) {
 				fgets(fichier, MAX_PATH, f);
 				fgets(adr, 256, f);
@@ -78,24 +104,26 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 				fclose(f);
 				sscanf(buf, "%d", &version);
 
+				/* Remplir les champs de la fenêtre avec les
+				 * valeurs sauvegardées */
 				SetDlgItemText(hwnd, IDC_EDIT1, fichier);
 				SetDlgItemText(hwnd, IDC_EDIT2, adr);
-				fichier_ok = 1;
 
+				/* Cocher version sauvegardée choisie */
 				if (version == 1)
 					SendMessage(GetDlgItem(hwnd, IDC_RADIO1), BM_SETCHECK, BST_CHECKED,1);
 				if (version == 2)
 					SendMessage(GetDlgItem(hwnd, IDC_RADIO2), BM_SETCHECK, BST_CHECKED,1);
 			}
 
-			/* formalités directement copiées de l'exemple de theForger */
+			/* Formalités directement copiées de l'exemple de theForger */
 			SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)LoadIcon(NULL, 
 				MAKEINTRESOURCE(IDI_APPLICATION)));
 			SendMessage(hwnd, WM_SETICON, ICON_BIG, (LPARAM)LoadIcon(NULL, 
 				MAKEINTRESOURCE(IDI_APPLICATION)));
 		break;
 
-		/* encore d'autre formalités copiées */
+		/* Encore d'autre formalités copiées */
 
 		case WM_CLOSE:
 			EndDialog(hwnd, 0);
@@ -113,49 +141,53 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 
-		/* les boutons, à présent */
-
+		/* Les boutons, à présent */
 		case WM_COMMAND:
 			switch(LOWORD(wParam))
 			{
-				case IDC_RADIO1:	/* choix client 2003 */
+				case IDC_RADIO1:	/* Choix client 2003 */
 					version = 1;
 					break;
 
-				case IDC_RADIO2:	/* choix client 2004-2007 */
+				case IDC_RADIO2:	/* Choix client 2004-2007 */
 					version = 2;
 					break;
 
-				case IDC_BUTTON4:	/* bouton "sauvegarder" */
-				/* aller dans la directoire principale slochehack */
-				SetCurrentDirectory(pwd);
+				case IDC_BUTTON4:	/* Bouton "sauvegarder" */
+					/* Aller dans la directoire principale slochehack */
+					SetCurrentDirectory(pwd);
 
+					/* Tenter d'ouvrir le fichier de sauvegarde et
+					 * y écrire comme du monde les données */
 					if ((f = fopen("config_slochehack.txt", "w"))) {
+						/* fichier client choisi */
 						GetWindowText(GetDlgItem(hwnd, IDC_EDIT1), fichier, MAX_PATH);
 						ecrire_comme_du_monde(fichier, f);
 
+						/* addresse IP choisie */
 						GetWindowText(GetDlgItem(hwnd, IDC_EDIT2), adr, 256);
 						ecrire_comme_du_monde(adr, f);
 
+						/* version du client */
 						sprintf(buf, "%d", version);
 						ecrire_comme_du_monde(buf, f);
 
 						fclose(f);
 					} else {
-						MessageBox(hwnd, "Echec de la sauvegarde",
+						MessageBox(hwnd, "Échec de la sauvegarde",
 							"Erreur", MB_OK | MB_ICONEXCLAMATION);
 					}
 					break;
 
-				case IDC_BUTTON3:	/* bouton "regarder ipconfig" */
+				case IDC_BUTTON3:	/* Bouton "regarder ipconfig" */
 					system("start cmd.exe /kipconfig");
 					break;
 
-				case IDC_BUTTON2:	/* bouton "lancer le serveur" */
-					/* aller chercher l'addresse IP choisie */
+				case IDC_BUTTON2:	/* Bouton "lancer le serveur" */
+					/* Aller chercher l'addresse IP choisie */
 					GetWindowText(GetDlgItem(hwnd, IDC_EDIT2), adr, 256);
 
-					/* chercher fichier client */
+					/* Chercher chemin fichier client */
 					GetWindowText(GetDlgItem(hwnd, IDC_EDIT1), fichier, MAX_PATH);
 
 					if (strlen(adr) < 2) {
@@ -169,21 +201,24 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 						MessageBox(hwnd, "SVP copier flasm.exe dans le dossier slochehack",
 							"Erreur", MB_OK | MB_ICONEXCLAMATION);
 					} else if (!version) {
-						MessageBox(hwnd, "SVP choisir une version du client", "Erreur", 
-							MB_OK | MB_ICONEXCLAMATION);
+						MessageBox(hwnd, "SVP choisir une version du client",
+							"Erreur", MB_OK | MB_ICONEXCLAMATION);
 					}
 					else {
-						/* aller dans la directoire principale slochehack */
-						SetCurrentDirectory(pwd);
-
-						/* lancer la première partie du serveur */
+						/* Lancer la première partie du serveur
+						 * (modifications XML et SWF, serveur web) */
 						sprintf(buf, "start lancement1.bat ");
 						strcat(buf,  enlever_lignes(adr));
 						strcat(buf, " \"");
 						strcat(buf, enlever_lignes(fichier));
 						strcat(buf, "\"");
+
+						/* Lancer la commande dans la directoire principale */
+						SetCurrentDirectory(pwd);
 						system(buf);
 
+						/* Lancer la deuxième partie, soit le serveur
+						 * de messages XML */
 						if (version == 1)
 							sprintf(buf, "start lancement2003.bat ");
 						else
@@ -193,12 +228,13 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 						strcat(buf, enlever_lignes(fichier));
 						strcat(buf, "\"");
 
-						SetCurrentDirectory(pwd); /* directoire principale */
-						system(buf);			/* lancement partie 2 */
+						/* Lancer la commande dans la directoire principale */
+						SetCurrentDirectory(pwd);
+						system(buf);
 					}
 					break;
 
-				case IDC_BUTTON1:	/* parcourir pour choisir fichier client */
+				case IDC_BUTTON1:	/* Parcourir pour choisir fichier client */
 					ZeroMemory(&ofn, sizeof(ofn));
 					ofn.lStructSize = sizeof(ofn);
 					ofn.hwndOwner = hwnd;
@@ -210,20 +246,19 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 
 					if(GetOpenFileName(&ofn)) {
 						if (strlen(szFileName)) {
-							fichier_ok = 1;
 							strcpy(fichier, szFileName);
 							SetDlgItemText(hwnd, IDC_EDIT1, fichier);
 						}
 					}
 				break;
 
-				case IDOK:			/* quitter */
+				case IDOK:			/* Quitter */
 					EndDialog(hwnd, 0);
 				break;
 			}
 		break;
 
-		/* formalités */
+		/* Formalités */
 
 		case WM_DESTROY:
 			DeleteObject(g_hbrBackground);
@@ -235,8 +270,10 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 	return TRUE;
 }
 
+/* Entrée */
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
 	return DialogBox(hInstance, MAKEINTRESOURCE(IDD_MAIN), NULL, DlgProc);
 }
+
