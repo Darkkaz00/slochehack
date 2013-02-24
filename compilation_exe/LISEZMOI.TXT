@@ -29,8 +29,11 @@ Logiciel vite-fait.
 INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 
 	Ce que ça vous prend:
+		- Windows XP ou ultérieur (selon le site de Python)
 		- Outil flasm (http://www.nowrap.de/flasm.html)
 		  Placez "flasm.exe" dans la directoire principale de slochehack.
+		- Au besoin, le "Microsoft Visual C++ 2008 Redistributable Package"
+		  http://www.microsoft.com/en-us/download/details.aspx?id=29
 
 Étapes de lancement facile graphique:
 
