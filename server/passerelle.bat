@@ -4,5 +4,5 @@
 @echo off
 
 cd ..\\xml-server\\
-python %1 %2
+passerelle2.exe %1 %2
 cd ..\\server\\

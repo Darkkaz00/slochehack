@@ -8,4 +8,3 @@ cd ../server/; sh conversion_exe.sh; rm conversion_exe.sh; cd ../compilation_exe
 
 cd ..; sh conversion_exe.sh; rm conversion_exe.sh; cd compilation_exe
 
-cp ../server/passerelle2.bat ../server/passerelle.bat

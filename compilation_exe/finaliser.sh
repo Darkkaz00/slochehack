@@ -9,7 +9,6 @@ rm *.py
 #mv README README.TXT
 #unix2dos README.TXT
 rm README
-rm passerelle1.bat passerelle2.bat
 cc ncweb-windows.c -o ncweb.exe
 rm *.sh *.c demarrage-unix
 cd ../compilation_exe
