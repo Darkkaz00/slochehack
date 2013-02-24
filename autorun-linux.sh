@@ -20,10 +20,15 @@ CLIENT=fichiers-client/sloche2004.swf
 # le client 2003 !
 XMLSERV=xmlserv.py
 
+# Tuyeauterie assez compliquée pour extraire l'adresse IP LAN
 ifconfig | grep 192 | grep -v RX | sed 's/inet addr:\(.*\)\ Bcast:\(.*\)/\1/' | tr -d ' ' | tail -1 >localhost.txt
 echo "IP: `cat localhost.txt`"
+
+# Modifier le SWF et les XML
 python modification-swf.py `cat localhost.txt` $CLIENT
 rm localhost.txt
 
+# Lancer le serveur web et le serveur chat XML
+# dans deux fenêtres terminal graphiques séparées
 $TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd server; ./demarrage-unix; sh" &
 $TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd xml-server; echo xmlserv; python $XMLSERV; sh" &
