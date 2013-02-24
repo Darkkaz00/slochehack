@@ -1,13 +1,15 @@
 Historique des versions du logiciel "slochehack"
 
 Version 1.5 - XXX
-- Ajout d'une version compatible Windows avec un démarreur graphique
-  facile d'usage
+- Ajout d'une version compatible Windows. Elle comprend un démarreur
+  graphique facile d'usage et le seul logiciel externe requis est
+  "flasm.exe".
 - Meilleure compatibilité avec FreeBSD
 - Plus besoin du serveur de policies de Adobe
 - Plus besoin de modifier soi-même les configurations XML
 - Correction des infos sur la configuration logicielle requise
 - Nettoyage et simplification générale du logiciel
+- Nettoyage et simplification de la documentation technique HTML
 - Accès au pouvoir "King de la Swompe" ............ [à finir]
 
 Version 1.4 - 6 février 2013
