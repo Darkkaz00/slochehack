@@ -25,13 +25,13 @@
 #include "resource.h"
 
 char buf[1024];		/* Usage général */
-FILE *f;			/* Usage général */
+FILE *f;		/* Usage général */
 
 int version = 0;	/* 1: version 2003, 2: version 2004-2007 */
 char pwd[4096];		/* Directoire principale slochehack */
 
 char fichier[MAX_PATH] = "";	/* Chemin fichier client choisi */
-char adr[256] = "";			/* Addresse IP serveur choisie */
+char adr[256] = "";		/* Addresse IP serveur choisie */
 
 /* Variables de programmation Windows tirées
  * de l'exemple fourni par theForger */
