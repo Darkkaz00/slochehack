@@ -12,7 +12,7 @@ import thread
 import urllib
 import select
 import random
-from roommove import *
+from roommove2003 import *
 from getuserapi import *
 import time
 import amis_api
