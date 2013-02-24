@@ -1,0 +1,14 @@
+Les sites suivants m'ont été utiles lors de la préparation du
+logiciel de lancement graphique:
+
+- "Welcome to theForger's Win32 API Tutorial"
+   http://www.winprog.org/tutorial/
+
+- "[SOLVED] Win32 API Development with mingw/wine. Help Please."
+  http://ubuntuforums.org/showthread.php?t=705371
+
+- "How can we check if a file Exists or not using Win32 program?"
+  http://stackoverflow.com/questions/3828835/how-can-we-check-if-a-file-exists-or-not-using-win32-program
+
+Gabriel
+24 février 2013
