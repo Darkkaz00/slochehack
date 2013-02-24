@@ -4,28 +4,23 @@ ni les graphismes/client/son/HTML originaux de sloche.
 Ici je vous donne les chemins des fichiers non-inclus qui sont requis pour
 faire fonctionner une réimplémentation assez complète et je vous
 donne des infos sur ce que sont ces fichiers. Pour que le logiciel marche
-il faut copier aux ___bons___ endroits les ___bons___ fichiers. Merci.
+il faut copier aux *bons* endroits les *bons* fichiers. Merci.
 
-Donc, en résumé, ça vous prend d'avance le logiciel gratuit de serveur
-de policies de Adobe ainsi que les fichiers du site. Je ne les donne pas.
-Je vous montre juste où les mettre.
-
-PAGE D'ACCUEIL [pas absolument nécessaire]
+PAGE D'ACCUEIL		[pas absolument nécessaire]
 
 ./server/sloche-data/popup.html		<--  la fenêtre avec le client
 ./server/sloche-data/index.html		<--  la page d'accueil
-./server/sloche-data/splahtml.gif	<--  logo du site sur la page d'accueil
+./server/sloche-data/splahtml.gif	<--  logo du site à l'accueil
 
 FICHIERS CLIENT FLASH
+[bon, moi j'ai la collection quasi-complète, pas besoin d'en
+avoir autant; un seul client suffira]
 
 ./fichiers-client/sloche2007.swf	<--	client version 2007
 ./fichiers-client/sloche2006.swf	<--	client version 2006
 ./fichiers-client/sloche2005.swf	<--	client version 2005
 ./fichiers-client/sloche2004.swf	<--	client version 2004
 ./fichiers-client/sloche2003.swf	<--	client version 2003
-
-[bon, moi j'ai la collection quasi-complète, pas besoin d'en
-avoir autant; un seul client suffira]
 
 ICÔNES BOUTONS POUVOIRS (taille : 17 x 17 pixels, format: JPEG)
 [pas absolument nécessaire]
