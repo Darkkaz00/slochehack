@@ -34,7 +34,8 @@ f.close()
 #      push 3
 #      push -100
 #
-if m.hexdigest() == '4fd90f12605dae1248382fa9416a80b4':
+# le deuxieme, c'est pour foutu windows qui marche encore de travers
+if m.hexdigest() == '4fd90f12605dae1248382fa9416a80b4' or m.hexdigest() == 'd008a90badd1830c3da08143c58cf3d8':
 	print "Client version 2003 detecte, tentative d'application du patch fixreal..."
 	f = open("sloche_mod.asm")
 	lignes = []

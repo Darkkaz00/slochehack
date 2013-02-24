@@ -230,7 +230,7 @@ def serve_client(conn, addr, id):
 	print "xmlserv: branchement depuis. %s:%s. lancement du thread %d" % (client_host, client_port, id)
 
 	init = time.time()
-	ready = select.select([conn], [], [], 0.2)
+	ready = select.select([conn], [], [], 0.01)
 	if ready[0]:
 		req = conn.recv(1024)
 		print "r: %s" % req

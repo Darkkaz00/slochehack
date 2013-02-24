@@ -87,6 +87,15 @@ int check_flasm()
 	return GetFileAttributes("flasm.exe") != 0xFFFFFFFF;
 }
 
+int check_decor()
+{
+	/* Aller dans la directoire principale slochehack */
+	SetCurrentDirectory(pwd);
+
+	/* http://stackoverflow.com/questions/3828835/how-can-we-check-if-a-file-exists-or-not-using-win32-program */
+	return GetFileAttributes("server\\sloche-data\\11.swf") != 0xFFFFFFFF;
+}
+
 /* La routine principale de la fenêtre graphique */
 BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 {
@@ -202,6 +211,9 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 							"Erreur", MB_OK | MB_ICONEXCLAMATION);
 					} else if (!version) {
 						MessageBox(hwnd, "SVP choisir une version du client",
+							"Erreur", MB_OK | MB_ICONEXCLAMATION);
+					} else if (!check_decor()) {
+						MessageBox(hwnd, "11.swf est absent... SVP copier les decors au bons endroits. voir FICHIERS-EXTERNES-REQUIS.TXT",
 							"Erreur", MB_OK | MB_ICONEXCLAMATION);
 					}
 					else {

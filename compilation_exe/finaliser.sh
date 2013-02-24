@@ -9,7 +9,6 @@ rm *.py
 #mv README README.TXT
 #unix2dos README.TXT
 rm README
-cc ncweb-windows.c -o ncweb.exe
 rm *.sh *.c demarrage-unix
 cd ../compilation_exe
 
@@ -25,11 +24,3 @@ unix2dos FICHIERS-EXTERNES-REQUIS.TXT
 mv compilation_exe/LISEZMOI.TXT "`pwd`"
 cd compilation_exe
 
-cd gui
-sh build.sh
-cd ..
-# Dans le merveilleux monde de Microsoft, il faut copier
-# le fichier .exe et son .manifest de la meme commande,
-# pas avec deux commandes separees, sinon ca marche pas,
-# demandez-moi pas pourquoi !!!!!!!!!!!! >:(
-cp gui/slochehack.exe gui/slochehack.exe.manifest gui/*.bat ..

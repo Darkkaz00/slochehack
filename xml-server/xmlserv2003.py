@@ -121,7 +121,7 @@ def serve_client(conn, addr, id):
 	mq[id] = []
 
 	init = time.time()
-	ready = select.select([conn], [], [], 0.2)
+	ready = select.select([conn], [], [], 0.01)
 	if ready[0]:
 		req = conn.recv(1024)
 		print "r: %s" % req
@@ -138,9 +138,15 @@ def serve_client(conn, addr, id):
 	# enterChat garbage
 	req = conn.recv(1024)
 	print "got %s; skipping it" % req
+	old_req = req
 
-	# Initial room request
-	req = conn.recv(1024)
+	# bogue subtil sous windows
+	if "requestRoom" in old_req:
+		req = old_req
+	else:
+		# Initial room request
+		req = conn.recv(1024)
+	
 	if req.find('TYPE="requestRoom"') < 0:
 		print "Expected room request from %s:%s; got %s. Closing connection." % (client_host, client_port, req)
 		conn.close()
