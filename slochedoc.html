@@ -1,15 +1,12 @@
 <H3>Documentation technique (incompl&egrave;te et pas garantie juste) sur Sloche</H3>
 
-<BR>Derni&egrave;re mise &agrave; jour: 6 f&eacute;vrier 2013 - slochehack version 1.4
+<BR>Derni&egrave;re mise &agrave; jour: 16 f&eacute;vrier 2013
 <BR>
-<BR>Ce document donne quelques indices techniques sur le serveur de chat XML de sloche,
-<BR>lesquels j'ai devin&eacute;s en jouant avec le client et en programmant une r&eacute;impl&eacute;mentation de ce serveur de chat.
-<BR>C'est incomplet et il n'y a pas vraiment d'information sur le serveur HTTP.
-<BR>Il est possible d'en apprendre plus en r&eacute;p&eacute;tant soi-m&ecirc;me l'exercice ou en lisant le code (un peu confus) de mon logiciel <a href="https://sites.google.com/site/newgabrielca/souvenirsloche/slochehack">slochehack</a>.
-<BR>Par exemple, dans le fichier xmlserv2003.py il y a du code pour faire le bogue des "nains rouges".
+<BR>Ce document donne quelques indices techniques sur le serveur de chat XML de sloche, lesquels j'ai devin&eacute;s en jouant avec le client et en programmant une r&eacute;impl&eacute;mentation de ce serveur de chat. C'est incomplet; l'information sur le serveur HTTP est particuli&egrave;rement incompl&egrave;te.
 <BR>
-<BR>Voir aussi: le vieux site <a href="http://jp-source.tripod.com/sloche.html">JP source</a>, qui donne plusieurs informations identiques &agrave; celles fournies ici.
+<BR>Il est possible d'en apprendre plus en r&eacute;p&eacute;tant soi-m&ecirc;me l'exercice ou en lisant le code (un peu confus) de mon logiciel <a href="https://sites.google.com/site/newgabrielca/souvenirsloche/slochehack">slochehack</a>. Par exemple, dans le fichier xmlserv2003.py il y a du code pour faire le bogue des "nains rouges".
 <BR>
+<BR>Le vieux site <a href="http://jp-source.tripod.com/sloche.html">JP source</a>, qui date de quand sloche.com existait encore vraiment, donne plusieurs informations identiques &agrave; celles fournies ici.
 <BR>
 <HR>
 
@@ -42,7 +39,6 @@
 
 <BR>(ceci ne se rapporte pas directement &agrave; sloche, mais bon...)
 <PRE>
-
 $ cat &gt;~/mm.cfg
 ErrorReportingEnable=1
 TraceOutputFileEnable=1
@@ -51,7 +47,6 @@ $ flashplayerdebugger bob.swf
 $ cat ~/.macromedia/Flash_Player/Logs/flashlog.txt
 
 </PRE><A NAME="ancre1"></A><U>Codes avatars sp&eacute;ciaux</U><PRE>
-
 real: tete = corps = pied = 666
 laplante: tete = corps = pied = 777
 doclipo: tete = corps = pied = 888
@@ -59,7 +54,6 @@ doclipo: tete = corps = pied = 888
 Pour &ecirc;tre sans-t&ecirc;te, par exemple, tete = 0 suffira.
 
 </PRE><A NAME="ancre2"></A><U>Configuration XML des serveurs chat et messagiel</U><PRE>
-
 Lors d'une requ&ecirc;te HTTP pour: /client/simpleChatConfig.xml
 Le site de sloche.com original r&eacute;pondait:
 
@@ -74,15 +68,20 @@ Le site de sloche.com original r&eacute;pondait:
 o&ugrave; chat.sloche.com est l'addresse TCP/IP du serveur de chat XML,
 et 9100 le port &agrave; utiliser.
 
-Remarque: il y a un fichier /client/simpleChatConfig1.xml qui
+Il y aussi a un fichier /client/simpleChatConfig1.xml qui
 sert au "messagiel" (amis / "slochepop"). Il faut g&eacute;n&eacute;ralement
-mettre le serveur chat et le serveur messagiel sur deux sur des
-ports (et/ou h&ocirc;tes) s&eacute;par&eacute;s. Remarque: il faut s'assuer de ne
-*pas* donner de paquet "ACK" depuis le messagiel, sans quoi le
-client se met &agrave; faire des b&ecirc;tises.
+mettre le serveur chat et le serveur messagiel sur deux ports 
+(et, si on veut, h&ocirc;tes) s&eacute;par&eacute;s. Remarque: il faut s'assuer de ne 
+*pas* donner de paquet "ACK" depuis le messagiel, sans quoi le client
+se met &agrave; faire des b&ecirc;tises.
+
+slochehack utilise dans sa configuration par d&eacute;faut le port 9100
+pour le chat XML et le port 9200 pour le messagiel. Ces deux ports
+sont absents du fichier /etc/services distribu&eacute; sous Linux qui donne
+la liste des ports officiellement pris, alors &ccedil;a devrait pas causer
+trop de probl&egrave;mes.
 
 </PRE><A NAME="ancre3"></A><U>Fichiers Flash et images sur le serveur Web (incomplet)</U><PRE>
-
 /client/decor/lipo_decor.swf : d&eacute;cor salles priv&eacute;es "liposuccion"
 /client/decor/XX.swf : d&eacute;cors salles de chat publiques
 /client/son/sonX.swf, o&ugrave; 0 &lt; X &lt; 7 : musiques du site
@@ -94,7 +93,6 @@ client se met &agrave; faire des b&ecirc;tises.
 je n'ai pas de copie de ce fichier flash, il est introuvable sur internet.
 
 </PRE><A NAME="ancre4"></A><U>Requ&ecirc;tes HTTP POST (incomplet)</U><PRE>
-
 Lors des requ&ecirc;tes POST, plusieurs variables sont encod&eacute;s en format
 "query string" et pass&eacute;es comme corps de requ&ecirc;te.
 
@@ -105,7 +103,6 @@ Dans le logiciel slochehack, des fichiers Python dans la directoire xml-server
 se chargent de r&eacute;pondre &agrave; ce genre de requ&ecirc;te.
 
 </PRE><A NAME="ancre5"></A><U>D&eacute;roulement d'une session de chat (clients 2004-2007; incomplet)</U><PRE>
-
 D'abord, client se branche au serveur XML. Serveur doit r&eacute;pondre:
 
 &lt;MESSAGE TYPE="ACK"&gt;&lt;/MESSAGE&gt;
@@ -154,13 +151,19 @@ Remarque: pour la version originale (2003) du chat, les noms de paquets sont dif
 Voir mon fichier xmlserv2003.py.
 
 </PRE><A NAME="ancre6"></A><U>Message XML pour envoi de message priv&eacute; (clients 2004-2007)</U><PRE>
-
-&lt;MESSAGE TYPE="BT" FROM="SimpleChat" PRIVATE="true"&gt;&lt;ID&gt;id&lt;/ID&gt;&lt;TEXT&gt;text&lt;/TEXT&gt;&lt;/MESSAGE&gt;
+&lt;MESSAGE TYPE="BT" FROM="SimpleChat" PRIVATE="true"&gt;
+	&lt;ID&gt;id&lt;/ID&gt;
+	&lt;TEXT&gt;text&lt;/TEXT&gt;
+&lt;/MESSAGE&gt;
 
 </PRE><A NAME="ancre7"></A><U>Message XML pouvoir (envoy&eacute; par serveur 2004-2007)</U><PRE>
-
-&lt;MESSAGE TYPE="BE"&gt;&lt;ETAT&gt;123&lt;/ETAT&gt;&lt;FROM&gt;user&lt;/FROM&gt;&lt;TO&gt;user&lt;/TO&gt;
-&lt;EFFET&gt;123&lt;/EFFET&gt;&lt;PARAM&gt;blabla&lt;/PARAM&gt;&lt;/MESSAGE&gt;
+&lt;MESSAGE TYPE="BE"&gt;
+	&lt;ETAT&gt;123&lt;/ETAT&gt;
+	&lt;FROM&gt;user&lt;/FROM&gt;
+	&lt;TO&gt;user&lt;/TO&gt;
+	&lt;EFFET&gt;123&lt;/EFFET&gt;
+	&lt;PARAM&gt;blabla&lt;/PARAM&gt;
+&lt;/MESSAGE&gt;
 
 ETAT = 0 : annuler effet
 ETAT = 1 : appliquer effet
@@ -175,7 +178,7 @@ pour l'activation de ces pouvoirs (les boutons
 sur la barre rouge en haut d'&eacute;cran).
 ==============================================
  
-    11 : giant
+    11 : g&eacute;ant
 
         Logo: champignon
         Nom officiel: "Pouss&eacute;e de croissance". 
@@ -212,7 +215,7 @@ sur la barre rouge en haut d'&eacute;cran).
         Logo: logo style "peace"
         Nom officiel: "Pouahl !" 
  
-    23 : club VIP.
+    23 : club VIP
         Pour client 2007, flare
         donne ce bout de code int&eacute;ressant:
  
@@ -220,7 +223,6 @@ sur la barre rouge en haut d'&eacute;cran).
                 case 23:
                   _root.club = 1;
  
-
         Logo: lettres majuscules "VIP"
         Nom officiel: "Club swompe".
  
@@ -229,87 +231,113 @@ sur la barre rouge en haut d'&eacute;cran).
         Logo: silhouette
         Nom officiel: "Nouveaux personnages swompe". 
  
-    24 : t&eacute;l&eacute;portation.
+    24 : t&eacute;l&eacute;portation
 
          Logo: &eacute;toiles
 
     25 : bobblehead (raptissitateur ?)
 
-         Nom officiel: "Minimiseur".
          Logo: loupe
+         Nom officiel: "Minimiseur".
 
     27 : roi et reine du bal
  
-        Logo: m&eacute;daille.
-        Nom officiel: "Roi et reine du bal". 
+         Logo: m&eacute;daille.
+         Nom officiel: "Roi et reine du bal". 
  
     31 : fier pet. il faut peser sur DOWN pour utiliser.
-        relai XML incomplet.    - logo toxique
+         slochehack: relai XML incomplet ?
  
-        Logo: t&ecirc;te de mort ("toxique")
-        Nom officiel: "Fier pet".
+         Logo: t&ecirc;te de mort ("toxique")
+         Nom officiel: "Fier pet".
  
     32 : bike :)        - &eacute;toile
  
-        Logo: &eacute;toile bleue avec bande verticale rouge
-        Nom officiel: "Permis de conduire". 
+         Logo: &eacute;toile bleue avec bande verticale rouge
+         Nom officiel: "Permis de conduire". 
  
     33 : ultra. -- monsieur bouette, madame insecte
-        avec le bouton &ccedil;a marche 100%
+         avec le bouton &ccedil;a marche 100%
  
-        Logo: silhouette particuli&egrave;re
-        Nom officiel: "Nouveaux personnages trop sp&eacute;ciaux". 
+	 L'usager qui active le pouvoir peut cliquer sur la t&ecirc;te de
+	 son avatar, ce qui change la t&ecirc;te. Il peut aussi appuyer sur
+	 le bouton DOWN, ce qui donne lieu &agrave; un genre d'excr&eacute;ment qui
+	 contient soit de la bouette ou des mouches.
+
+         Logo: silhouette particuli&egrave;re
+         Nom officiel: "Nouveaux personnages trop sp&eacute;ciaux". 
  
     40 : gzzzit. envoy&eacute; automatiquement par le client en tapant "gzzzit".
+
     41 : r&eacute;al le boucher
 
-        Logo: morceau de viande
-        Nom officiel: R&eacute;al le boucher. 
+         Logo: morceau de viande
+         Nom officiel: R&eacute;al le boucher. 
  
     42 : king de la swompe
  
-        Nom officiel: "King de la swompe". 
+         Nom officiel: "King de la swompe". 
  
-         param = 1 -&gt; semble normal, h&eacute;licopt&egrave;res apparaissent,
-                personnages se font &eacute;crabouiller.
+	 param = (rien) -&gt; Pas d'h&eacute;licopt&egrave;res. D&eacute;placements
+	 entre salles permis. Le bouton pouvoir pour le king
+	 met initialement l'avatar dans cet &eacute;tat et &ccedil;a semble
+	 &ecirc;tre le r&ocirc;le du serveur que de changer le chiffre
+	 de param&egrave;tre.
+
+	 Le client g&egrave;re les chiffres de param&egrave;tre 0, 1, 2, 3.
+
+	 param = 0 -&gt; ??
+
+         param = 1 -&gt; Semble normal, h&eacute;licopt&egrave;res apparaissent,
+                      personnages se font &eacute;crabouiller.
+                      &Eacute;ventuellement les h&eacute;licopt&egrave;res tuent le king,
+                      il tombe et se fait tirer hors du chat par une corde.
+
+	 param = 2 -&gt; ??
+
+	 param = 3 -&gt; ?? 
+
+        Il y a une balise KING dans le message ER qui sert &agrave; ???
  
-        il y a un param&egrave;tre KING dans un autre message qui
-        sert &agrave; ???
- 
-        message XML sp&eacute;cial ?????? pour le message "le king
-        circule" ????
- 
-        &eacute;ventuellement les h&eacute;licopt&egrave;res tuent le king,
-        il tombe et se fait tirer hors du chat par une corde.
- 
-    &ccedil;a prend le SWF 2004 du site pour avoir tous ces
-    pouvoirs. tr&egrave;s peu restent dans 2006-2007.
+	Le sprite num&eacute;ro 1583 du client 2004 comporte le texte suivant:
+	    Alerte &agrave; l'&eacute;crapou ! Un King se prom&egrave;ne sur le chat
+            et &eacute;crase les slocheux.
+	Quand et comment doit on faire passer ce message ?
+	Le message est-il utilis&eacute; par le client ?
+  
+    (&Ccedil;a prend le SWF 2004 du site pour avoir tous ces
+    pouvoirs. Tr&egrave;s peu restent dans 2006-2007.)
 </PRE>
 <BR>Voir aussi la <a href="http://korckchit.populus.org/rub/9">liste des pouvoirs</a> sur le site de korkchit (c'est de l&agrave; que j'ai copi&eacute; les "noms officiels").
 <BR>
 <PRE>
-
 </PRE><A NAME="ancre8"></A><U>Message XML &eacute;motions (clients 2004-2007)</U><PRE>
-
 Le client envoie et le serveur relaie de fa&ccedil;on identique le message
 suivant:
 
-&lt;MESSAGE TYPE="BST" FROM="SimpleChat"&gt;&lt;CIBLE&gt;name&lt;/CIBLE&gt;&lt;ST&gt;sentiment&lt;/ST&gt;&lt;/MESSAGE&gt;
+&lt;MESSAGE TYPE="BST" FROM="SimpleChat"&gt;
+	&lt;CIBLE&gt;name&lt;/CIBLE&gt;
+	&lt;ST&gt;sentiment&lt;/ST&gt;
+&lt;/MESSAGE&gt;
 
 O&ugrave; sentiment peut &ecirc;tre: ange, demon, amoureux, explosion, malade, nuage
 
-</PRE><A NAME="ancre9"></A><U>Message XML docteur liposuccion (clients 2006-2007)</U><PRE>
+Demandez-moi pas pourquoi, avec des clients ant&eacute;rieurs &agrave; 2005 et avec
+le serveur slochehack, la fen&ecirc;tre pour activer les pouvoirs refuse
+de s'ouvrir.
 
+</PRE><A NAME="ancre9"></A><U>Message XML docteur liposuccion (clients 2006-2007)</U><PRE>
 Le client d'un usager donn&eacute; envoie ceci lorsqu'il *subit* l'effet "liposuccion":
 
 	&lt;MESSAGE TYPE="DL"&gt;&lt;/MESSAGE&gt;
 
 Puis le serveur envoie au client:
 
-	&lt;MESSAGE TYPE="DL"&gt;&lt;TARGET&gt;bob&lt;/TARGET&gt;&lt;/MESSAGE&gt;
+	&lt;MESSAGE TYPE="DL"&gt;
+		&lt;TARGET&gt;bob&lt;/TARGET&gt;
+	&lt;/MESSAGE&gt;
 
 </PRE><A NAME="ancre10"></A><U>D&eacute;roulement d'un changement de fiche via "ma page" alors que connect&eacute; au chat</U><PRE>
-
 Voici &agrave; quoi les messages XML ressemblent lorsqu'un changement de fiche
 a lieu &agrave; l'interieur de chat, client version 2003, en utilisant le
 bouton "ma page":
@@ -362,7 +390,6 @@ serveur: &lt;MESSAGE TYPE="ER" VALUE="update"&gt;&lt;RID VALUE="update"&gt;23&lt
 &lt;/CARAC&gt;&lt;/MESSAGE&gt;
 
 </PRE><A NAME="ancre11"></A><U>D&eacute;but d'une session slochepop</U><PRE>
-
 Lorsque l'utilisateur clique pour la premi&egrave;re fois sur l'ic&ocirc;ne
 de bulle qui sert &agrave; utiliser le slochepop, le client se connecte
 au serveur messagiel, qui r&eacute;pond avec une liste comme celle-ci:
@@ -392,8 +419,8 @@ Bob autorise la requ&ecirc;te
 Le serveur relaie l'autorisation
 -- envoi a gerard de '&lt;MESSAGE TYPE="send"&gt;&lt;TEXT OPTION="autoriser"&gt;bob&lt;/TEXT&gt;&lt;FROM&gt;bob&lt;/FROM&gt;&lt;/MESSAGE&gt;'
 
-Envoi mutuel de message AMI qui ajoute l'un &agrave; la liste d'amis de l'autre.
-Le serveur fait le relai.
+Finalement, le serveur doit relayer un message "ami" de fa&ccedil;on compl&egrave;tement
+redondante. (pourquoi ???)
 -- gerard: &lt;MESSAGE TYPE="ami" FROM="Client"&gt;&lt;NOM&gt;gerard&lt;/NOM&gt;&lt;AMI&gt;bob&lt;/AMI&gt;&lt;/MESSAGE&gt;
 -- envoi a gerard de '&lt;MESSAGE TYPE="ami"&gt;&lt;AMI STATUS="1"&gt;bob&lt;/AMI&gt;&lt;/MESSAGE&gt;'
 -- bob: &lt;MESSAGE TYPE="ami" FROM="Client"&gt;&lt;NOM&gt;bob&lt;/NOM&gt;&lt;AMI&gt;gerard&lt;/AMI&gt;&lt;/MESSAGE&gt;
@@ -408,22 +435,26 @@ Le serveur fait le relai.
 -- envoi a gerard de '&lt;MESSAGE TYPE="send"&gt;&lt;TEXT OPTION="supprimer"&gt;bob&lt;/TEXT&gt;&lt;FROM&gt;bob&lt;/FROM&gt;&lt;/MESSAGE&gt;'
 
 </PRE><A NAME="ancre15"></A><U>Les salles priv&eacute;es "liposuccion" (clients 2006-2007)</U><PRE>
-
-SLOCHEHACK - SALLES PRIVEES (V4 LIPOSUCCION)
 TESTS FAITS AVEC CLIENT 2007
- 
 ===========================================================
+
+LR -- obtenir liste des rooms priv&eacute;es
  
-LR -- obtenir liste des rooms privees
+Requ&ecirc;te client:
  
-Requete client:
+&lt;MESSAGE TYPE="LR" FROM="Client"&gt;
+&lt;/MESSAGE&gt;
  
-&lt;MESSAGE TYPE="LR" FROM="Client"&gt;&lt;/CLIENT&gt;
- 
-Reponse serveur:
+R&eacute;ponse serveur:
  
 &lt;MESSAGE TYPE="LR"&gt;
-&lt;RP&gt;&lt;ID&gt;0&lt;/ID&gt;&lt;NAME&gt;nom-de-room&lt;/NAME&gt;&lt;USERNAME&gt;david&lt;/USERNAME&gt;&lt;NB&gt;12&lt;/NB&gt;&lt;ACCESS&gt;OK&lt;/ACCESS&gt;&lt;/RP&gt;
+	&lt;RP&gt;
+		&lt;ID&gt;0&lt;/ID&gt;
+		&lt;NAME&gt;nom-de-room&lt;/NAME&gt;
+		&lt;USERNAME&gt;david&lt;/USERNAME&gt;
+		&lt;NB&gt;12&lt;/NB&gt;
+		&lt;ACCESS&gt;OK&lt;/ACCESS&gt;
+	&lt;/RP&gt;
 &lt;/MESSAGE&gt;
 
 Si ACCESS = "OK", la salle appara&icirc;tra en vert et il ne sera pas
@@ -434,29 +465,34 @@ requ&ecirc;te.
  
 ===========================================================
  
-RP -- requete pour entrer dans une salle privee
+RP -- requete pour entrer dans une salle priv&eacute;e
  
-Requete client:
+Requ&ecirc;te client:
  
-&lt;MESSAGE TYPE="RP"&gt;&lt;ID&gt;0&lt;/ID&gt;&lt;RAISON&gt;encoded%20text&lt;/RAISON&gt;&lt;/MESSAGE&gt;
+&lt;MESSAGE TYPE="RP"&gt;
+	&lt;ID&gt;0&lt;/ID&gt;
+	&lt;RAISON&gt;encoded%20text&lt;/RAISON&gt;
+&lt;/MESSAGE&gt;
  
 ===========================================================
  
-CR -- creer une salle privee
+CR -- cr&eacute;er une salle priv&eacute;e
  
-Requete client:
+Requ&ecirc;te client:
  
-&lt;MESSAGE TYPE="CR"&gt;&lt;NOM&gt;donald&lt;/NOM&gt;&lt;DESC&gt;clownroom&lt;/DESC&gt;&lt;/MESSAGE&gt;
+&lt;MESSAGE TYPE="CR"&gt;
+	&lt;NOM&gt;donald&lt;/NOM&gt;
+	&lt;DESC&gt;clownroom&lt;/DESC&gt;
+&lt;/MESSAGE&gt;
  
-Reponse serveur:
+R&eacute;ponse serveur:
  
 &lt;MESSAGE TYPE="CR"&gt;
 &lt;STATUS&gt;OK&lt;/STATUS&gt; [autre que OK donne: 'TU NE PEUX CREER CETTE ROOM PRIVEE']
 &lt;ID&gt;123&lt;/ID&gt;
 &lt;USERNAME&gt;USERNAME&lt;/USERNAME&gt;
 &lt;ROOMNAME&gt;ROOMNAME&lt;/ROOMNAME&gt;
-&lt;/MESSAGE&gt;
- 
+&lt;/MESSAGE&gt; 
  
 Cela ajoute la room a la liste dans le GUI du client.
 Le client va envoyer:
@@ -467,9 +503,9 @@ ou XXX = le ID de room correspondant.
  
 ===========================================================
  
-SR -- entrer dans room privee.
+SR -- entrer dans room priv&eacute;e
  
-Requete client:
+Requ&ecirc;te client:
  
 &lt;MESSAGE TYPE="SR"&gt;&lt;ID&gt;XXX&lt;/ID&gt;&lt;/MESSAGE&gt;
  
@@ -491,8 +527,8 @@ n&eacute;gatifs.
  
 ===========================================================
  
-RP -- Demande d'access a une salle privee, envoyee au
-      proprietaire.
+RP -- Demande d'acc&egrave;s a une salle priv&eacute;e, envoy&eacute;e au
+      propri&eacute;taire.
  
 Envoi du client:
  
@@ -517,12 +553,19 @@ suivi de la raison donnee puis des boutons:
  
 Si il clique sur REFUSER, il enverra au serveur ceci:
  
-&lt;MESSAGE TYPE="AC"&gt;&lt;S&gt;NOK&lt;/S&gt;&lt;ID&gt;XXX&lt;/ID&gt;&lt;RAISON&gt;&lt;/RAISON&gt;&lt;/MESSAGE&gt;
+&lt;MESSAGE TYPE="AC"&gt;
+	&lt;S&gt;NOK&lt;/S&gt;
+	&lt;ID&gt;XXX&lt;/ID&gt;
+	&lt;RAISON&gt;&lt;/RAISON&gt;
+&lt;/MESSAGE&gt;
  
 Si il clique sur AUTORISER, il enverra au serveur ceci:
  
-&lt;MESSAGE TYPE="AC"&gt;&lt;S&gt;OK&lt;/S&gt;&lt;ID&gt;XXX&lt;/ID&gt;&lt;RAISON&gt;&lt;/RAISON&gt;&lt;/MESSAGE&gt;
-
+&lt;MESSAGE TYPE="AC"&gt;
+	&lt;S&gt;OK&lt;/S&gt;
+	&lt;ID&gt;XXX&lt;/ID&gt;
+	&lt;RAISON&gt;&lt;/RAISON&gt;
+&lt;/MESSAGE&gt;
  
 ===========================================================
  
@@ -541,11 +584,14 @@ Envoi par le serveur:
 ===========================================================
 
 </PRE><A NAME="ancre16"></A><U>Bogues dans le client</U><PRE>
-
 - Dans la version originale du client 2003, si un avatar rentrait dans une
   salle o&ugrave; r&eacute;al &eacute;tait le seul autre avatar, r&eacute;al se faisait t&eacute;l&eacute;porter
   aux coordonn&eacute;es dudit avatar. Remarque: slochehack version 1.3 et suivantes
-  contiennent un script qui tente de r&eacute;gler ce bogue en modifiant automatiquement
-  le code Flash du client (op&eacute;ration assez compliqu&eacute;e).
+  contiennent un script qui tente de r&eacute;gler ce bogue en modifiant
+  automatiquement le code Flash du client (op&eacute;ration assez compliqu&eacute;e).
+
+- Le slochepop ne semble utilisable qu'une fois qu'on a cliqu&eacute; sur la petite
+  bulle. De plus, in ne semble pas y avoir dans le client de code pour mettre
+  &agrave; jour le chiffre &agrave; c&ocirc;t&eacute; de la bulle.
 
 </PRE>
