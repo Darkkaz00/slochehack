@@ -29,7 +29,7 @@ client = f.read()
 f.close()
 
 # client 2003 detecte --
-# Patch fix real 2003:
+# Patch "fixreal":
 # Ligne 47813:
 #      push 3
 #      push -100
