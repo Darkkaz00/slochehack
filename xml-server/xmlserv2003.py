@@ -276,13 +276,28 @@ def serve_client(conn, addr, id):
 				user_y[id] = random.randrange(350, 450)
 
 				if dir == "droite":
-					user_x[id] = random.randrange(80, 200)
+					user_x[id] = random.randrange(56, 110)
 				if dir == "gauche":
-					user_x[id] = random.randrange(500, 600)
+					user_x[id] = random.randrange(589, 645)
 				if dir == "haut":
-					user_y[id] = random.randrange(400, 500)
+					user_y[id] = random.randrange(440, 470)
 				if dir == "bas":
 					user_y[id] = random.randrange(300, 350)
+
+				# escaliers gzzit
+				if room == 64 and nr == 63:
+					user_x[id] = random.randrange(494, 559)
+					user_y[id] = random.randrange(447, 448)
+
+				# tuyeau
+				if room == 11 and nr == 61:
+					user_x[id] = random.randrange(277, 342)
+					user_y[id] = random.randrange(407, 458)
+
+				# entree gzzzit
+				if room == 15 and nr == 65:
+					user_x[id] = random.randrange(545, 621)
+					user_y[id] = random.randrange(479, 512)
 
 				if nr == 1 and user_y[id] < 349:
 					user_y[id] = 349

@@ -532,10 +532,20 @@ def serve_client(conn, addr, id):
 
 				nr = get_new_room(ref_room, dir, 2000, 2000)
 
+				# entree gzzzit
+				if room == 15 and nr == 65:
+					user_x[id] = random.randrange(545, 621)
+					user_y[id] = random.randrange(479, 512)
+
+				# tuyeau
+				if room == 11 and nr == 61:
+					user_x[id] = random.randrange(277, 342)
+					user_y[id] = random.randrange(407, 458)	
+
 				# sortie salle swompe
 				if room == 71 and nr == 61:
-					user_x[id] = random.randrange(260, 348)
-					user_y[id] = random.randrange(346, 389)
+					user_x[id] = random.randrange(51, 154)
+					user_y[id] = random.randrange(310, 331)
 
 				# entree salle swompe
 				if room == 61 and nr == 71:
@@ -570,9 +580,9 @@ def serve_client(conn, addr, id):
 					user_y[id] = random.randrange(350, 450)
 
 				if dir == "droite":
-					user_x[id] = random.randrange(80, 200)
+					user_x[id] = random.randrange(56, 110)
 				if dir == "gauche":
-					user_x[id] = random.randrange(500, 600)
+					user_x[id] = random.randrange(589, 645)
 				if dir == "haut":
 					user_y[id] = random.randrange(440, 470)
 				if dir == "bas":
@@ -604,6 +614,9 @@ def serve_client(conn, addr, id):
 				if nr > 71:
 					print "y coord club swompe ajust"
 					user_y[id] = old_y
+
+				if nr == 53 and user_y[id] < 360:
+					user_y[id] = 360
 
 				rpeople[room].remove(id)
 				rpeople[nr].append(id)
