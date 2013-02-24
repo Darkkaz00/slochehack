@@ -14,14 +14,12 @@ fields = urlparse.parse_qs(dat)
 # sloche 2003, 2004 utilise /inscriptions et un champ
 # special pour les inscriptions
 if 'op' in fields and fields['op'][0] == "save":
-#	os.system("python new_user.py '%s'" % dat)
 	new_user.do_new_user(dat)
 	sys.exit(0)
 
 # sloche 2003, 2004 utilise /inscriptions et un champ
 # special pour mapage
 if 'formsname' in fields and fields['formsname'][0] == "affiche":
-#	os.system("python update_user.py '%s'" % dat)
 	update_user.do_update_user(dat)
 	sys.exit(0)
 
