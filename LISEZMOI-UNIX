@@ -32,7 +32,6 @@ Logiciel vite-fait.
 
 INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 
-
 	Ce que ça vous prend:
 		- Système d'exploitation de type Unix (Linux, FreeBSD,
 		  Mac OS X, Solaris, etc.). Cela doit comprendre
@@ -42,8 +41,15 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 		- Python 2.x récent -- commande "python"
 		- Logiciel flasm (http://www.nowrap.de/flasm.html)
 		  la commande "flasm" doit marcher
+	
+	Tous les logiciels dans cette liste sauf flasm sont assez
+	souvent inclus dans les distributions Linux, BSD et Unix.
 
 Étapes de lancement:
+
+Remarque: il y a le script autorun-linux.sh qui fait tout cela tout seul si il
+est bien configuré. Malheureusement, il ne fonctionne que sous Linux et
+qu'avec les bureaux graphiques GNOME, MATE, et Ubuntu.
 
 1. python modification-swf.py IP exemple-de-fichier-client-sloche.swf
 
@@ -68,13 +74,6 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 	Remarque: ce serveur gère aussi le système d'amis et de
 	messagiel (le "sloche-pop").
 
-	Requiert Python 2.x récent.
-
-Remarque: il y a le script autorun-linux.sh qui fait tout cela tout seul si il
-est bien configuré. Malheureusement, il ne fonctionne que sous Linux et
-qu'avec les bureaux graphiques GNOME, MATE, et Ubuntu.
-
-
 UTILISATON DU SITE ===========================================================
 
 Le site devrait marcher de façon presqu'identique à l'original.
@@ -97,9 +96,6 @@ Comptes spéciaux
 Actions spéciales
 -----------------
 
-Compte doclipo:
-	Envoyer le message privé "l" à un slocheux
-	crée une liposuccion
 Compte laplante:
 	Envoyer le message privé "kick" à un slocheux
 	le renvoie du serveur.

@@ -4,20 +4,6 @@ par: un certain Gabriel, ancien fan de sloche.com ;)
 
 Guide de lancement de la version précompilée facile d'usage pour Windows
 
-CODE SOURCE =================================================================
-
-Ce projet est 100% open source. Le code source du serveur slochehack, qui
-comprend une version compatible Unix/Linux, est disponible depuis le site:
-
-https://sites.google.com/site/newgabrielca/souvenirsloche/slochehack
-
-Ce logiciel a été réalisé à l'aide des logiciels MinGW, Python, py2exe
-et ResEdit. L'archive présente contient le DLL du logiciel Python, dont
-le code source est disponible depuis: http://python.org/.
-
-Le logiciel graphique de lancement a été créé en modifiant un example
-de programmation Windows obtenu depuis http://www.winprog.org/tutorial/.
-
 FICHIERS EXTERNES REQUIS ====================================================
 
 S'il-vous-plaît bien lire le document "FICHIERS-EXTERNES-REQUIS.TXT" avant
@@ -131,9 +117,6 @@ Comptes spéciaux
 Actions spéciales
 -----------------
 
-Compte doclipo:
-	Envoyer le message privé "l" à un slocheux
-	crée une liposuccion
 Compte laplante:
 	Envoyer le message privé "kick" à un slocheux
 	le renvoie du serveur.
@@ -144,4 +127,21 @@ Compte pouvoirs:
 	Remarque: ça prend sloche version 2004 ou
 	2005. Dans 2003, ça existait pas encore,
 	et dans 2006-2007, ça a été enlevé.
+
+CODE SOURCE =================================================================
+
+Ce projet est 100% open source. Le code source du serveur slochehack, qui
+comprend une version compatible Unix/Linux, est disponible depuis le site:
+
+https://sites.google.com/site/newgabrielca/souvenirsloche/slochehack
+
+Ce logiciel a été réalisé à l'aide des logiciels MinGW, Python, py2exe
+et ResEdit. L'archive présente contient le DLL du logiciel Python, dont
+le code source est disponible depuis: http://python.org/.
+
+Le logiciel graphique de lancement a été créé en modifiant un example
+de programmation Windows obtenu depuis http://www.winprog.org/tutorial/.
+Le code source pour ce logiciel de lancement graphique est inclus dans
+l'archive code source slochehack mentionnée plus haut.
+
 
