@@ -2,5 +2,3 @@ Une version Windows très facile d'usage peut être compilée
 à l'aide des scripts dans la directoire compilation_exe.
 Ça prend MinGW, Python et py2exe. Je fournis d'avance la
 version compilée sur mon site.
-
-
