@@ -1,15 +1,14 @@
-Ces scripts crÃ©ent une version prÃ©-compilÃ©e de slochehack
-pour Windows qui ne requiert que flasm comme logiciel externe
-et qui comprend un lanceur graphique facile d'usage.
-Ã‡a prend MinGW, python et py2exe pour rouler ces scripts.
+Ces scripts créent une version pré-compilée de slochehack pour Windows
+qui ne requiert que flasm comme logiciel externe et qui comprend un
+lanceur graphique facile d'usage.  Ça prend MinGW, python et py2exe
+pour rouler ces scripts.
 
 sh tout-nettoyer.sh : enlever tout les fichiers precompiles
 
 sh tout-convertir.sh: compiler partout
 
-sh finaliser.sh [DANGEREUX]: effacer tous les .py et tout
-ce qui Ã  pas rapport a Windows. 
-Ne faire cela que sur une copie !!!
+sh finaliser.sh [DANGEREUX]: effacer tous les .py et tout ce qui à pas
+rapport a Windows.  Ne faire cela que sur une copie !!!
 
-Ã€ la toute fin, enlever la directoire compilation_exe.
+À la toute fin, enlever la directoire compilation_exe.
 

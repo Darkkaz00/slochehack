@@ -49,7 +49,8 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 Étapes de lancement facile graphique:
 
 1. Lancer "slochehack.exe" et remplir le formulaire.
-   Pour trouver votre IP locale, vous pouvez utiliser la commande "ipconfig".
+   Pour trouver votre IP locale, vous pouvez utiliser la commande "ipconfig",
+   disponible depuis le bouton "Regarder ipconfig" pour sauver du temps.
    Dans la sortie de la commande il devrait y avoir quelque chose comme ceci:
 
    Ethernet adapter Local Area Connection:
@@ -58,6 +59,16 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
            IP Address. . . . . . . . . . . . : 192.168.2.2
            Subnet Mask . . . . . . . . . . . : 255.255.255.0
            Default Gateway . . . . . . . . . : 192.168.2.1
+
+   Dans cet exemple de sortie, 192.168.2.2 est l'IP LAN à mettre dans le champ
+   "Addresse IP serveur".
+
+   Le bouton "Sauvegarder" conserve les paramètres afin qu'ils rapparaissent
+   au prochain lancement de l'utilitaire graphique.
+
+   Le bouton "Quitter" ferme l'utilitaire graphique, mais pas les deux fenêtres
+   serveur, qu'il faut fermer séparément pour stopper le serveur en tant que
+   tel.
 
 ------------------------------------------------------------------------------
 
