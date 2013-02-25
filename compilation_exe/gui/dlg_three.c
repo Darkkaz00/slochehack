@@ -39,7 +39,7 @@ HBRUSH g_hbrBackground = NULL;
 OPENFILENAME ofn;
 char szFileName[MAX_PATH] = "";
 
-/* 
+/*
  * Écrire une chaîne de caractères dans un fichier,
  * en n'y écrivant pas les caractères "newline"
  */
@@ -126,9 +126,9 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 			}
 
 			/* Formalités directement copiées de l'exemple de theForger */
-			SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)LoadIcon(NULL, 
+			SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)LoadIcon(NULL,
 				MAKEINTRESOURCE(IDI_APPLICATION)));
-			SendMessage(hwnd, WM_SETICON, ICON_BIG, (LPARAM)LoadIcon(NULL, 
+			SendMessage(hwnd, WM_SETICON, ICON_BIG, (LPARAM)LoadIcon(NULL,
 				MAKEINTRESOURCE(IDI_APPLICATION)));
 		break;
 
