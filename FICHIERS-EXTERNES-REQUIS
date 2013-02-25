@@ -6,6 +6,8 @@ faire fonctionner une réimplémentation assez complète et je vous
 donne des infos sur ce que sont ces fichiers. Pour que le logiciel marche
 il faut copier aux *bons* endroits les *bons* fichiers. Merci.
 
+Sur Windows, ça prend le programme flasm.exe dans la directoire principale.
+
 PAGE D'ACCUEIL		[pas absolument nécessaire]
 
 ./server/sloche-data/popup.html		<--  la fenêtre avec le client
