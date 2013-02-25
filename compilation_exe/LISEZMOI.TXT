@@ -29,18 +29,16 @@ Logiciel vite-fait.
 INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 
 	Ce que ça vous prend:
-		- Windows XP ou ultérieur (selon le site de Python)
+		- Windows XP ou ultérieur (probablement)
 		- Outil flasm (http://www.nowrap.de/flasm.html)
 		  Placez "flasm.exe" dans la directoire principale de slochehack.
 		- Au besoin, le "Microsoft Visual C++ 2008 Redistributable Package"
 		  http://www.microsoft.com/en-us/download/details.aspx?id=29
 
-Étapes de lancement facile graphique:
-
-1. Lancer "slochehack.exe" et remplir le formulaire.
+   Lancer "slochehack.exe" et remplir le formulaire.
    Pour trouver votre IP locale, vous pouvez utiliser la commande "ipconfig",
-   disponible depuis le bouton "Regarder ipconfig" pour sauver du temps.
-   Dans la sortie de la commande il devrait y avoir quelque chose comme ceci:
+   disponible depuis le bouton "Regarder ipconfig". Dans la sortie de la
+   commande il devrait y avoir quelque chose comme ceci:
 
    Ethernet adapter Local Area Connection:
 
@@ -52,51 +50,16 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
    Dans cet exemple de sortie, 192.168.2.2 est l'IP LAN à mettre dans le champ
    "Addresse IP serveur".
 
+   Le bouton "Lancer le serveur" devrait normalement ouvrir deux fenêtres
+   de terminal avec les deux composantes du serveur. Parfois, des erreurs
+   peuvent être indiquées dans ces fenêtres.
+
    Le bouton "Sauvegarder" conserve les paramètres afin qu'ils rapparaissent
    au prochain lancement de l'utilitaire graphique.
 
    Le bouton "Quitter" ferme l'utilitaire graphique, mais pas les deux fenêtres
    serveur, qu'il faut fermer séparément pour stopper le serveur en tant que
    tel.
-
-------------------------------------------------------------------------------
-
-Étapes de lancement "manuel":
-
-N.B. Sous Windows, le logiciel terminal s'appelle "invite de commandes".
-
-1. Dans un terminal, se rendre dans le dossier slochehack et taper:
-   modification-swf IP exemple-de-fichier-client-sloche.swf
-
-	où IP = adresse IP du serveur, soit local (192.168.2.x) ou Internet
-	(Internet = mauvaise idée, cf infos sécurité plus haut)
-
-   Pour trouver votre IP locale, vous pouvez utiliser la commande "ipconfig".
-   Dans la sortie de la commande il devrait y avoir quelque chose comme ceci:
-
-   Ethernet adapter Local Area Connection:
-
-           Connection-specific DNS Suffix  . : Belkin
-           IP Address. . . . . . . . . . . . : 192.168.2.2
-           Subnet Mask . . . . . . . . . . . : 255.255.255.0
-           Default Gateway . . . . . . . . . : 192.168.2.1
-
-   Dans cet exemple, 192.168.2.2 est l'IP locale.
-
-2. Si tout s'est bien déroulé, dans le même terminal, taper:
-   cd server
-   net-interface			
-
-   (C'est le serveur HTTP fait maison)
-
-3. Dans un deuxième terminal, se render au dossier slochehack et taper:
-	cd xml-server
-	xmlserv
-	
-	ATTENTION: pour la version 2003, il faut taper: xmlserv2003
-
-	Il s'agit du serveur de chat XML. Ce serveur gère aussi le
-	système d'amis et de messagiel (le "sloche-pop").
 
 UTILISATON DU SITE ===========================================================
 
