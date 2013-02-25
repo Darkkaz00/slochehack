@@ -201,9 +201,8 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 
 					if (strlen(adr) < 2) {
 						MessageBox(hwnd, "SVP choisir une addresse IP de serveur",
-							"Erreur", MB_OK | MB_ICONEXCLAMATION);				
-					}
-					else if (strlen(fichier) < 2) {
+							"Erreur", MB_OK | MB_ICONEXCLAMATION);
+					} else if (strlen(fichier) < 2) {
 						MessageBox(hwnd, "SVP choisir un fichier client",
 							"Erreur", MB_OK | MB_ICONEXCLAMATION);
 					} else if (!check_flasm()) {
