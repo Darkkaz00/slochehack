@@ -35,10 +35,12 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 		- Au besoin, le "Microsoft Visual C++ 2008 Redistributable Package"
 		  http://www.microsoft.com/en-us/download/details.aspx?id=29
 
-   Lancer "slochehack.exe" et remplir le formulaire.
-   Pour trouver votre IP locale, vous pouvez utiliser la commande "ipconfig",
-   disponible depuis le bouton "Regarder ipconfig". Dans la sortie de la
-   commande il devrait y avoir quelque chose comme ceci:
+   Lancer "slochehack.exe" et remplir le formulaire. Avec l'addresse par défaut
+   "localhost", le serveur sera accessible uniquement sur la machine présente
+   depuis "http://localhost/". Pour rendre le serveur disponible sur le réseau
+   local, il faut utiliser une adresse IP LAN, qu'on peut trouver avec la
+   commande "ipconfig", disponible depuis le bouton "Regarder ipconfig". Dans la
+   sortie de la commande il devrait y avoir quelque chose comme ceci:
 
    Ethernet adapter Local Area Connection:
 
@@ -48,18 +50,19 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
            Default Gateway . . . . . . . . . : 192.168.2.1
 
    Dans cet exemple de sortie, 192.168.2.2 est l'IP LAN à mettre dans le champ
-   "Addresse IP serveur".
+   "Addresse IP serveur". À partir de là, le serveur est accessible depuis
+   "http://192.168.2.2/" sur le réseau local.
 
    Le bouton "Lancer le serveur" devrait normalement ouvrir deux fenêtres
    de terminal avec les deux composantes du serveur. Parfois, des erreurs
    peuvent être indiquées dans ces fenêtres.
 
    Le bouton "Sauvegarder" conserve les paramètres afin qu'ils rapparaissent
-   au prochain lancement de l'utilitaire graphique.
+   au prochain lancement de l'utilitaire de lancement.
 
-   Le bouton "Quitter" ferme l'utilitaire graphique, mais pas les deux fenêtres
-   serveur, qu'il faut fermer séparément pour stopper le serveur en tant que
-   tel.
+   Le bouton "Quitter" ferme l'utilitaire de lancement, mais pas les deux
+   fenêtres serveur, qu'il faut fermer séparément pour stopper le serveur en
+   tant que tel.
 
 UTILISATON DU SITE ===========================================================
 

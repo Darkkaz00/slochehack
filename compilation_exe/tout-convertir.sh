@@ -18,6 +18,10 @@ cd ..
 # demandez-moi pas pourquoi !!!!!!!!!!!! >:(
 cp gui/slochehack.exe gui/slochehack.exe.manifest gui/*.bat ..
 
+# configuration par defaut
+cp gui/config_slochehack.txt ..
+
+
 cd ../server/
 cc ncweb-windows.c -o ncweb.exe
 cd ../compilation_exe
