@@ -95,5 +95,5 @@ def get_new_room(rid, move, x, y):
 			if nr > 72: nr = 71
 #			if nr > 77: nr = 71
 
-	print "%d %s -> %d" % (rid, move, nr)
+	#print "%d %s -> %d" % (rid, move, nr)
 	return nr

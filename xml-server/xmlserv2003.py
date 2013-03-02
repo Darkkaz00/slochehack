@@ -59,7 +59,9 @@ user_y = [0 for i in range(MAX_USERS)]
 
 # broadcast message to all message-queues
 def broadcast(msg, room):
+	
 	#print "broadcasting %s to %d" % (msg, room)
+	
 	for i in range(MAX_USERS):
 		if unames[i] != "" and i in rpeople[room]:
 			mq[i].append(msg)
@@ -127,7 +129,9 @@ def serve_client(conn, addr, id):
 		#print "r: %s" % req
 		#print "policy-file-request" in req
 		if "policy-file-request" in req:
+			
 			#print "policy file"
+			
 			conn.sendall("<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"9100,9200\" /></cross-domain-policy>" + '\0')
 			conn.close()
 			return
@@ -225,7 +229,9 @@ def serve_client(conn, addr, id):
 				sta = int(data[data.find("<STATUS>")+8:data.find("</STATUS>")])
 
 				if sta==visi:
+		
 					#print "BV redondant"
+
 
 				if sta == 0 and sta != visi:
 					broadcast('<MESSAGE TYPE="broadcastVisibility"><USERNAME>%s</USERNAME><STATUS>%d</STATUS></MESSAGE>' % (username, sta), room)
@@ -320,7 +326,9 @@ def serve_client(conn, addr, id):
 					user_y[id] = 322
 
 				if nr == 62:
+					
 					#print "room 62, adjusting ycoord"
+					
 					user_y[id] = 360
 
 				# partir de la vieille salle,
@@ -416,6 +424,7 @@ def serve_client_messagiel(conn, addr, id):
 	# <MESSAGE TYPE="enter" FROM="Client"><NOM>laplante</NOM><HR>24248</HR></MESSAGE>
 	rep = conn.recv(1024)
 	if rep.find('TYPE="enter"') < 0:
+		
 		#print "Expected enter message from %s:%s; got %s. Closing connection." % (client_host, client_port, rep)
 		conn.close()
 		return
@@ -423,6 +432,7 @@ def serve_client_messagiel(conn, addr, id):
 	#print "messagiel: %s:%s -> usager %s" % (client_host, client_port, username)
 	for i in range(MAX_USERS):
 		if unames_messagiel[id] == username:
+			
 			#print "deja branche !!!! fermeture de la connection"
 			conn.close()
 			return
@@ -458,6 +468,7 @@ def serve_client_messagiel(conn, addr, id):
 			if not data:
 				break
 			else:
+				pass
 				#print "messagiel: %s: %s" % (username, data)
 
 			# Requete ami

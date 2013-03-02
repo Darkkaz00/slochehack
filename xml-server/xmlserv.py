@@ -85,6 +85,7 @@ def active_pouvoir(id, pv):
 	if pv not in pouvoirs[id]:
 		pouvoirs[id].append(pv)
 		if pv in pouvoirs_attaques:
+			
 			#print "chrono start %d: %d" % (id, pv)
 			chrono[id][pv] = time.time() + 30
 			#print pouvoirs[id]
@@ -236,6 +237,7 @@ def serve_client(conn, addr, id):
 		#print "r: %s" % req
 		#print "policy-file-request" in req
 		if "policy-file-request" in req:
+			
 			#print "policy file"
 			conn.sendall("<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"9100,9200\" /></cross-domain-policy>" + '\0')
 			conn.close()
@@ -282,6 +284,7 @@ def serve_client(conn, addr, id):
 	while 1:
 		for pv in range(100):
 			if chrono[id][pv] != 0 and chrono[id][pv] < time.time():
+				
 				#print "%s: %d expire" % (unames[id], pv)
 				chrono[id][pv] = 0
 				desactive_pouvoir(id, pv)
@@ -301,6 +304,7 @@ def serve_client(conn, addr, id):
 	
 			# broadcast client's move and emotion messages as-is
 			if data.find('TYPE="BST"') > 0 or data.find('TYPE="BM"') > 0 or data.find('TYPE="BE"') > 0:
+				
 				#print data
 
 				# pouvoirs
@@ -443,6 +447,7 @@ def serve_client(conn, addr, id):
 					if nom_salle[i] == cette_salle:
 						if prop_salle[i] == ce_prop:
 							if not id_salle_libre[i]:
+								
 								#print "conflit salle existante: %s" % cette_salle
 								cr_ok = False
 
@@ -608,10 +613,12 @@ def serve_client(conn, addr, id):
 					user_y[id] = 322
 
 				if nr == 62:
+					
 					#print "room 62, adjusting ycoord"
 					user_y[id] = 360
 
 				if nr > 71:
+					
 					#print "y coord club swompe ajust"
 					user_y[id] = old_y
 
@@ -658,11 +665,13 @@ def serve_client(conn, addr, id):
 def envoi_ou_stockage(to, relai):
 	if chiffre_dans_messagiel(to) != None:
 		# Envoyer le message directement
+		
 		#print "messagiel: envoi direct a %s de '%s'" % (to, relai)
 		queue_messagiel[chiffre_dans_messagiel(to)].append(relai)
 	else:
 		# Stocker le message et l'envoyer lorsque l'usager
 		# se branchera au slochepop
+		
 		#print "messagiel: stockage pour %s de '%s'" % (to, relai)
 		stockage_messagiel_api.ajouter(to, relai)
 
@@ -722,6 +731,7 @@ def serve_client_messagiel(conn, addr, id):
 			if not data:
 				break
 			else:
+				pass
 				#print "messagiel: %s: %s" % (username, data)
 
 			# Requete ami

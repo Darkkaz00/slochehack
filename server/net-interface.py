@@ -25,7 +25,7 @@ def find_free_id():
 def serve_client(conn, addr, id):
 	thread_free[id] = False
 	client_host, client_port = addr
-	print "Connexion obtenue: %s:%s. - thread %d" % (client_host, client_port, id)
+	#print "Connexion obtenue: %s:%s. - thread %d" % (client_host, client_port, id)
 
 	req = conn.recv(5 * 1024 * 1024)
 	serv = Popen('./ncweb', shell=False, stdout=PIPE, stdin=PIPE, stderr=PIPE)
@@ -33,7 +33,7 @@ def serve_client(conn, addr, id):
 	output = serv.stdout.read()
 	conn.sendall(output)
 	#serv.kill()
-	print "Fermeture de la connexion %s:%s" % (client_host, client_port)
+	#print "Fermeture de la connexion %s:%s" % (client_host, client_port)
 	conn.shutdown(socket.SHUT_RDWR)
 	thread_free[id] = True
 

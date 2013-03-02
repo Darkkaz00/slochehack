@@ -64,5 +64,5 @@ def get_new_room(rid, move, x, y):
 			nr += 1
 			if nr > 65: nr = 61
 
-	print "%d %s -> %d" % (rid, move, nr)
+	#print "%d %s -> %d" % (rid, move, nr)
 	return nr
