@@ -229,7 +229,7 @@ def serve_client(conn, addr, id):
 				sta = int(data[data.find("<STATUS>")+8:data.find("</STATUS>")])
 
 				if sta==visi:
-		
+					pass
 					#print "BV redondant"
 
 
