@@ -45,6 +45,14 @@ ICÔNES BOUTONS POUVOIRS (taille : 17 x 17 pixels, format: JPEG)
 
 SALLES DE CHAT
 
+Remarque: avec le client 2003, les salles 51.swf, 52.swf, ..., 55.swf sont la
+salle "gzzit" et les salles 61.swf et suivantes n'existent pas.
+
+Avec les clients 2004 et suivants, la salle gzzzit est dans les fichiers
+61.swf, 62.swf, ..., 65.swf, les salles "swompe" sont dans les fichiers
+51.swf, ..., 55.swf, et les salles "swompe VIP" sont dans les fichiers
+71.swf et suivants.
+
 ./server/sloche-data/0.swf 		<-- salle privée liposuccion
 ./server/sloche-data/64.swf		<-- décors salles de chat ...
 ./server/sloche-data/15.swf			.

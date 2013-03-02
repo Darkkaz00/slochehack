@@ -282,7 +282,7 @@ def serve_client(conn, addr, id):
 				nr = get_new_room(room, dir, user_x[id], user_y[id])
 
 				if dir == "gauche" and user_x[id] > 100 and room == 15:
-					nr = 65
+					nr = 55
 
 				user_x[id] = random.randrange(300, 400)
 				user_y[id] = random.randrange(350, 450)
@@ -297,35 +297,35 @@ def serve_client(conn, addr, id):
 					user_y[id] = random.randrange(300, 350)
 
 				# escaliers gzzit
-				if room == 64 and nr == 63:
+				if room == 54 and nr == 53:
 					user_x[id] = random.randrange(494, 559)
 					user_y[id] = random.randrange(447, 448)
 
 				# tuyeau
-				if room == 11 and nr == 61:
+				if room == 11 and nr == 51:
 					user_x[id] = random.randrange(277, 342)
 					user_y[id] = random.randrange(407, 458)
 
 				# entree gzzzit
-				if room == 15 and nr == 65:
+				if room == 15 and nr == 55:
 					user_x[id] = random.randrange(545, 621)
 					user_y[id] = random.randrange(479, 512)
 
 				if nr == 1 and user_y[id] < 349:
 					user_y[id] = 349
 
-				if nr == 64 and user_y[id] < 379: user_y[id] = 379
-				if nr == 65 and user_y[id] < 339: user_y[id] = 339
+				if nr == 54 and user_y[id] < 379: user_y[id] = 379
+				if nr == 55 and user_y[id] < 339: user_y[id] = 339
 
-				if nr == 61 and room == 11:
+				if nr == 51 and room == 11:
 					user_x[id] = 282
 					user_y[id] = 447
 
-				if nr == 11 and room == 61:
+				if nr == 11 and room == 51:
 					user_x[id] = 540
 					user_y[id] = 322
 
-				if nr == 62:
+				if nr == 52:
 					
 					#print "room 62, adjusting ycoord"
 					
