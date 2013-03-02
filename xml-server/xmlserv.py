@@ -85,9 +85,9 @@ def active_pouvoir(id, pv):
 	if pv not in pouvoirs[id]:
 		pouvoirs[id].append(pv)
 		if pv in pouvoirs_attaques:
-			print "chrono start %d: %d" % (id, pv)
+			#print "chrono start %d: %d" % (id, pv)
 			chrono[id][pv] = time.time() + 30
-			print pouvoirs[id]
+			#print pouvoirs[id]
 
 def desactive_pouvoir(id, pv):
 	if pv in pouvoirs[id]:
@@ -233,16 +233,16 @@ def serve_client(conn, addr, id):
 	ready = select.select([conn], [], [], 0.01)
 	if ready[0]:
 		req = conn.recv(1024)
-		print "r: %s" % req
-		print "policy-file-request" in req
+		#print "r: %s" % req
+		#print "policy-file-request" in req
 		if "policy-file-request" in req:
-			print "policy file"
+			#print "policy file"
 			conn.sendall("<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"9100,9200\" /></cross-domain-policy>" + '\0')
 			conn.close()
 			return
 
 	conn.sendall("<MESSAGE TYPE=\"ACK\"></MESSAGE>" + '\0')
-	print "xmlserv: ACK %s:%s" % (client_host, client_port)
+	#print "xmlserv: ACK %s:%s" % (client_host, client_port)
 
 	# Initial room request
 	# <MESSAGE TYPE="RR" FROM="laplante"><RID>23</RID><DI>droite</DI><NOM>laplante</NOM><GUEST>false</GUEST></MESSAGE>
@@ -282,7 +282,7 @@ def serve_client(conn, addr, id):
 	while 1:
 		for pv in range(100):
 			if chrono[id][pv] != 0 and chrono[id][pv] < time.time():
-				print "%s: %d expire" % (unames[id], pv)
+				#print "%s: %d expire" % (unames[id], pv)
 				chrono[id][pv] = 0
 				desactive_pouvoir(id, pv)
 				# <MESSAGE TYPE="BE"><ETAT>123</ETAT><FROM>user</FROM><TO>user</TO>
@@ -297,11 +297,11 @@ def serve_client(conn, addr, id):
 		if ready[0]:
 			data = conn.recv(1024)
 			if not data: break
-			print ("%s:%s: %s" % (client_host, client_port, data)).strip()
+			#print ("%s:%s: %s" % (client_host, client_port, data)).strip()
 	
 			# broadcast client's move and emotion messages as-is
 			if data.find('TYPE="BST"') > 0 or data.find('TYPE="BM"') > 0 or data.find('TYPE="BE"') > 0:
-				print data
+				#print data
 
 				# pouvoirs
 				if data.find('<PV>') > 0:
@@ -365,7 +365,7 @@ def serve_client(conn, addr, id):
 					if not id_salle_libre[i]:
 						if len(rpeople[1000 + i]) == 0:
 							id_salle_libre[i] = True
-							print "effacement de la salle %s (numero %d, tableau %d)" % (nom_salle[i], i, 1000 + i)
+							#print "effacement de la salle %s (numero %d, tableau %d)" % (nom_salle[i], i, 1000 + i)
 									
 				for i in range(1000):
 					if not id_salle_libre[i]:
@@ -393,7 +393,7 @@ def serve_client(conn, addr, id):
 						rep += '</RP>'
 				rep += '</MESSAGE>'
 				conn.sendall(rep.strip() + '\0')
-				print 'reponse LR: %s' % rep
+				#print 'reponse LR: %s' % rep
 
 			# demander acces a aune room privee
 			if data.find('TYPE="RP"') > 0:
@@ -427,7 +427,7 @@ def serve_client(conn, addr, id):
 
 				if len(req_sp[id]) > 0:
 					id_dest = chiffre_user(req_sp[id].pop())
-					print "relai AC: %s" % relai
+					#print "relai AC: %s" % relai
 					mq[id_dest].append(relai)
 				
 
@@ -443,7 +443,7 @@ def serve_client(conn, addr, id):
 					if nom_salle[i] == cette_salle:
 						if prop_salle[i] == ce_prop:
 							if not id_salle_libre[i]:
-								print "conflit salle existante: %s" % cette_salle
+								#print "conflit salle existante: %s" % cette_salle
 								cr_ok = False
 
 				if cr_ok:
@@ -460,7 +460,7 @@ def serve_client(conn, addr, id):
 				rep += '</MESSAGE>'
 
 				conn.sendall(rep.strip() + '\0')
-				print 'reponse CR: %s' % rep
+				#print 'reponse CR: %s' % rep
 
 			# SR -- requete entree room privee
 			if data.find('TYPE="SR"') > 0:
@@ -474,13 +474,13 @@ def serve_client(conn, addr, id):
 				rep += '<STATUS>OK</STATUS>'	# NOK pour refuser entree...
 				rep += '</MESSAGE>'
 				conn.sendall(rep.strip() + '\0')
-				print 'reponse SR: %s' % rep
+				#print 'reponse SR: %s' % rep
 
 				# maintenant, le changement de salle a proprement parler
 
-				print "%s entre dans la salle privee numero %d" % (username, id_salle)
+				#print "%s entre dans la salle privee numero %d" % (username, id_salle)
 				nr = 1000 - id_salle
-				print "chiffre tableau: %d" % nr
+				#print "chiffre tableau: %d" % nr
 				rpeople[room].remove(id)
 				rpeople[nr].append(id)
 				leave_room(room, id)
@@ -608,11 +608,11 @@ def serve_client(conn, addr, id):
 					user_y[id] = 322
 
 				if nr == 62:
-					print "room 62, adjusting ycoord"
+					#print "room 62, adjusting ycoord"
 					user_y[id] = 360
 
 				if nr > 71:
-					print "y coord club swompe ajust"
+					#print "y coord club swompe ajust"
 					user_y[id] = old_y
 
 				if nr == 53 and user_y[id] < 360:
@@ -638,10 +638,10 @@ def serve_client(conn, addr, id):
 				unames[id] = ""
 				return
 			conn.sendall(mq[id][0].strip() + '\0')
-			print "xmlchat: %s: envoi depuis queue: %s" % (username, mq[id][0])
+			#print "xmlchat: %s: envoi depuis queue: %s" % (username, mq[id][0])
 			mq[id] = mq[id][1:]
 
-	print "xmlserv: fermeture conn. %s:%s" % (client_host, client_port)
+	#print "xmlserv: fermeture conn. %s:%s" % (client_host, client_port)
 	conn.close()
 
 	# Avertir sortie aux amis sur messagiel
@@ -658,12 +658,12 @@ def serve_client(conn, addr, id):
 def envoi_ou_stockage(to, relai):
 	if chiffre_dans_messagiel(to) != None:
 		# Envoyer le message directement
-		print "messagiel: envoi direct a %s de '%s'" % (to, relai)
+		#print "messagiel: envoi direct a %s de '%s'" % (to, relai)
 		queue_messagiel[chiffre_dans_messagiel(to)].append(relai)
 	else:
 		# Stocker le message et l'envoyer lorsque l'usager
 		# se branchera au slochepop
-		print "messagiel: stockage pour %s de '%s'" % (to, relai)
+		#print "messagiel: stockage pour %s de '%s'" % (to, relai)
 		stockage_messagiel_api.ajouter(to, relai)
 
 def serve_client_messagiel(conn, addr, id):
@@ -684,7 +684,7 @@ def serve_client_messagiel(conn, addr, id):
 		conn.close()
 		return
 	username = rep[rep.find("<NOM>")+5:rep.find("</NOM>")]
-	print "messagiel: %s:%s -> usager %s" % (client_host, client_port, username)
+	#print "messagiel: %s:%s -> usager %s" % (client_host, client_port, username)
 	for i in range(MAX_USERS):
 		if unames_messagiel[id] == username:
 			print "deja branche !!!! fermeture de la connection"
@@ -722,13 +722,13 @@ def serve_client_messagiel(conn, addr, id):
 			if not data:
 				break
 			else:
-				print "messagiel: %s: %s" % (username, data)
+				#print "messagiel: %s: %s" % (username, data)
 
 			# Requete ami
 			if data.find('<OPTION>request</OPTION>') > 0:
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
 				text = data[data.find("<TEXT>")+6:data.find("</TEXT>")]
-				print "messagiel: %s req ami %s: '%s'" % (username, to, text)
+				#print "messagiel: %s req ami %s: '%s'" % (username, to, text)
 
 				# relai. marche sur 2007.
 				relai = '<MESSAGE TYPE="send">'
@@ -744,7 +744,7 @@ def serve_client_messagiel(conn, addr, id):
 			if data.find('<OPTION>autoriser</OPTION>') > 0:
 				nom = data[data.find("<NOM>")+5:data.find("</NOM>")]
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
-				print "%s autorise %s a etre son ami" % (nom, to)
+				#print "%s autorise %s a etre son ami" % (nom, to)
 
 				# Stocker nouvel ami dans la BDD
 				if nom == username:
@@ -768,7 +768,7 @@ def serve_client_messagiel(conn, addr, id):
 			if data.find('<OPTION>refus</OPTION>') > 0:
 				nom = data[data.find("<NOM>")+5:data.find("</NOM>")]
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
-				print "%s refuse a %s le droit d'etre son ami" % (nom, to)			
+				#print "%s refuse a %s le droit d'etre son ami" % (nom, to)			
 
 				# Envoyer la bulle "ami refuse"
 				relai = '<MESSAGE TYPE="send">'
@@ -780,7 +780,7 @@ def serve_client_messagiel(conn, addr, id):
 			# Relai ami
 			# <MESSAGE TYPE="ami" FROM="Client"><NOM>donald</NOM><AMI>laplante</AMI></MESSAGE>
 			if data.find('TYPE="ami"') > 0:
-				print "relai ami..."
+				#print "relai ami..."
 				nom = data[data.find("<NOM>")+5:data.find("</NOM>")]
 				ami = data[data.find("<AMI>")+5:data.find("</AMI>")]
 
@@ -792,7 +792,7 @@ def serve_client_messagiel(conn, addr, id):
 			# Supprimer ami
 			if data.find('<OPTION>supprimer</OPTION>') > 0:
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
-				print "messagiel: %s supprime ami %s" % (username, to)
+				#print "messagiel: %s supprime ami %s" % (username, to)
 
 				# Ce relai marche sur le client 2007
 				relai = '<MESSAGE TYPE="send">'
@@ -814,7 +814,7 @@ def serve_client_messagiel(conn, addr, id):
 			if not (data.find('<OPTION>') > 0) and data.find('TYPE="send"') > 0:
 				to = data[data.find("<TO>")+4:data.find("</TO>")]
 				text = data[data.find("<TEXT>")+6:data.find("</TEXT>")]
-				print "messagiel: %s message a %s: '%s'" % (username, to, text)
+				#print "messagiel: %s message a %s: '%s'" % (username, to, text)
 
 				# Ajoute un nouveau message slochepop avec une
 				# petite bulle qu'il faut cliquer pour le lire.
@@ -827,7 +827,7 @@ def serve_client_messagiel(conn, addr, id):
 		# Messages en file (recus d'un autre module ou thread etc.)
 		while len(queue_messagiel[id]):
 			conn.sendall(queue_messagiel[id][0].strip() + '\0')
-			print "messagiel: %s: envoi depuis queue: %s" % (username, queue_messagiel[id][0])
+			#print "messagiel: %s: envoi depuis queue: %s" % (username, queue_messagiel[id][0])
 			queue_messagiel[id] = queue_messagiel[id][1:]
 
 	unames_messagiel[id] = ""
