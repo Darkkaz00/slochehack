@@ -5,10 +5,11 @@ Version 1.5 - XXX
 - Création d'une version compatible Windows. Elle est sensée être très
   facile à installer et à utiliser. Elle comporte un nouvel outil de
   lancement graphique et ne demande comme logiciel externe que "flasm.exe"
-- Correction des déplacements entres salles aux extrêmes de la carte avec
-  le client 2003
-- Meilleurs déplacements entre salles avec tous les clients
+- Correction des déplacements entre les salles aux extrêmes de la carte
+  avec le client 2003
 - Bon fonctionnement des salles "gzzzit" avec le client 2003
+  (voir remarques sur les fichiers décors dans FICHIERS-EXTERNES-REQUIS)
+- Meilleurs déplacements entre salles avec tous les clients
 - Accès au pouvoir "King de la Swompe" ............ [à finir]
 - Nettoyage et simplification du logiciel
 - Correction et simplification et mise à jour de la documentation
