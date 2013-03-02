@@ -207,7 +207,9 @@ def description_salle(room, update=False, new_people=[]):
 	return mes
 
 def update_room(room, person):
-	print "Adding person %d to room %d" % (person, room)
+	
+#	print "Adding person %d to room %d" % (person, room)
+	
 	mes = description_salle(room, True, [person])
 
 	# broadcast to all the people in the room

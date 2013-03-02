@@ -91,7 +91,9 @@ def bogue_des_nains_rouges(room):
 	broadcast(mes, room)
 
 def update_room(room, person):
-	print "Adding person %d to room %d" % (person, room)
+	
+	#print "Adding person %d to room %d" % (person, room)
+	
 	mes = '<MESSAGE TYPE="enterRoom" VALUE="update"><ROOMID VALUE="update">%d</ROOMID>' % room
 	if 1:
 		t = c = p = "1"
