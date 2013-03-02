@@ -2,18 +2,20 @@ Historique des versions du logiciel "slochehack"
 
 Version 1.5 - XXX
 
-- Nettoyage et simplification du logiciel
-- Correction et simplification de la documentation
 - Création d'une version compatible Windows. Elle est sensée être très
   facile à installer et à utiliser. Elle comporte un nouvel outil de
   lancement graphique et ne demande comme logiciel externe que "flasm.exe"
-- Plus besoin du serveur de policies de Adobe
-- Ajout d'un script qui modifie automatiquement les fichiers configuration XML
-- Meilleurs déplacements entre salles avec tous les clients
 - Correction des déplacements entres salles aux extrêmes de la carte avec
   le client 2003
+- Meilleurs déplacements entre salles avec tous les clients
 - Bon fonctionnement des salles "gzzzit" avec le client 2003
 - Accès au pouvoir "King de la Swompe" ............ [à finir]
+- Nettoyage et simplification du logiciel
+- Correction et simplification et mise à jour de la documentation
+- Les deux serveurs sont plus muets et plus rapides (moins d'infos de débogage
+  affichées sur les fenêtres de terminal)
+- Plus besoin du serveur de policies de Adobe
+- Ajout d'un script qui modifie automatiquement les fichiers configuration XML
 
 Version 1.4 - 6 février 2013
 
