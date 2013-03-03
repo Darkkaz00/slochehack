@@ -29,7 +29,7 @@ Logiciel vite-fait.
 INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 
 	Ce que ça vous prend:
-		- Windows XP ou ultérieur (probablement)
+		- Windows 2000 ou ultérieur (probablement)
 		- Outil flasm (http://www.nowrap.de/flasm.html)
 		  Placez "flasm.exe" dans la directoire principale de slochehack.
 		- Au besoin, le "Microsoft Visual C++ 2008 Redistributable Package"
