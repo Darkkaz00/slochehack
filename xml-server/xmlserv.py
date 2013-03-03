@@ -68,6 +68,8 @@ partie = [0 for i in range(MAX_USERS)]
 # king ?
 king = [0 for i in range(MAX_USERS)]
 
+chrono_king = [0 for i in range(MAX_USERS)]
+
 chrono = [[0 for i in range(100)] for i in range(MAX_USERS)]
 
 def reset_pouvoirs(id):
@@ -131,6 +133,12 @@ user_y = [0 for i in range(MAX_USERS)]
 def broadcast(msg, room):
 	for i in range(MAX_USERS):
 		if unames[i] != "" and i in rpeople[room]:
+			mq[i].append(msg)
+
+# broadcast message to everyone
+def broadcast_all(msg):
+	for i in range(MAX_USERS):
+		if unames[i] != "":
 			mq[i].append(msg)
 
 def find_free_id():
@@ -233,14 +241,14 @@ def serve_client(conn, addr, id):
 	print "xmlserv: branchement depuis. %s:%s. lancement du thread %d" % (client_host, client_port, id)
 
 	init = time.time()
-	ready = select.select([conn], [], [], 0.01)
+	ready = select.select([conn], [], [], 0.1)
 	if ready[0]:
 		req = conn.recv(1024)
-		#print "r: %s" % req
-		#print "policy-file-request" in req
+		print "r: %s" % req
+		print "policy-file-request" in req
 		if "policy-file-request" in req:
 			
-			#print "policy file"
+			print "policy file"
 			conn.sendall("<?xml version=\"1.0\"?><cross-domain-policy><allow-access-from domain=\"*\" to-ports=\"9100,9200\" /></cross-domain-policy>" + '\0')
 			conn.close()
 			return
@@ -272,6 +280,7 @@ def serve_client(conn, addr, id):
 	rpeople[room].append(id)
 
 	reset_pouvoirs(id)
+	chrono_king[id] = 0
 
 	user_x[id] = random.randrange(300, 400)
 	user_y[id] = random.randrange(300, 400)
@@ -297,6 +306,13 @@ def serve_client(conn, addr, id):
 				stop_sortilege += '<FROM>%s</FROM><TO>%s</TO>' % (username, username)
 				stop_sortilege += '<EFFET>%d</EFFET><PARAM></PARAM></MESSAGE>' % pv
 				broadcast(stop_sortilege, room)
+
+		if chrono_king[id] > 0 and chrono_king[id] < time.time():
+			king[id] = 1
+			chrono_king[id] = 0
+			print "%s: king: helico" % username
+			helico = '<MESSAGE TYPE="BE"><ETAT>1</ETAT><FROM>%s</FROM><TO>%s</TO><EFFET>42</EFFET><PARAM>1</PARAM></MESSAGE>' % (username, username)
+			broadcast(helico, room)
 
 		ready = select.select([conn], [], [], 0.01)
 		if ready[0]:
@@ -348,7 +364,14 @@ def serve_client(conn, addr, id):
 							ultra[id] = param
 						else:
 							ultra[id] = 0
-				
+
+					# king
+					if pv == 42 and sta == 1 and param == 0:
+						print "demarrage king"
+						chrono_king[id] = time.time() + 60
+						#bandeau_king = '<MESSAGE TYPE="BE"><ETAT>1</ETAT><FROM>%s</FROM><TO>%s</TO><EFFET>42</EFFET><PARAM>0</PARAM></MESSAGE>' % (username, username)
+						#broadcast_all(bandeau_king)
+
 				broadcast(data, room)
 
 			# broadcast visibility
