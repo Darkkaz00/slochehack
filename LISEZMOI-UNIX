@@ -36,7 +36,7 @@ INSTRUCTIONS DE LANCEMENT DU SERVEUR =========================================
 		- Système d'exploitation de type Unix (Linux, FreeBSD,
 		  Mac OS X, Solaris, etc.). Cela doit comprendre
 		  les utiliataires standard, dont "sh", "make", "sed",
-		  et la commande "cc" pour le compilateur C.
+		  et un compilateur C (par exemple c99, gcc ou clang).
 		- Droits d'administrateur et utilitaire "sudo"
 		- Python 2.x récent -- commande "python"
 		- Logiciel flasm (http://www.nowrap.de/flasm.html)
