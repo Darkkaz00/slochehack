@@ -25,6 +25,7 @@
 #include "resource.h"
 
 char buf[1024];		/* Usage général */
+char buf2[MAX_PATH];	/* Usage général */
 FILE *f;		/* Usage général */
 
 int version = 0;	/* 1: version 2003, 2: version 2004-2007 */
@@ -107,9 +108,23 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 
 			/* Charger fichier sauvegarde, s'il y a lieu */
 			if ((f = fopen("config_slochehack.txt", "r"))) {
-				fgets(fichier, MAX_PATH, f);
-				fgets(adr, 256, f);
-				fgets(buf, 1024, f);
+				/*
+				 * Subtilité: il faut songer à enlever les '\n'
+				 * après la lecture, sans quoi il y a
+				 * des genres de crottes laides mais
+				 * inoffensifs dans les champs sous
+				 * Windows XP, mais pas sous 7 et 8
+				 * -- Gabriel 2014-01-14
+				 */
+				fgets(buf2, MAX_PATH, f);
+				strcat(fichier, enlever_lignes(buf2));
+
+				fgets(buf2, 256, f);
+				strcat(adr, enlever_lignes(buf2));
+
+				fgets(buf2, 1024, f);
+				strcat(buf, enlever_lignes(buf2));
+
 				fclose(f);
 				sscanf(buf, "%d", &version);
 
