@@ -30,6 +30,7 @@ FILE *f;		/* Usage général */
 
 int version = 0;	/* 1: version 2003, 2: version 2004-2007 */
 char pwd[4096];		/* Directoire principale slochehack */
+char dossier_clients[MAX_PATH];
 
 char fichier[MAX_PATH] = "";	/* Chemin fichier client choisi */
 char adr[256] = "";		/* Addresse IP serveur choisie */
@@ -105,6 +106,10 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 		case WM_INITDIALOG:
 			/* Stocker la directoire de lancement pour usage futur */
 			GetCurrentDirectory(4096, pwd);
+
+			/* Directoire fichiers client */
+			strcpy(dossier_clients, pwd);
+			strcat(dossier_clients, "\\fichiers-client");
 
 			/* Charger fichier sauvegarde, s'il y a lieu */
 			if ((f = fopen("config_slochehack.txt", "r"))) {
@@ -267,6 +272,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 					ofn.lpstrFilter = "Fichiers Flash (*.swf)\0*.swf\0Tous les fichiers (*.*)\0*.*\0";
 					ofn.lpstrFile = szFileName;
 					ofn.nMaxFile = MAX_PATH;
+					ofn.lpstrInitialDir = "fichiers-client";
 					ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
 					ofn.lpstrDefExt = "swf";
 
