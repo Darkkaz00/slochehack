@@ -25,7 +25,11 @@ ifconfig | grep 192 | grep -v RX | sed 's/inet addr:\(.*\)\ Bcast:\(.*\)/\1/' | 
 echo "IP: `cat localhost.txt`"
 
 # Modifier le SWF et les XML
-python modification-swf.py `cat localhost.txt` $CLIENT
+if ! python modification-swf.py `cat localhost.txt` $CLIENT;
+then
+	echo "Foirage du script de modification"
+	exit 1
+fi
 rm localhost.txt
 
 # Lancer le serveur web et le serveur chat XML
