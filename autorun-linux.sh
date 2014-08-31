@@ -9,6 +9,7 @@
 # de lancer le serveur "manuellement", voir le fichier "README".
 
 # Changer au besoin. seulement testé avec GNOME et MATE,
+# et maintenant aussi KDE (aout 2014)
 # j'espère que la syntaxte des paramètres sera la même avec
 # d'autres environnements graphiques...
 TERMINAL_GRAPHIQUE=mate-terminal
@@ -34,5 +35,13 @@ rm localhost.txt
 
 # Lancer le serveur web et le serveur chat XML
 # dans deux fenêtres terminal graphiques séparées
-$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd server; ./demarrage-unix; sh" &
-$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd xml-server; echo xmlserv; python $XMLSERV; sh" &
+if [ $TERMINAL_GRAPHIQUE == "konsole" ];
+then
+	# KDE konsole
+        $TERMINAL_GRAPHIQUE --workdir "`pwd`" -e sh -c "cd server; ./demarrage-unix; sh" &
+        $TERMINAL_GRAPHIQUE --workdir "`pwd`" -e sh -c "cd xml-server; echo xmlserv; python $XMLSERV; sh" &
+else
+	# MATE/GNOME
+	$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd server; ./demarrage-unix; sh" &
+	$TERMINAL_GRAPHIQUE --working-directory="`pwd`" -x sh -c "cd xml-server; echo xmlserv; python $XMLSERV; sh" &
+fi
